@@ -138,8 +138,14 @@ struct LeaderboardEntry
 //  CONTRACT STATE
 // ============================================================
 
-struct QZNREWARDROUTER
+struct QZNREWARDROUTER2
 {
+};
+
+struct QZNREWARDROUTER : public ContractBase
+{
+    struct StateData
+    {
     // ---- Player Registry (256 slots) ----
     // QPI static memory — explicit slot declarations
     PlayerRecord players_0;
@@ -434,7 +440,10 @@ struct QZNREWARDROUTER
     id      adminAddress;
     id      gameCabinetAddress;     // Only cabinet can report match results
     bit     initialized;
-};
+    };
+
+public:
+
 
 // ============================================================
 //  INPUT / OUTPUT STRUCTS
@@ -571,7 +580,6 @@ PRIVATE_FUNCTION(_getMultiplierBPS)
 {
     // Called inline — result used directly at call site
 }
-_
 
 PRIVATE_PROCEDURE(_updateLeaderboard)
 /*
@@ -582,7 +590,6 @@ PRIVATE_PROCEDURE(_updateLeaderboard)
 {
     // Embedded inline in ReportMatchResult for QPI single-file compliance
 }
-_
 
 PRIVATE_PROCEDURE(_checkAchievements)
 /*
@@ -593,7 +600,6 @@ PRIVATE_PROCEDURE(_checkAchievements)
 {
     // Embedded inline in ReportMatchResult
 }
-_
 
 // ============================================================
 //  CONTRACT PROCEDURES
@@ -636,7 +642,6 @@ PUBLIC_PROCEDURE(InitializeRouter)
     state.initialized = 1;
     output.success    = 1;
 }
-_
 
 PUBLIC_PROCEDURE(RegisterPlayer)
 /*
@@ -963,7 +968,6 @@ PUBLIC_PROCEDURE(RegisterPlayer)
     output.multiplierBPS   = multBPS;
     output.success         = 1;
 }
-_
 
 PUBLIC_PROCEDURE(StakeQZN)
 /*
@@ -1273,7 +1277,6 @@ PUBLIC_PROCEDURE(StakeQZN)
     }
     // Slots 1-15 follow identical pattern
 }
-_
 
 PUBLIC_PROCEDURE(UnstakeQZN)
 /*
@@ -1316,7 +1319,6 @@ PUBLIC_PROCEDURE(UnstakeQZN)
         output.newMultiplierBPS = newMult;
     }
 }
-_
 
 PUBLIC_PROCEDURE(ReportMatchResult)
 /*
@@ -1626,7 +1628,7 @@ PUBLIC_PROCEDURE(ReportMatchResult)
         sint64 achBonus;
 
         baseReward       = input.isSolo ? BASE_WIN_REWARD : BASE_WIN_REWARD;
-        multipliedReward = div(baseReward * state.players_0.stakeMultiplierBPS, MULT_DENOMINATOR);
+        multipliedReward = div(baseReward * state.players_0.stakeMultiplierBPS, MULT_DENOMINATOR).quot;
 
         // ---- APPLY EPOCH CAP ----
         sint64 capRemaining;
@@ -1744,12 +1746,12 @@ PUBLIC_PROCEDURE(ReportMatchResult)
         playerEpochScore = state.players_0.epochScore;
 
         // Simple insertion: replace lowest score if player scores higher
-        // Full sort on BEGIN_EPOCH for clean leaderboard each epoch
+        // Full sort on BEGIN_EPOCH() for clean leaderboard each epoch
         if (playerEpochScore > state.board_9.score)
         {
             state.board_9.walletAddress = input.winnerAddress;
             state.board_9.score         = playerEpochScore;
-            // Full sort happens in BEGIN_EPOCH
+            // Full sort happens in BEGIN_EPOCH()
         }
 
         // Deduct from reserve
@@ -1767,7 +1769,6 @@ PUBLIC_PROCEDURE(ReportMatchResult)
     // Losers' streak resets
     // (Abbreviated — same slot-lookup pattern applied to loser1/2/3)
 }
-_
 
 PUBLIC_PROCEDURE(ClaimRewards)
 /*
@@ -1831,7 +1832,6 @@ PUBLIC_PROCEDURE(ClaimRewards)
     }
     // Slots 1-15 follow identical pattern
 }
-_
 
 PUBLIC_PROCEDURE(FundReserve)
 /*
@@ -1856,7 +1856,6 @@ PUBLIC_PROCEDURE(FundReserve)
     output.newRewardReserve      = state.rewardReserveBalance;
     output.newAchievementReserve = state.achievementReserveBalance;
 }
-_
 
 // ============================================================
 //  READ-ONLY QUERY FUNCTIONS
@@ -1885,7 +1884,6 @@ PUBLIC_FUNCTION(GetPlayerStats)
         output.lifetimeEarned   = state.players_0.lifetimeEarned;
     }
 }
-_
 
 PUBLIC_FUNCTION(GetLeaderboard)
 {
@@ -1898,13 +1896,12 @@ PUBLIC_FUNCTION(GetLeaderboard)
     output.currentEpoch      = state.currentEpoch;
     output.epochRewardPool   = state.epochRewardPool;
 }
-_
 
 // ============================================================
 //  REGISTRATION
 // ============================================================
 
-REGISTER_USER_FUNCTIONS_AND_PROCEDURES
+REGISTER_USER_FUNCTIONS_AND_PROCEDURES()
 {
     REGISTER_USER_PROCEDURE(InitializeRouter,     1);
     REGISTER_USER_PROCEDURE(RegisterPlayer,       2);
@@ -1916,13 +1913,12 @@ REGISTER_USER_FUNCTIONS_AND_PROCEDURES
     REGISTER_USER_FUNCTION(GetPlayerStats,        8);
     REGISTER_USER_FUNCTION(GetLeaderboard,        9);
 }
-_
 
 // ============================================================
 //  SYSTEM HOOKS
 // ============================================================
 
-BEGIN_EPOCH
+BEGIN_EPOCH()
 /*
  * Fires every epoch (~weekly). Responsibilities:
  *
@@ -1938,7 +1934,7 @@ BEGIN_EPOCH
     state.epochTotalDistributed = 0;
 
     // ---- SORT LEADERBOARD (bubble sort top 10) ----
-    // Simple sort — only 10 entries, acceptable in BEGIN_EPOCH
+    // Simple sort — only 10 entries, acceptable in BEGIN_EPOCH()
     sint64 tempScore;
     id     tempWallet;
 
@@ -2007,11 +2003,11 @@ BEGIN_EPOCH
 
     // ---- LEADERBOARD BONUS POOL ----
     sint64 lbPool;
-    lbPool = div(state.epochRewardPool * LEADERBOARD_POOL_BPS, LEADERBOARD_BPS_DENOM);
+    lbPool = div(state.epochRewardPool * LEADERBOARD_POOL_BPS, LEADERBOARD_BPS_DENOM).quot;
 
     // Rank 1 gets 30% of leaderboard pool
     sint64 rank1Bonus;
-    rank1Bonus = div(lbPool * LEADERBOARD_WINNER_BPS, LEADERBOARD_BPS_DENOM);
+    rank1Bonus = div(lbPool * LEADERBOARD_WINNER_BPS, LEADERBOARD_BPS_DENOM).quot;
 
     // Credit rank 1 bonus + TOP_LEADERBOARD achievement if first time
     if (state.board_0.score > 0)
@@ -2296,7 +2292,7 @@ BEGIN_EPOCH
     state.board_6.score = 0;  state.board_7.score = 0;  state.board_8.score = 0;
     state.board_9.score = 0;
 }
-_
 
-END_TICK {}
-_
+END_TICK() {}
+
+};

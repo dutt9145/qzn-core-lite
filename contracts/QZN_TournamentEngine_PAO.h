@@ -123,8 +123,14 @@ struct TournamentRecord
 //  CONTRACT STATE
 // ============================================================
 
-struct QZNTOUR
+struct QZNTOUR2
 {
+};
+
+struct QZNTOUR : public ContractBase
+{
+    struct StateData
+    {
     TournamentRecord tournaments[QZN_TOURNAMENT_MAX_TOURNAMENTS];
     uint32           tournamentCount;
     id               protocolAdmin;
@@ -137,7 +143,10 @@ struct QZNTOUR
     // Indices 0-31: winners bracket scratch
     // Indices 32-63: losers bracket scratch (double elim only)
     id               scratchIds[QZN_TOURNAMENT_MAX_PLAYERS];
-};
+    };
+
+public:
+
 
 // ============================================================
 //  INPUT / OUTPUT STRUCTS
@@ -283,7 +292,6 @@ PUBLIC_PROCEDURE(InitializeTournamentEngine)
     state.initialized            = 1;
     output.success               = 1;
 }
-_
 
 PUBLIC_PROCEDURE(CreateTournament)
 /*
@@ -355,7 +363,6 @@ PUBLIC_PROCEDURE(CreateTournament)
     output.tournamentId = tIdx;
     output.success      = 1;
 }
-_
 
 PUBLIC_PROCEDURE(RegisterPlayer)
 /*
@@ -427,7 +434,6 @@ PUBLIC_PROCEDURE(RegisterPlayer)
     output.slotIndex = slot;
     output.success   = 1;
 }
-_
 
 PUBLIC_PROCEDURE(StartTournament)
 /*
@@ -575,7 +581,6 @@ PUBLIC_PROCEDURE(StartTournament)
     output.matchCount = state.tournaments[tIdx].matchCount;
     output.success    = 1;
 }
-_
 
 PUBLIC_PROCEDURE(SubmitMatchResult)
 /*
@@ -759,8 +764,8 @@ PUBLIC_PROCEDURE(SubmitMatchResult)
                 state.tournaments[tIdx].tstate = TSTATE_FINALIZING;
 
                 uint64 total  = state.tournaments[tIdx].prizePool;
-                uint64 first  = div(total * QZN_TOURNAMENT_PRIZE_FIRST,  (uint64)100);
-                uint64 second = div(total * QZN_TOURNAMENT_PRIZE_SECOND, (uint64)100);
+                uint64 first  = div(total * QZN_TOURNAMENT_PRIZE_FIRST,  (uint64).quot100);
+                uint64 second = div(total * QZN_TOURNAMENT_PRIZE_SECOND, (uint64).quot100);
                 uint64 third  = total - first - second; // remainder prevents rounding dust
 
                 if (state.tournaments[tIdx].first  != NULL_ID) qpi.transfer(state.tournaments[tIdx].first,  first);
@@ -872,8 +877,8 @@ PUBLIC_PROCEDURE(SubmitMatchResult)
                 state.tournaments[tIdx].tstate = TSTATE_FINALIZING;
 
                 uint64 total  = state.tournaments[tIdx].prizePool;
-                uint64 first  = div(total * QZN_TOURNAMENT_PRIZE_FIRST,  (uint64)100);
-                uint64 second = div(total * QZN_TOURNAMENT_PRIZE_SECOND, (uint64)100);
+                uint64 first  = div(total * QZN_TOURNAMENT_PRIZE_FIRST,  (uint64).quot100);
+                uint64 second = div(total * QZN_TOURNAMENT_PRIZE_SECOND, (uint64).quot100);
                 uint64 third  = total - first - second;
 
                 if (state.tournaments[tIdx].first  != NULL_ID) qpi.transfer(state.tournaments[tIdx].first,  first);
@@ -950,8 +955,8 @@ PUBLIC_PROCEDURE(SubmitMatchResult)
                 state.tournaments[tIdx].tstate = TSTATE_FINALIZING;
 
                 uint64 total  = state.tournaments[tIdx].prizePool;
-                uint64 first  = div(total * QZN_TOURNAMENT_PRIZE_FIRST,  (uint64)100);
-                uint64 second = div(total * QZN_TOURNAMENT_PRIZE_SECOND, (uint64)100);
+                uint64 first  = div(total * QZN_TOURNAMENT_PRIZE_FIRST,  (uint64).quot100);
+                uint64 second = div(total * QZN_TOURNAMENT_PRIZE_SECOND, (uint64).quot100);
                 uint64 third  = total - first - second;
 
                 if (state.tournaments[tIdx].first  != NULL_ID) qpi.transfer(state.tournaments[tIdx].first,  first);
@@ -971,7 +976,6 @@ PUBLIC_PROCEDURE(SubmitMatchResult)
         }
     }
 }
-_
 
 PUBLIC_PROCEDURE(CancelTournament)
 /*
@@ -1013,7 +1017,6 @@ PUBLIC_PROCEDURE(CancelTournament)
     state.tournaments[tIdx].prizePool = 0;
     output.success = 1;
 }
-_
 
 // ============================================================
 //  PUBLIC FUNCTIONS (read-only)
@@ -1048,7 +1051,6 @@ PUBLIC_FUNCTION(GetTournament)
     output.third             = state.tournaments[tIdx].third;
     output.prizesDistributed = state.tournaments[tIdx].prizesDistributed;
 }
-_
 
 PUBLIC_FUNCTION(GetMatch)
 /*
@@ -1066,7 +1068,6 @@ PUBLIC_FUNCTION(GetMatch)
     output.match = state.tournaments[input.tournamentId].matches[input.matchIndex];
     output.found = 1;
 }
-_
 
 PUBLIC_FUNCTION(GetPlayerRecord)
 /*
@@ -1096,13 +1097,12 @@ PUBLIC_FUNCTION(GetPlayerRecord)
 
     output.found = 0;
 }
-_
 
 // ============================================================
 //  REGISTRATION
 // ============================================================
 
-REGISTER_USER_FUNCTIONS_AND_PROCEDURES
+REGISTER_USER_FUNCTIONS_AND_PROCEDURES()
 {
     REGISTER_USER_PROCEDURE(InitializeTournamentEngine, 1);
     REGISTER_USER_PROCEDURE(CreateTournament,           2);
@@ -1114,13 +1114,12 @@ REGISTER_USER_FUNCTIONS_AND_PROCEDURES
     REGISTER_USER_FUNCTION(GetMatch,                    8);
     REGISTER_USER_FUNCTION(GetPlayerRecord,             9);
 }
-_
 
 // ============================================================
 //  SYSTEM HOOKS
 // ============================================================
 
-BEGIN_EPOCH
+BEGIN_EPOCH()
 /*
  * Fires at the start of every epoch (~weekly).
  * Reserved for future: epoch-based tournament scheduling,
@@ -1128,12 +1127,12 @@ BEGIN_EPOCH
  */
 {
 }
-_
 
-END_TICK
+END_TICK()
 /*
  * Reserved for future: tick-based match expiry enforcement.
  */
 {
 }
-_
+
+};

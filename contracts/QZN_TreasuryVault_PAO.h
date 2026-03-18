@@ -110,8 +110,14 @@ struct SpendProposal
 //  CONTRACT STATE
 // ============================================================
 
-struct QZNTREASVAULT
+struct QZNTREASVAULT2
 {
+};
+
+struct QZNTREASVAULT : public ContractBase
+{
+    struct StateData
+    {
     // ---- Balances ----
     sint64  treasuryBalance;          // QZN in vault
     sint64  totalReceived;            // Lifetime QZN received
@@ -158,7 +164,10 @@ struct QZNTREASVAULT
     id      adminAddress;
     bit     initialized;
     bit     paused;                   // Emergency pause flag
-};
+    };
+
+public:
+
 
 // ============================================================
 //  INPUT / OUTPUT STRUCTS
@@ -286,7 +295,6 @@ PRIVATE_FUNCTION(_isSigner)
 {
     // Embedded inline at call sites
 }
-_
 
 PRIVATE_PROCEDURE(_executeSpend)
 /*
@@ -296,7 +304,6 @@ PRIVATE_PROCEDURE(_executeSpend)
 {
     // Embedded inline in SignProposal and ExecuteProposal
 }
-_
 
 // ============================================================
 //  CONTRACT PROCEDURES
@@ -337,7 +344,6 @@ PUBLIC_PROCEDURE(InitializeVault)
     output.success              = 1;
     output.vaultBalance         = state.treasuryBalance;
 }
-_
 
 PUBLIC_PROCEDURE(ProposeSpend)
 /*
@@ -441,7 +447,6 @@ PUBLIC_PROCEDURE(ProposeSpend)
     output.timelockRequired  = needsTimelock;
     output.executeAfterEpoch = execAfter;
 }
-_
 
 PUBLIC_PROCEDURE(SignProposal)
 /*
@@ -580,7 +585,6 @@ PUBLIC_PROCEDURE(SignProposal)
     }
     // Slots 1-7 follow identical pattern
 }
-_
 
 PUBLIC_PROCEDURE(ExecuteProposal)
 /*
@@ -666,7 +670,6 @@ PUBLIC_PROCEDURE(ExecuteProposal)
     }
     // Slots 1-7 identical
 }
-_
 
 PUBLIC_PROCEDURE(CancelProposal)
 /*
@@ -693,7 +696,6 @@ PUBLIC_PROCEDURE(CancelProposal)
 
     output.cancelled = 0;
 }
-_
 
 // ============================================================
 //  READ-ONLY QUERY FUNCTIONS
@@ -709,7 +711,6 @@ PUBLIC_FUNCTION(GetVaultState)
     output.paused                 = state.paused;
     output.nextProposalId         = state.nextProposalId;
 }
-_
 
 PUBLIC_FUNCTION(GetProposal)
 {
@@ -726,13 +727,12 @@ PUBLIC_FUNCTION(GetProposal)
     }
     // Slots 1-7 identical
 }
-_
 
 // ============================================================
 //  REGISTRATION
 // ============================================================
 
-REGISTER_USER_FUNCTIONS_AND_PROCEDURES
+REGISTER_USER_FUNCTIONS_AND_PROCEDURES()
 {
     REGISTER_USER_PROCEDURE(InitializeVault,   1);
     REGISTER_USER_PROCEDURE(ProposeSpend,      2);
@@ -742,13 +742,12 @@ REGISTER_USER_FUNCTIONS_AND_PROCEDURES
     REGISTER_USER_FUNCTION(GetVaultState,      6);
     REGISTER_USER_FUNCTION(GetProposal,        7);
 }
-_
 
 // ============================================================
 //  SYSTEM HOOKS
 // ============================================================
 
-BEGIN_EPOCH
+BEGIN_EPOCH()
 /*
  * Fires every epoch (~weekly). Responsibilities:
  *
@@ -831,7 +830,7 @@ BEGIN_EPOCH
         }
     }
 }
-_
 
-END_TICK {}
-_
+END_TICK() {}
+
+};

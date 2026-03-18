@@ -124,8 +124,14 @@ struct MatchRecord
 //  CONTRACT STATE
 // ============================================================
 
-struct QZNCABINET
+struct QZNCABINET2
 {
+};
+
+struct QZNCABINET : public ContractBase
+{
+    struct StateData
+    {
     MatchRecord matches_0;
     MatchRecord matches_1;
     MatchRecord matches_2;
@@ -167,7 +173,10 @@ struct QZNCABINET
 
     // ---- Solo Reward Reserve ----
     sint64 rewardReserveBalance;
-};
+    };
+
+public:
+
 
 // ============================================================
 //  INPUT / OUTPUT STRUCTS — SettleMatch cross-contract
@@ -308,7 +317,6 @@ PUBLIC_PROCEDURE(InitializeCabinet)
 
     output.success = 1;
 }
-_
 
 PUBLIC_PROCEDURE(RegisterMatch)
 /*
@@ -785,7 +793,6 @@ PUBLIC_PROCEDURE(RegisterMatch)
     output.totalStake = totalStake;
     output.success    = 1;
 }
-_
 
 PUBLIC_PROCEDURE(SubmitResult)
 /*
@@ -996,7 +1003,6 @@ PUBLIC_PROCEDURE(SubmitResult)
     output.success            = 1;
     output.confirmWindowTicks = CONFIRM_WINDOW_TICKS;
 }
-_
 
 PUBLIC_PROCEDURE(ConfirmResult)
 /*
@@ -1059,7 +1065,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         {
             sint64 soloReward;
             soloReward = SOLO_BASE_REWARD_QU;
-            soloReward = soloReward + div(state.matches_0.winnerScore, SOLO_SCORE_MULTIPLIER);
+            soloReward = soloReward + div(state.matches_0.winnerScore, SOLO_SCORE_MULTIPLIER).quot;
             if (soloReward > SOLO_MAX_REWARD_QU) { soloReward = SOLO_MAX_REWARD_QU; }
             if (state.rewardReserveBalance >= soloReward)
             {
@@ -1092,8 +1098,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             0
         );
 
-        state.matches_0.prizeAwarded = div(state.matches_0.totalStake * 4500LL, 10000LL);
-        state.matches_0.burnedAmount = div(state.matches_0.totalStake * 1000LL, 10000LL);
+        state.matches_0.prizeAwarded = div(state.matches_0.totalStake * 4500LL, 10000LL).quot;
+        state.matches_0.burnedAmount = div(state.matches_0.totalStake * 1000LL, 10000LL).quot;
         state.matches_0.state        = STATE_SETTLED;
         state.matches_0.settledTick  = qpi.tick();
 
@@ -1151,7 +1157,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         {
             sint64 soloReward;
             soloReward = SOLO_BASE_REWARD_QU;
-            soloReward = soloReward + div(state.matches_1.winnerScore, SOLO_SCORE_MULTIPLIER);
+            soloReward = soloReward + div(state.matches_1.winnerScore, SOLO_SCORE_MULTIPLIER).quot;
             if (soloReward > SOLO_MAX_REWARD_QU) { soloReward = SOLO_MAX_REWARD_QU; }
             if (state.rewardReserveBalance >= soloReward)
             {
@@ -1184,8 +1190,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             0
         );
 
-        state.matches_1.prizeAwarded = div(state.matches_1.totalStake * 4500LL, 10000LL);
-        state.matches_1.burnedAmount = div(state.matches_1.totalStake * 1000LL, 10000LL);
+        state.matches_1.prizeAwarded = div(state.matches_1.totalStake * 4500LL, 10000LL).quot;
+        state.matches_1.burnedAmount = div(state.matches_1.totalStake * 1000LL, 10000LL).quot;
         state.matches_1.state        = STATE_SETTLED;
         state.matches_1.settledTick  = qpi.tick();
 
@@ -1243,7 +1249,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         {
             sint64 soloReward;
             soloReward = SOLO_BASE_REWARD_QU;
-            soloReward = soloReward + div(state.matches_2.winnerScore, SOLO_SCORE_MULTIPLIER);
+            soloReward = soloReward + div(state.matches_2.winnerScore, SOLO_SCORE_MULTIPLIER).quot;
             if (soloReward > SOLO_MAX_REWARD_QU) { soloReward = SOLO_MAX_REWARD_QU; }
             if (state.rewardReserveBalance >= soloReward)
             {
@@ -1276,8 +1282,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             0
         );
 
-        state.matches_2.prizeAwarded = div(state.matches_2.totalStake * 4500LL, 10000LL);
-        state.matches_2.burnedAmount = div(state.matches_2.totalStake * 1000LL, 10000LL);
+        state.matches_2.prizeAwarded = div(state.matches_2.totalStake * 4500LL, 10000LL).quot;
+        state.matches_2.burnedAmount = div(state.matches_2.totalStake * 1000LL, 10000LL).quot;
         state.matches_2.state        = STATE_SETTLED;
         state.matches_2.settledTick  = qpi.tick();
 
@@ -1335,7 +1341,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         {
             sint64 soloReward;
             soloReward = SOLO_BASE_REWARD_QU;
-            soloReward = soloReward + div(state.matches_3.winnerScore, SOLO_SCORE_MULTIPLIER);
+            soloReward = soloReward + div(state.matches_3.winnerScore, SOLO_SCORE_MULTIPLIER).quot;
             if (soloReward > SOLO_MAX_REWARD_QU) { soloReward = SOLO_MAX_REWARD_QU; }
             if (state.rewardReserveBalance >= soloReward)
             {
@@ -1368,8 +1374,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             0
         );
 
-        state.matches_3.prizeAwarded = div(state.matches_3.totalStake * 4500LL, 10000LL);
-        state.matches_3.burnedAmount = div(state.matches_3.totalStake * 1000LL, 10000LL);
+        state.matches_3.prizeAwarded = div(state.matches_3.totalStake * 4500LL, 10000LL).quot;
+        state.matches_3.burnedAmount = div(state.matches_3.totalStake * 1000LL, 10000LL).quot;
         state.matches_3.state        = STATE_SETTLED;
         state.matches_3.settledTick  = qpi.tick();
 
@@ -1427,7 +1433,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         {
             sint64 soloReward;
             soloReward = SOLO_BASE_REWARD_QU;
-            soloReward = soloReward + div(state.matches_4.winnerScore, SOLO_SCORE_MULTIPLIER);
+            soloReward = soloReward + div(state.matches_4.winnerScore, SOLO_SCORE_MULTIPLIER).quot;
             if (soloReward > SOLO_MAX_REWARD_QU) { soloReward = SOLO_MAX_REWARD_QU; }
             if (state.rewardReserveBalance >= soloReward)
             {
@@ -1460,8 +1466,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             0
         );
 
-        state.matches_4.prizeAwarded = div(state.matches_4.totalStake * 4500LL, 10000LL);
-        state.matches_4.burnedAmount = div(state.matches_4.totalStake * 1000LL, 10000LL);
+        state.matches_4.prizeAwarded = div(state.matches_4.totalStake * 4500LL, 10000LL).quot;
+        state.matches_4.burnedAmount = div(state.matches_4.totalStake * 1000LL, 10000LL).quot;
         state.matches_4.state        = STATE_SETTLED;
         state.matches_4.settledTick  = qpi.tick();
 
@@ -1519,7 +1525,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         {
             sint64 soloReward;
             soloReward = SOLO_BASE_REWARD_QU;
-            soloReward = soloReward + div(state.matches_5.winnerScore, SOLO_SCORE_MULTIPLIER);
+            soloReward = soloReward + div(state.matches_5.winnerScore, SOLO_SCORE_MULTIPLIER).quot;
             if (soloReward > SOLO_MAX_REWARD_QU) { soloReward = SOLO_MAX_REWARD_QU; }
             if (state.rewardReserveBalance >= soloReward)
             {
@@ -1552,8 +1558,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             0
         );
 
-        state.matches_5.prizeAwarded = div(state.matches_5.totalStake * 4500LL, 10000LL);
-        state.matches_5.burnedAmount = div(state.matches_5.totalStake * 1000LL, 10000LL);
+        state.matches_5.prizeAwarded = div(state.matches_5.totalStake * 4500LL, 10000LL).quot;
+        state.matches_5.burnedAmount = div(state.matches_5.totalStake * 1000LL, 10000LL).quot;
         state.matches_5.state        = STATE_SETTLED;
         state.matches_5.settledTick  = qpi.tick();
 
@@ -1611,7 +1617,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         {
             sint64 soloReward;
             soloReward = SOLO_BASE_REWARD_QU;
-            soloReward = soloReward + div(state.matches_6.winnerScore, SOLO_SCORE_MULTIPLIER);
+            soloReward = soloReward + div(state.matches_6.winnerScore, SOLO_SCORE_MULTIPLIER).quot;
             if (soloReward > SOLO_MAX_REWARD_QU) { soloReward = SOLO_MAX_REWARD_QU; }
             if (state.rewardReserveBalance >= soloReward)
             {
@@ -1644,8 +1650,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             0
         );
 
-        state.matches_6.prizeAwarded = div(state.matches_6.totalStake * 4500LL, 10000LL);
-        state.matches_6.burnedAmount = div(state.matches_6.totalStake * 1000LL, 10000LL);
+        state.matches_6.prizeAwarded = div(state.matches_6.totalStake * 4500LL, 10000LL).quot;
+        state.matches_6.burnedAmount = div(state.matches_6.totalStake * 1000LL, 10000LL).quot;
         state.matches_6.state        = STATE_SETTLED;
         state.matches_6.settledTick  = qpi.tick();
 
@@ -1703,7 +1709,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         {
             sint64 soloReward;
             soloReward = SOLO_BASE_REWARD_QU;
-            soloReward = soloReward + div(state.matches_7.winnerScore, SOLO_SCORE_MULTIPLIER);
+            soloReward = soloReward + div(state.matches_7.winnerScore, SOLO_SCORE_MULTIPLIER).quot;
             if (soloReward > SOLO_MAX_REWARD_QU) { soloReward = SOLO_MAX_REWARD_QU; }
             if (state.rewardReserveBalance >= soloReward)
             {
@@ -1736,8 +1742,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             0
         );
 
-        state.matches_7.prizeAwarded = div(state.matches_7.totalStake * 4500LL, 10000LL);
-        state.matches_7.burnedAmount = div(state.matches_7.totalStake * 1000LL, 10000LL);
+        state.matches_7.prizeAwarded = div(state.matches_7.totalStake * 4500LL, 10000LL).quot;
+        state.matches_7.burnedAmount = div(state.matches_7.totalStake * 1000LL, 10000LL).quot;
         state.matches_7.state        = STATE_SETTLED;
         state.matches_7.settledTick  = qpi.tick();
 
@@ -1795,7 +1801,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         {
             sint64 soloReward;
             soloReward = SOLO_BASE_REWARD_QU;
-            soloReward = soloReward + div(state.matches_8.winnerScore, SOLO_SCORE_MULTIPLIER);
+            soloReward = soloReward + div(state.matches_8.winnerScore, SOLO_SCORE_MULTIPLIER).quot;
             if (soloReward > SOLO_MAX_REWARD_QU) { soloReward = SOLO_MAX_REWARD_QU; }
             if (state.rewardReserveBalance >= soloReward)
             {
@@ -1828,8 +1834,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             0
         );
 
-        state.matches_8.prizeAwarded = div(state.matches_8.totalStake * 4500LL, 10000LL);
-        state.matches_8.burnedAmount = div(state.matches_8.totalStake * 1000LL, 10000LL);
+        state.matches_8.prizeAwarded = div(state.matches_8.totalStake * 4500LL, 10000LL).quot;
+        state.matches_8.burnedAmount = div(state.matches_8.totalStake * 1000LL, 10000LL).quot;
         state.matches_8.state        = STATE_SETTLED;
         state.matches_8.settledTick  = qpi.tick();
 
@@ -1887,7 +1893,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         {
             sint64 soloReward;
             soloReward = SOLO_BASE_REWARD_QU;
-            soloReward = soloReward + div(state.matches_9.winnerScore, SOLO_SCORE_MULTIPLIER);
+            soloReward = soloReward + div(state.matches_9.winnerScore, SOLO_SCORE_MULTIPLIER).quot;
             if (soloReward > SOLO_MAX_REWARD_QU) { soloReward = SOLO_MAX_REWARD_QU; }
             if (state.rewardReserveBalance >= soloReward)
             {
@@ -1920,8 +1926,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             0
         );
 
-        state.matches_9.prizeAwarded = div(state.matches_9.totalStake * 4500LL, 10000LL);
-        state.matches_9.burnedAmount = div(state.matches_9.totalStake * 1000LL, 10000LL);
+        state.matches_9.prizeAwarded = div(state.matches_9.totalStake * 4500LL, 10000LL).quot;
+        state.matches_9.burnedAmount = div(state.matches_9.totalStake * 1000LL, 10000LL).quot;
         state.matches_9.state        = STATE_SETTLED;
         state.matches_9.settledTick  = qpi.tick();
 
@@ -1979,7 +1985,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         {
             sint64 soloReward;
             soloReward = SOLO_BASE_REWARD_QU;
-            soloReward = soloReward + div(state.matches_10.winnerScore, SOLO_SCORE_MULTIPLIER);
+            soloReward = soloReward + div(state.matches_10.winnerScore, SOLO_SCORE_MULTIPLIER).quot;
             if (soloReward > SOLO_MAX_REWARD_QU) { soloReward = SOLO_MAX_REWARD_QU; }
             if (state.rewardReserveBalance >= soloReward)
             {
@@ -2012,8 +2018,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             0
         );
 
-        state.matches_10.prizeAwarded = div(state.matches_10.totalStake * 4500LL, 10000LL);
-        state.matches_10.burnedAmount = div(state.matches_10.totalStake * 1000LL, 10000LL);
+        state.matches_10.prizeAwarded = div(state.matches_10.totalStake * 4500LL, 10000LL).quot;
+        state.matches_10.burnedAmount = div(state.matches_10.totalStake * 1000LL, 10000LL).quot;
         state.matches_10.state        = STATE_SETTLED;
         state.matches_10.settledTick  = qpi.tick();
 
@@ -2071,7 +2077,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         {
             sint64 soloReward;
             soloReward = SOLO_BASE_REWARD_QU;
-            soloReward = soloReward + div(state.matches_11.winnerScore, SOLO_SCORE_MULTIPLIER);
+            soloReward = soloReward + div(state.matches_11.winnerScore, SOLO_SCORE_MULTIPLIER).quot;
             if (soloReward > SOLO_MAX_REWARD_QU) { soloReward = SOLO_MAX_REWARD_QU; }
             if (state.rewardReserveBalance >= soloReward)
             {
@@ -2104,8 +2110,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             0
         );
 
-        state.matches_11.prizeAwarded = div(state.matches_11.totalStake * 4500LL, 10000LL);
-        state.matches_11.burnedAmount = div(state.matches_11.totalStake * 1000LL, 10000LL);
+        state.matches_11.prizeAwarded = div(state.matches_11.totalStake * 4500LL, 10000LL).quot;
+        state.matches_11.burnedAmount = div(state.matches_11.totalStake * 1000LL, 10000LL).quot;
         state.matches_11.state        = STATE_SETTLED;
         state.matches_11.settledTick  = qpi.tick();
 
@@ -2163,7 +2169,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         {
             sint64 soloReward;
             soloReward = SOLO_BASE_REWARD_QU;
-            soloReward = soloReward + div(state.matches_12.winnerScore, SOLO_SCORE_MULTIPLIER);
+            soloReward = soloReward + div(state.matches_12.winnerScore, SOLO_SCORE_MULTIPLIER).quot;
             if (soloReward > SOLO_MAX_REWARD_QU) { soloReward = SOLO_MAX_REWARD_QU; }
             if (state.rewardReserveBalance >= soloReward)
             {
@@ -2196,8 +2202,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             0
         );
 
-        state.matches_12.prizeAwarded = div(state.matches_12.totalStake * 4500LL, 10000LL);
-        state.matches_12.burnedAmount = div(state.matches_12.totalStake * 1000LL, 10000LL);
+        state.matches_12.prizeAwarded = div(state.matches_12.totalStake * 4500LL, 10000LL).quot;
+        state.matches_12.burnedAmount = div(state.matches_12.totalStake * 1000LL, 10000LL).quot;
         state.matches_12.state        = STATE_SETTLED;
         state.matches_12.settledTick  = qpi.tick();
 
@@ -2255,7 +2261,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         {
             sint64 soloReward;
             soloReward = SOLO_BASE_REWARD_QU;
-            soloReward = soloReward + div(state.matches_13.winnerScore, SOLO_SCORE_MULTIPLIER);
+            soloReward = soloReward + div(state.matches_13.winnerScore, SOLO_SCORE_MULTIPLIER).quot;
             if (soloReward > SOLO_MAX_REWARD_QU) { soloReward = SOLO_MAX_REWARD_QU; }
             if (state.rewardReserveBalance >= soloReward)
             {
@@ -2288,8 +2294,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             0
         );
 
-        state.matches_13.prizeAwarded = div(state.matches_13.totalStake * 4500LL, 10000LL);
-        state.matches_13.burnedAmount = div(state.matches_13.totalStake * 1000LL, 10000LL);
+        state.matches_13.prizeAwarded = div(state.matches_13.totalStake * 4500LL, 10000LL).quot;
+        state.matches_13.burnedAmount = div(state.matches_13.totalStake * 1000LL, 10000LL).quot;
         state.matches_13.state        = STATE_SETTLED;
         state.matches_13.settledTick  = qpi.tick();
 
@@ -2347,7 +2353,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         {
             sint64 soloReward;
             soloReward = SOLO_BASE_REWARD_QU;
-            soloReward = soloReward + div(state.matches_14.winnerScore, SOLO_SCORE_MULTIPLIER);
+            soloReward = soloReward + div(state.matches_14.winnerScore, SOLO_SCORE_MULTIPLIER).quot;
             if (soloReward > SOLO_MAX_REWARD_QU) { soloReward = SOLO_MAX_REWARD_QU; }
             if (state.rewardReserveBalance >= soloReward)
             {
@@ -2380,8 +2386,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             0
         );
 
-        state.matches_14.prizeAwarded = div(state.matches_14.totalStake * 4500LL, 10000LL);
-        state.matches_14.burnedAmount = div(state.matches_14.totalStake * 1000LL, 10000LL);
+        state.matches_14.prizeAwarded = div(state.matches_14.totalStake * 4500LL, 10000LL).quot;
+        state.matches_14.burnedAmount = div(state.matches_14.totalStake * 1000LL, 10000LL).quot;
         state.matches_14.state        = STATE_SETTLED;
         state.matches_14.settledTick  = qpi.tick();
 
@@ -2439,7 +2445,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         {
             sint64 soloReward;
             soloReward = SOLO_BASE_REWARD_QU;
-            soloReward = soloReward + div(state.matches_15.winnerScore, SOLO_SCORE_MULTIPLIER);
+            soloReward = soloReward + div(state.matches_15.winnerScore, SOLO_SCORE_MULTIPLIER).quot;
             if (soloReward > SOLO_MAX_REWARD_QU) { soloReward = SOLO_MAX_REWARD_QU; }
             if (state.rewardReserveBalance >= soloReward)
             {
@@ -2472,8 +2478,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             0
         );
 
-        state.matches_15.prizeAwarded = div(state.matches_15.totalStake * 4500LL, 10000LL);
-        state.matches_15.burnedAmount = div(state.matches_15.totalStake * 1000LL, 10000LL);
+        state.matches_15.prizeAwarded = div(state.matches_15.totalStake * 4500LL, 10000LL).quot;
+        state.matches_15.burnedAmount = div(state.matches_15.totalStake * 1000LL, 10000LL).quot;
         state.matches_15.state        = STATE_SETTLED;
         state.matches_15.settledTick  = qpi.tick();
 
@@ -2489,7 +2495,6 @@ PUBLIC_PROCEDURE(ConfirmResult)
     }
 
 }
-_
 
 PUBLIC_PROCEDURE(DisputeResult)
 /*
@@ -2697,7 +2702,6 @@ PUBLIC_PROCEDURE(DisputeResult)
     }
 
 }
-_
 
 PUBLIC_FUNCTION(GetMatch)
 {
@@ -2961,7 +2965,6 @@ PUBLIC_FUNCTION(GetMatch)
     }
 
 }
-_
 
 PUBLIC_FUNCTION(GetCabinetStats)
 {
@@ -2973,13 +2976,12 @@ PUBLIC_FUNCTION(GetCabinetStats)
     output.paqmanCount        = state.paqmanMatchCount;
     output.tanqCount          = state.tanqMatchCount;
 }
-_
 
 // ============================================================
 //  REGISTRATION
 // ============================================================
 
-REGISTER_USER_FUNCTIONS_AND_PROCEDURES
+REGISTER_USER_FUNCTIONS_AND_PROCEDURES()
 {
     REGISTER_USER_PROCEDURE(InitializeCabinet,  1);
     REGISTER_USER_PROCEDURE(RegisterMatch,      2);
@@ -2989,18 +2991,16 @@ REGISTER_USER_FUNCTIONS_AND_PROCEDURES
     REGISTER_USER_FUNCTION(GetMatch,            6);
     REGISTER_USER_FUNCTION(GetCabinetStats,     7);
 }
-_
 
 // ============================================================
 //  SYSTEM HOOKS
 // ============================================================
 
-BEGIN_EPOCH
+BEGIN_EPOCH()
 {
 }
-_
 
-END_TICK
+END_TICK()
 /*
  * Expire matches that missed the confirmation window.
  * Fires every tick — checks all 16 slots.
@@ -3235,3 +3235,4 @@ END_TICK
         }
     }
 }
+};

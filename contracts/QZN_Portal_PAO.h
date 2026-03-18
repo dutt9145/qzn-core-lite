@@ -131,8 +131,14 @@ struct GameListing
 //  CONTRACT STATE
 // ============================================================
 
-struct QZNPORTAL
+struct QZNPORTAL2
 {
+};
+
+struct QZNPORTAL : public ContractBase
+{
+    struct StateData
+    {
     // ---- PORTAL Nodes (100 slots) ----
     // Abbreviated to 16 for clarity — full deployment expands to 100
     PortalNode nodes_1;
@@ -218,7 +224,9 @@ struct QZNPORTAL
     id      adminAddress;
     bit     initialized;
     bit     portalActive;
-}
+    };
+
+public:
 
 // ============================================================
 //  INPUT / OUTPUT STRUCTS
@@ -423,7 +431,6 @@ PUBLIC_PROCEDURE(InitializePortal)
 
     output.success = 1;
 }
-_
 
 PUBLIC_PROCEDURE(IssueNode)
 /*
@@ -499,7 +506,6 @@ PUBLIC_PROCEDURE(IssueNode)
     output.shareBPS = shareBPS;
     output.success  = 1;
 }
-_
 
 PUBLIC_PROCEDURE(TransferNode)
 /*
@@ -543,12 +549,11 @@ PUBLIC_PROCEDURE(TransferNode)
     }
     // Nodes 3-16 identical
 }
-_
 
 PUBLIC_PROCEDURE(ClaimNodeRevenue)
 /*
  * Node owner claims accumulated revenue.
- * Revenue is accrued each epoch via BEGIN_EPOCH distribution.
+ * Revenue is accrued each epoch via BEGIN_EPOCH() distribution.
  * Unclaimed after REVENUE_CLAIM_EPOCHS is returned to treasury.
  */
 {
@@ -596,7 +601,6 @@ PUBLIC_PROCEDURE(ClaimNodeRevenue)
     }
     // Nodes 3-16 identical
 }
-_
 
 PUBLIC_PROCEDURE(RegisterGame)
 /*
@@ -651,7 +655,6 @@ PUBLIC_PROCEDURE(RegisterGame)
     output.success       = 1;
     output.stakeRequired = BUILDER_STAKE_REQUIRED;
 }
-_
 
 PUBLIC_PROCEDURE(ApproveGame)
 /*
@@ -682,7 +685,6 @@ PUBLIC_PROCEDURE(ApproveGame)
     }
     // Slots 2-15 identical
 }
-_
 
 PUBLIC_PROCEDURE(UpdateGameState)
 /*
@@ -713,7 +715,6 @@ PUBLIC_PROCEDURE(UpdateGameState)
     }
     // Slots 1-15 identical
 }
-_
 
 PUBLIC_PROCEDURE(StakeForAccess)
 /*
@@ -810,7 +811,6 @@ PUBLIC_PROCEDURE(StakeForAccess)
     output.totalStaked        = newStake;
     output.nextTierThreshold  = nextThreshold;
 }
-_
 
 PUBLIC_PROCEDURE(ReceiveProtocolFees)
 /*
@@ -826,7 +826,7 @@ PUBLIC_PROCEDURE(ReceiveProtocolFees)
     }
 
     sint64 nodePool;
-    nodePool = div(input.amount * NODE_REVENUE_POOL_BPS, REVENUE_BPS_DENOM);
+    nodePool = div(input.amount * NODE_REVENUE_POOL_BPS, REVENUE_BPS_DENOM).quot;
 
     state.currentEpochRevenuePool = state.currentEpochRevenuePool + nodePool;
     state.pendingDistribution     = state.pendingDistribution + nodePool;
@@ -834,7 +834,6 @@ PUBLIC_PROCEDURE(ReceiveProtocolFees)
     output.addedToPool  = nodePool;
     output.currentPool  = state.currentEpochRevenuePool;
 }
-_
 
 // ============================================================
 //  READ-ONLY QUERY FUNCTIONS
@@ -865,7 +864,6 @@ PUBLIC_FUNCTION(GetPlayerAccess)
     output.canPlayPremium  = (tier >= ACCESS_STAKER)   ? 1 : 0;
     output.hasEarlyAccess  = (tier == ACCESS_CHAMPION) ? 1 : 0;
 }
-_
 
 PUBLIC_FUNCTION(GetNode)
 {
@@ -889,7 +887,6 @@ PUBLIC_FUNCTION(GetNode)
     }
     // Nodes 3-16 identical
 }
-_
 
 PUBLIC_FUNCTION(GetGame)
 {
@@ -905,7 +902,6 @@ PUBLIC_FUNCTION(GetGame)
     }
     // Slots 1-15 identical
 }
-_
 
 PUBLIC_FUNCTION(GetPortalStats)
 {
@@ -915,13 +911,12 @@ PUBLIC_FUNCTION(GetPortalStats)
     output.totalRevenueDistributed = state.totalRevenueDistributed;
     output.currentEpochPool        = state.currentEpochRevenuePool;
 }
-_
 
 // ============================================================
 //  REGISTRATION
 // ============================================================
 
-REGISTER_USER_FUNCTIONS_AND_PROCEDURES
+REGISTER_USER_FUNCTIONS_AND_PROCEDURES()
 {
     REGISTER_USER_PROCEDURE(InitializePortal,     1);
     REGISTER_USER_PROCEDURE(IssueNode,            2);
@@ -937,13 +932,12 @@ REGISTER_USER_FUNCTIONS_AND_PROCEDURES
     REGISTER_USER_FUNCTION(GetGame,               12);
     REGISTER_USER_FUNCTION(GetPortalStats,        13);
 }
-_
 
 // ============================================================
 //  SYSTEM HOOKS
 // ============================================================
 
-BEGIN_EPOCH
+BEGIN_EPOCH()
 /*
  * Every epoch:
  * 1. Distribute accumulated revenue pool across all active nodes
@@ -986,13 +980,13 @@ BEGIN_EPOCH
     if (state.nodes_1.state == NODE_ACTIVE)
     {
         sint64 nodeShare;
-        nodeShare = div(pool * state.nodes_1.shareBPS, totalWeightedShares);
+        nodeShare = div(pool * state.nodes_1.shareBPS, totalWeightedShares).quot;
         state.nodes_1.pendingRevenue = state.nodes_1.pendingRevenue + nodeShare;
     }
     if (state.nodes_2.state == NODE_ACTIVE)
     {
         sint64 nodeShare;
-        nodeShare = div(pool * state.nodes_2.shareBPS, totalWeightedShares);
+        nodeShare = div(pool * state.nodes_2.shareBPS, totalWeightedShares).quot;
         state.nodes_2.pendingRevenue = state.nodes_2.pendingRevenue + nodeShare;
     }
     // Nodes 3-16 identical distribution pattern
@@ -1019,7 +1013,7 @@ BEGIN_EPOCH
     state.pendingDistribution       = 0;
     state.currentEpochRevenuePool   = 0;
 }
-_
 
-END_TICK {}
-_
+END_TICK() {}
+
+};
