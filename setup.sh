@@ -101,7 +101,7 @@ qzn_block = """
 
 """
 
-marker = '#include "contracts/VottunBridge.h"'
+marker = '#endif\n\n// new contracts should be added above this line'
 if "QZN_TOKEN_CONTRACT_INDEX" not in content:
     content = content.replace(marker, qzn_block + marker)
     with open(contract_def, "w") as f:
