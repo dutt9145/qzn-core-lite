@@ -401,387 +401,387 @@ PUBLIC_PROCEDURE(RegisterMatch)
     // ---- WRITE TO SLOT ----
     if (slot == 0)
     {
-        state.mut().matches_0.gameId           = input.gameId;
-        state.mut().matches_0.matchType        = input.matchType;
-        state.mut().matches_0.state            = STATE_PENDING;
-        state.mut().matches_0.playerCount      = playerCount;
-        state.mut().matches_0.players_0        = qpi.invocator();
-        state.mut().matches_0.players_1        = input.player1;
-        state.mut().matches_0.players_2        = input.player2;
-        state.mut().matches_0.players_3        = input.player3;
-        state.mut().matches_0.stakes_0         = input.stakePerPlayer;
-        state.mut().matches_0.stakes_1         = input.stakePerPlayer;
-        state.mut().matches_0.stakes_2         = input.stakePerPlayer;
-        state.mut().matches_0.stakes_3         = input.stakePerPlayer;
-        state.mut().matches_0.totalStake       = totalStake;
-        state.mut().matches_0.openedTick       = qpi.tick();
-        state.mut().matches_0.serverSigned     = 0;
+        state.mut().matches_0.gameId = input.gameId;
+        state.mut().matches_0.matchType = input.matchType;
+        state.mut().matches_0.state = STATE_PENDING;
+        state.mut().matches_0.playerCount = playerCount;
+        state.mut().matches_0.players_0 = qpi.invocator();
+        state.mut().matches_0.players_1 = input.player1;
+        state.mut().matches_0.players_2 = input.player2;
+        state.mut().matches_0.players_3 = input.player3;
+        state.mut().matches_0.stakes_0 = input.stakePerPlayer;
+        state.mut().matches_0.stakes_1 = input.stakePerPlayer;
+        state.mut().matches_0.stakes_2 = input.stakePerPlayer;
+        state.mut().matches_0.stakes_3 = input.stakePerPlayer;
+        state.mut().matches_0.totalStake = totalStake;
+        state.mut().matches_0.openedTick = qpi.tick();
+        state.mut().matches_0.serverSigned = 0;
         state.mut().matches_0.player0Confirmed = 0;
         state.mut().matches_0.player1Confirmed = 0;
         state.mut().matches_0.player2Confirmed = 0;
         state.mut().matches_0.player3Confirmed = 0;
-        state.mut().matches_0.prizeAwarded     = 0;
-        state.mut().matches_0.burnedAmount     = 0;
+        state.mut().matches_0.prizeAwarded = 0;
+        state.mut().matches_0.burnedAmount = 0;
     }
     else if (slot == 1)
     {
-        state.mut().matches_1.gameId           = input.gameId;
-        state.mut().matches_1.matchType        = input.matchType;
-        state.mut().matches_1.state            = STATE_PENDING;
-        state.mut().matches_1.playerCount      = playerCount;
-        state.mut().matches_1.players_0        = qpi.invocator();
-        state.mut().matches_1.players_1        = input.player1;
-        state.mut().matches_1.players_2        = input.player2;
-        state.mut().matches_1.players_3        = input.player3;
-        state.mut().matches_1.stakes_0         = input.stakePerPlayer;
-        state.mut().matches_1.stakes_1         = input.stakePerPlayer;
-        state.mut().matches_1.stakes_2         = input.stakePerPlayer;
-        state.mut().matches_1.stakes_3         = input.stakePerPlayer;
-        state.mut().matches_1.totalStake       = totalStake;
-        state.mut().matches_1.openedTick       = qpi.tick();
-        state.mut().matches_1.serverSigned     = 0;
+        state.mut().matches_1.gameId = input.gameId;
+        state.mut().matches_1.matchType = input.matchType;
+        state.mut().matches_1.state = STATE_PENDING;
+        state.mut().matches_1.playerCount = playerCount;
+        state.mut().matches_1.players_0 = qpi.invocator();
+        state.mut().matches_1.players_1 = input.player1;
+        state.mut().matches_1.players_2 = input.player2;
+        state.mut().matches_1.players_3 = input.player3;
+        state.mut().matches_1.stakes_0 = input.stakePerPlayer;
+        state.mut().matches_1.stakes_1 = input.stakePerPlayer;
+        state.mut().matches_1.stakes_2 = input.stakePerPlayer;
+        state.mut().matches_1.stakes_3 = input.stakePerPlayer;
+        state.mut().matches_1.totalStake = totalStake;
+        state.mut().matches_1.openedTick = qpi.tick();
+        state.mut().matches_1.serverSigned = 0;
         state.mut().matches_1.player0Confirmed = 0;
         state.mut().matches_1.player1Confirmed = 0;
         state.mut().matches_1.player2Confirmed = 0;
         state.mut().matches_1.player3Confirmed = 0;
-        state.mut().matches_1.prizeAwarded     = 0;
-        state.mut().matches_1.burnedAmount     = 0;
+        state.mut().matches_1.prizeAwarded = 0;
+        state.mut().matches_1.burnedAmount = 0;
     }
     else if (slot == 2)
     {
-        state.mut().matches_2.gameId           = input.gameId;
-        state.mut().matches_2.matchType        = input.matchType;
-        state.mut().matches_2.state            = STATE_PENDING;
-        state.mut().matches_2.playerCount      = playerCount;
-        state.mut().matches_2.players_0        = qpi.invocator();
-        state.mut().matches_2.players_1        = input.player1;
-        state.mut().matches_2.players_2        = input.player2;
-        state.mut().matches_2.players_3        = input.player3;
-        state.mut().matches_2.stakes_0         = input.stakePerPlayer;
-        state.mut().matches_2.stakes_1         = input.stakePerPlayer;
-        state.mut().matches_2.stakes_2         = input.stakePerPlayer;
-        state.mut().matches_2.stakes_3         = input.stakePerPlayer;
-        state.mut().matches_2.totalStake       = totalStake;
-        state.mut().matches_2.openedTick       = qpi.tick();
-        state.mut().matches_2.serverSigned     = 0;
+        state.mut().matches_2.gameId = input.gameId;
+        state.mut().matches_2.matchType = input.matchType;
+        state.mut().matches_2.state = STATE_PENDING;
+        state.mut().matches_2.playerCount = playerCount;
+        state.mut().matches_2.players_0 = qpi.invocator();
+        state.mut().matches_2.players_1 = input.player1;
+        state.mut().matches_2.players_2 = input.player2;
+        state.mut().matches_2.players_3 = input.player3;
+        state.mut().matches_2.stakes_0 = input.stakePerPlayer;
+        state.mut().matches_2.stakes_1 = input.stakePerPlayer;
+        state.mut().matches_2.stakes_2 = input.stakePerPlayer;
+        state.mut().matches_2.stakes_3 = input.stakePerPlayer;
+        state.mut().matches_2.totalStake = totalStake;
+        state.mut().matches_2.openedTick = qpi.tick();
+        state.mut().matches_2.serverSigned = 0;
         state.mut().matches_2.player0Confirmed = 0;
         state.mut().matches_2.player1Confirmed = 0;
         state.mut().matches_2.player2Confirmed = 0;
         state.mut().matches_2.player3Confirmed = 0;
-        state.mut().matches_2.prizeAwarded     = 0;
-        state.mut().matches_2.burnedAmount     = 0;
+        state.mut().matches_2.prizeAwarded = 0;
+        state.mut().matches_2.burnedAmount = 0;
     }
     else if (slot == 3)
     {
-        state.mut().matches_3.gameId           = input.gameId;
-        state.mut().matches_3.matchType        = input.matchType;
-        state.mut().matches_3.state            = STATE_PENDING;
-        state.mut().matches_3.playerCount      = playerCount;
-        state.mut().matches_3.players_0        = qpi.invocator();
-        state.mut().matches_3.players_1        = input.player1;
-        state.mut().matches_3.players_2        = input.player2;
-        state.mut().matches_3.players_3        = input.player3;
-        state.mut().matches_3.stakes_0         = input.stakePerPlayer;
-        state.mut().matches_3.stakes_1         = input.stakePerPlayer;
-        state.mut().matches_3.stakes_2         = input.stakePerPlayer;
-        state.mut().matches_3.stakes_3         = input.stakePerPlayer;
-        state.mut().matches_3.totalStake       = totalStake;
-        state.mut().matches_3.openedTick       = qpi.tick();
-        state.mut().matches_3.serverSigned     = 0;
+        state.mut().matches_3.gameId = input.gameId;
+        state.mut().matches_3.matchType = input.matchType;
+        state.mut().matches_3.state = STATE_PENDING;
+        state.mut().matches_3.playerCount = playerCount;
+        state.mut().matches_3.players_0 = qpi.invocator();
+        state.mut().matches_3.players_1 = input.player1;
+        state.mut().matches_3.players_2 = input.player2;
+        state.mut().matches_3.players_3 = input.player3;
+        state.mut().matches_3.stakes_0 = input.stakePerPlayer;
+        state.mut().matches_3.stakes_1 = input.stakePerPlayer;
+        state.mut().matches_3.stakes_2 = input.stakePerPlayer;
+        state.mut().matches_3.stakes_3 = input.stakePerPlayer;
+        state.mut().matches_3.totalStake = totalStake;
+        state.mut().matches_3.openedTick = qpi.tick();
+        state.mut().matches_3.serverSigned = 0;
         state.mut().matches_3.player0Confirmed = 0;
         state.mut().matches_3.player1Confirmed = 0;
         state.mut().matches_3.player2Confirmed = 0;
         state.mut().matches_3.player3Confirmed = 0;
-        state.mut().matches_3.prizeAwarded     = 0;
-        state.mut().matches_3.burnedAmount     = 0;
+        state.mut().matches_3.prizeAwarded = 0;
+        state.mut().matches_3.burnedAmount = 0;
     }
     else if (slot == 4)
     {
-        state.mut().matches_4.gameId           = input.gameId;
-        state.mut().matches_4.matchType        = input.matchType;
-        state.mut().matches_4.state            = STATE_PENDING;
-        state.mut().matches_4.playerCount      = playerCount;
-        state.mut().matches_4.players_0        = qpi.invocator();
-        state.mut().matches_4.players_1        = input.player1;
-        state.mut().matches_4.players_2        = input.player2;
-        state.mut().matches_4.players_3        = input.player3;
-        state.mut().matches_4.stakes_0         = input.stakePerPlayer;
-        state.mut().matches_4.stakes_1         = input.stakePerPlayer;
-        state.mut().matches_4.stakes_2         = input.stakePerPlayer;
-        state.mut().matches_4.stakes_3         = input.stakePerPlayer;
-        state.mut().matches_4.totalStake       = totalStake;
-        state.mut().matches_4.openedTick       = qpi.tick();
-        state.mut().matches_4.serverSigned     = 0;
+        state.mut().matches_4.gameId = input.gameId;
+        state.mut().matches_4.matchType = input.matchType;
+        state.mut().matches_4.state = STATE_PENDING;
+        state.mut().matches_4.playerCount = playerCount;
+        state.mut().matches_4.players_0 = qpi.invocator();
+        state.mut().matches_4.players_1 = input.player1;
+        state.mut().matches_4.players_2 = input.player2;
+        state.mut().matches_4.players_3 = input.player3;
+        state.mut().matches_4.stakes_0 = input.stakePerPlayer;
+        state.mut().matches_4.stakes_1 = input.stakePerPlayer;
+        state.mut().matches_4.stakes_2 = input.stakePerPlayer;
+        state.mut().matches_4.stakes_3 = input.stakePerPlayer;
+        state.mut().matches_4.totalStake = totalStake;
+        state.mut().matches_4.openedTick = qpi.tick();
+        state.mut().matches_4.serverSigned = 0;
         state.mut().matches_4.player0Confirmed = 0;
         state.mut().matches_4.player1Confirmed = 0;
         state.mut().matches_4.player2Confirmed = 0;
         state.mut().matches_4.player3Confirmed = 0;
-        state.mut().matches_4.prizeAwarded     = 0;
-        state.mut().matches_4.burnedAmount     = 0;
+        state.mut().matches_4.prizeAwarded = 0;
+        state.mut().matches_4.burnedAmount = 0;
     }
     else if (slot == 5)
     {
-        state.mut().matches_5.gameId           = input.gameId;
-        state.mut().matches_5.matchType        = input.matchType;
-        state.mut().matches_5.state            = STATE_PENDING;
-        state.mut().matches_5.playerCount      = playerCount;
-        state.mut().matches_5.players_0        = qpi.invocator();
-        state.mut().matches_5.players_1        = input.player1;
-        state.mut().matches_5.players_2        = input.player2;
-        state.mut().matches_5.players_3        = input.player3;
-        state.mut().matches_5.stakes_0         = input.stakePerPlayer;
-        state.mut().matches_5.stakes_1         = input.stakePerPlayer;
-        state.mut().matches_5.stakes_2         = input.stakePerPlayer;
-        state.mut().matches_5.stakes_3         = input.stakePerPlayer;
-        state.mut().matches_5.totalStake       = totalStake;
-        state.mut().matches_5.openedTick       = qpi.tick();
-        state.mut().matches_5.serverSigned     = 0;
+        state.mut().matches_5.gameId = input.gameId;
+        state.mut().matches_5.matchType = input.matchType;
+        state.mut().matches_5.state = STATE_PENDING;
+        state.mut().matches_5.playerCount = playerCount;
+        state.mut().matches_5.players_0 = qpi.invocator();
+        state.mut().matches_5.players_1 = input.player1;
+        state.mut().matches_5.players_2 = input.player2;
+        state.mut().matches_5.players_3 = input.player3;
+        state.mut().matches_5.stakes_0 = input.stakePerPlayer;
+        state.mut().matches_5.stakes_1 = input.stakePerPlayer;
+        state.mut().matches_5.stakes_2 = input.stakePerPlayer;
+        state.mut().matches_5.stakes_3 = input.stakePerPlayer;
+        state.mut().matches_5.totalStake = totalStake;
+        state.mut().matches_5.openedTick = qpi.tick();
+        state.mut().matches_5.serverSigned = 0;
         state.mut().matches_5.player0Confirmed = 0;
         state.mut().matches_5.player1Confirmed = 0;
         state.mut().matches_5.player2Confirmed = 0;
         state.mut().matches_5.player3Confirmed = 0;
-        state.mut().matches_5.prizeAwarded     = 0;
-        state.mut().matches_5.burnedAmount     = 0;
+        state.mut().matches_5.prizeAwarded = 0;
+        state.mut().matches_5.burnedAmount = 0;
     }
     else if (slot == 6)
     {
-        state.mut().matches_6.gameId           = input.gameId;
-        state.mut().matches_6.matchType        = input.matchType;
-        state.mut().matches_6.state            = STATE_PENDING;
-        state.mut().matches_6.playerCount      = playerCount;
-        state.mut().matches_6.players_0        = qpi.invocator();
-        state.mut().matches_6.players_1        = input.player1;
-        state.mut().matches_6.players_2        = input.player2;
-        state.mut().matches_6.players_3        = input.player3;
-        state.mut().matches_6.stakes_0         = input.stakePerPlayer;
-        state.mut().matches_6.stakes_1         = input.stakePerPlayer;
-        state.mut().matches_6.stakes_2         = input.stakePerPlayer;
-        state.mut().matches_6.stakes_3         = input.stakePerPlayer;
-        state.mut().matches_6.totalStake       = totalStake;
-        state.mut().matches_6.openedTick       = qpi.tick();
-        state.mut().matches_6.serverSigned     = 0;
+        state.mut().matches_6.gameId = input.gameId;
+        state.mut().matches_6.matchType = input.matchType;
+        state.mut().matches_6.state = STATE_PENDING;
+        state.mut().matches_6.playerCount = playerCount;
+        state.mut().matches_6.players_0 = qpi.invocator();
+        state.mut().matches_6.players_1 = input.player1;
+        state.mut().matches_6.players_2 = input.player2;
+        state.mut().matches_6.players_3 = input.player3;
+        state.mut().matches_6.stakes_0 = input.stakePerPlayer;
+        state.mut().matches_6.stakes_1 = input.stakePerPlayer;
+        state.mut().matches_6.stakes_2 = input.stakePerPlayer;
+        state.mut().matches_6.stakes_3 = input.stakePerPlayer;
+        state.mut().matches_6.totalStake = totalStake;
+        state.mut().matches_6.openedTick = qpi.tick();
+        state.mut().matches_6.serverSigned = 0;
         state.mut().matches_6.player0Confirmed = 0;
         state.mut().matches_6.player1Confirmed = 0;
         state.mut().matches_6.player2Confirmed = 0;
         state.mut().matches_6.player3Confirmed = 0;
-        state.mut().matches_6.prizeAwarded     = 0;
-        state.mut().matches_6.burnedAmount     = 0;
+        state.mut().matches_6.prizeAwarded = 0;
+        state.mut().matches_6.burnedAmount = 0;
     }
     else if (slot == 7)
     {
-        state.mut().matches_7.gameId           = input.gameId;
-        state.mut().matches_7.matchType        = input.matchType;
-        state.mut().matches_7.state            = STATE_PENDING;
-        state.mut().matches_7.playerCount      = playerCount;
-        state.mut().matches_7.players_0        = qpi.invocator();
-        state.mut().matches_7.players_1        = input.player1;
-        state.mut().matches_7.players_2        = input.player2;
-        state.mut().matches_7.players_3        = input.player3;
-        state.mut().matches_7.stakes_0         = input.stakePerPlayer;
-        state.mut().matches_7.stakes_1         = input.stakePerPlayer;
-        state.mut().matches_7.stakes_2         = input.stakePerPlayer;
-        state.mut().matches_7.stakes_3         = input.stakePerPlayer;
-        state.mut().matches_7.totalStake       = totalStake;
-        state.mut().matches_7.openedTick       = qpi.tick();
-        state.mut().matches_7.serverSigned     = 0;
+        state.mut().matches_7.gameId = input.gameId;
+        state.mut().matches_7.matchType = input.matchType;
+        state.mut().matches_7.state = STATE_PENDING;
+        state.mut().matches_7.playerCount = playerCount;
+        state.mut().matches_7.players_0 = qpi.invocator();
+        state.mut().matches_7.players_1 = input.player1;
+        state.mut().matches_7.players_2 = input.player2;
+        state.mut().matches_7.players_3 = input.player3;
+        state.mut().matches_7.stakes_0 = input.stakePerPlayer;
+        state.mut().matches_7.stakes_1 = input.stakePerPlayer;
+        state.mut().matches_7.stakes_2 = input.stakePerPlayer;
+        state.mut().matches_7.stakes_3 = input.stakePerPlayer;
+        state.mut().matches_7.totalStake = totalStake;
+        state.mut().matches_7.openedTick = qpi.tick();
+        state.mut().matches_7.serverSigned = 0;
         state.mut().matches_7.player0Confirmed = 0;
         state.mut().matches_7.player1Confirmed = 0;
         state.mut().matches_7.player2Confirmed = 0;
         state.mut().matches_7.player3Confirmed = 0;
-        state.mut().matches_7.prizeAwarded     = 0;
-        state.mut().matches_7.burnedAmount     = 0;
+        state.mut().matches_7.prizeAwarded = 0;
+        state.mut().matches_7.burnedAmount = 0;
     }
     else if (slot == 8)
     {
-        state.mut().matches_8.gameId           = input.gameId;
-        state.mut().matches_8.matchType        = input.matchType;
-        state.mut().matches_8.state            = STATE_PENDING;
-        state.mut().matches_8.playerCount      = playerCount;
-        state.mut().matches_8.players_0        = qpi.invocator();
-        state.mut().matches_8.players_1        = input.player1;
-        state.mut().matches_8.players_2        = input.player2;
-        state.mut().matches_8.players_3        = input.player3;
-        state.mut().matches_8.stakes_0         = input.stakePerPlayer;
-        state.mut().matches_8.stakes_1         = input.stakePerPlayer;
-        state.mut().matches_8.stakes_2         = input.stakePerPlayer;
-        state.mut().matches_8.stakes_3         = input.stakePerPlayer;
-        state.mut().matches_8.totalStake       = totalStake;
-        state.mut().matches_8.openedTick       = qpi.tick();
-        state.mut().matches_8.serverSigned     = 0;
+        state.mut().matches_8.gameId = input.gameId;
+        state.mut().matches_8.matchType = input.matchType;
+        state.mut().matches_8.state = STATE_PENDING;
+        state.mut().matches_8.playerCount = playerCount;
+        state.mut().matches_8.players_0 = qpi.invocator();
+        state.mut().matches_8.players_1 = input.player1;
+        state.mut().matches_8.players_2 = input.player2;
+        state.mut().matches_8.players_3 = input.player3;
+        state.mut().matches_8.stakes_0 = input.stakePerPlayer;
+        state.mut().matches_8.stakes_1 = input.stakePerPlayer;
+        state.mut().matches_8.stakes_2 = input.stakePerPlayer;
+        state.mut().matches_8.stakes_3 = input.stakePerPlayer;
+        state.mut().matches_8.totalStake = totalStake;
+        state.mut().matches_8.openedTick = qpi.tick();
+        state.mut().matches_8.serverSigned = 0;
         state.mut().matches_8.player0Confirmed = 0;
         state.mut().matches_8.player1Confirmed = 0;
         state.mut().matches_8.player2Confirmed = 0;
         state.mut().matches_8.player3Confirmed = 0;
-        state.mut().matches_8.prizeAwarded     = 0;
-        state.mut().matches_8.burnedAmount     = 0;
+        state.mut().matches_8.prizeAwarded = 0;
+        state.mut().matches_8.burnedAmount = 0;
     }
     else if (slot == 9)
     {
-        state.mut().matches_9.gameId           = input.gameId;
-        state.mut().matches_9.matchType        = input.matchType;
-        state.mut().matches_9.state            = STATE_PENDING;
-        state.mut().matches_9.playerCount      = playerCount;
-        state.mut().matches_9.players_0        = qpi.invocator();
-        state.mut().matches_9.players_1        = input.player1;
-        state.mut().matches_9.players_2        = input.player2;
-        state.mut().matches_9.players_3        = input.player3;
-        state.mut().matches_9.stakes_0         = input.stakePerPlayer;
-        state.mut().matches_9.stakes_1         = input.stakePerPlayer;
-        state.mut().matches_9.stakes_2         = input.stakePerPlayer;
-        state.mut().matches_9.stakes_3         = input.stakePerPlayer;
-        state.mut().matches_9.totalStake       = totalStake;
-        state.mut().matches_9.openedTick       = qpi.tick();
-        state.mut().matches_9.serverSigned     = 0;
+        state.mut().matches_9.gameId = input.gameId;
+        state.mut().matches_9.matchType = input.matchType;
+        state.mut().matches_9.state = STATE_PENDING;
+        state.mut().matches_9.playerCount = playerCount;
+        state.mut().matches_9.players_0 = qpi.invocator();
+        state.mut().matches_9.players_1 = input.player1;
+        state.mut().matches_9.players_2 = input.player2;
+        state.mut().matches_9.players_3 = input.player3;
+        state.mut().matches_9.stakes_0 = input.stakePerPlayer;
+        state.mut().matches_9.stakes_1 = input.stakePerPlayer;
+        state.mut().matches_9.stakes_2 = input.stakePerPlayer;
+        state.mut().matches_9.stakes_3 = input.stakePerPlayer;
+        state.mut().matches_9.totalStake = totalStake;
+        state.mut().matches_9.openedTick = qpi.tick();
+        state.mut().matches_9.serverSigned = 0;
         state.mut().matches_9.player0Confirmed = 0;
         state.mut().matches_9.player1Confirmed = 0;
         state.mut().matches_9.player2Confirmed = 0;
         state.mut().matches_9.player3Confirmed = 0;
-        state.mut().matches_9.prizeAwarded     = 0;
-        state.mut().matches_9.burnedAmount     = 0;
+        state.mut().matches_9.prizeAwarded = 0;
+        state.mut().matches_9.burnedAmount = 0;
     }
     else if (slot == 10)
     {
-        state.mut().matches_10.gameId           = input.gameId;
-        state.mut().matches_10.matchType        = input.matchType;
-        state.mut().matches_10.state            = STATE_PENDING;
-        state.mut().matches_10.playerCount      = playerCount;
-        state.mut().matches_10.players_0        = qpi.invocator();
-        state.mut().matches_10.players_1        = input.player1;
-        state.mut().matches_10.players_2        = input.player2;
-        state.mut().matches_10.players_3        = input.player3;
-        state.mut().matches_10.stakes_0         = input.stakePerPlayer;
-        state.mut().matches_10.stakes_1         = input.stakePerPlayer;
-        state.mut().matches_10.stakes_2         = input.stakePerPlayer;
-        state.mut().matches_10.stakes_3         = input.stakePerPlayer;
-        state.mut().matches_10.totalStake       = totalStake;
-        state.mut().matches_10.openedTick       = qpi.tick();
-        state.mut().matches_10.serverSigned     = 0;
+        state.mut().matches_10.gameId = input.gameId;
+        state.mut().matches_10.matchType = input.matchType;
+        state.mut().matches_10.state = STATE_PENDING;
+        state.mut().matches_10.playerCount = playerCount;
+        state.mut().matches_10.players_0 = qpi.invocator();
+        state.mut().matches_10.players_1 = input.player1;
+        state.mut().matches_10.players_2 = input.player2;
+        state.mut().matches_10.players_3 = input.player3;
+        state.mut().matches_10.stakes_0 = input.stakePerPlayer;
+        state.mut().matches_10.stakes_1 = input.stakePerPlayer;
+        state.mut().matches_10.stakes_2 = input.stakePerPlayer;
+        state.mut().matches_10.stakes_3 = input.stakePerPlayer;
+        state.mut().matches_10.totalStake = totalStake;
+        state.mut().matches_10.openedTick = qpi.tick();
+        state.mut().matches_10.serverSigned = 0;
         state.mut().matches_10.player0Confirmed = 0;
         state.mut().matches_10.player1Confirmed = 0;
         state.mut().matches_10.player2Confirmed = 0;
         state.mut().matches_10.player3Confirmed = 0;
-        state.mut().matches_10.prizeAwarded     = 0;
-        state.mut().matches_10.burnedAmount     = 0;
+        state.mut().matches_10.prizeAwarded = 0;
+        state.mut().matches_10.burnedAmount = 0;
     }
     else if (slot == 11)
     {
-        state.mut().matches_11.gameId           = input.gameId;
-        state.mut().matches_11.matchType        = input.matchType;
-        state.mut().matches_11.state            = STATE_PENDING;
-        state.mut().matches_11.playerCount      = playerCount;
-        state.mut().matches_11.players_0        = qpi.invocator();
-        state.mut().matches_11.players_1        = input.player1;
-        state.mut().matches_11.players_2        = input.player2;
-        state.mut().matches_11.players_3        = input.player3;
-        state.mut().matches_11.stakes_0         = input.stakePerPlayer;
-        state.mut().matches_11.stakes_1         = input.stakePerPlayer;
-        state.mut().matches_11.stakes_2         = input.stakePerPlayer;
-        state.mut().matches_11.stakes_3         = input.stakePerPlayer;
-        state.mut().matches_11.totalStake       = totalStake;
-        state.mut().matches_11.openedTick       = qpi.tick();
-        state.mut().matches_11.serverSigned     = 0;
+        state.mut().matches_11.gameId = input.gameId;
+        state.mut().matches_11.matchType = input.matchType;
+        state.mut().matches_11.state = STATE_PENDING;
+        state.mut().matches_11.playerCount = playerCount;
+        state.mut().matches_11.players_0 = qpi.invocator();
+        state.mut().matches_11.players_1 = input.player1;
+        state.mut().matches_11.players_2 = input.player2;
+        state.mut().matches_11.players_3 = input.player3;
+        state.mut().matches_11.stakes_0 = input.stakePerPlayer;
+        state.mut().matches_11.stakes_1 = input.stakePerPlayer;
+        state.mut().matches_11.stakes_2 = input.stakePerPlayer;
+        state.mut().matches_11.stakes_3 = input.stakePerPlayer;
+        state.mut().matches_11.totalStake = totalStake;
+        state.mut().matches_11.openedTick = qpi.tick();
+        state.mut().matches_11.serverSigned = 0;
         state.mut().matches_11.player0Confirmed = 0;
         state.mut().matches_11.player1Confirmed = 0;
         state.mut().matches_11.player2Confirmed = 0;
         state.mut().matches_11.player3Confirmed = 0;
-        state.mut().matches_11.prizeAwarded     = 0;
-        state.mut().matches_11.burnedAmount     = 0;
+        state.mut().matches_11.prizeAwarded = 0;
+        state.mut().matches_11.burnedAmount = 0;
     }
     else if (slot == 12)
     {
-        state.mut().matches_12.gameId           = input.gameId;
-        state.mut().matches_12.matchType        = input.matchType;
-        state.mut().matches_12.state            = STATE_PENDING;
-        state.mut().matches_12.playerCount      = playerCount;
-        state.mut().matches_12.players_0        = qpi.invocator();
-        state.mut().matches_12.players_1        = input.player1;
-        state.mut().matches_12.players_2        = input.player2;
-        state.mut().matches_12.players_3        = input.player3;
-        state.mut().matches_12.stakes_0         = input.stakePerPlayer;
-        state.mut().matches_12.stakes_1         = input.stakePerPlayer;
-        state.mut().matches_12.stakes_2         = input.stakePerPlayer;
-        state.mut().matches_12.stakes_3         = input.stakePerPlayer;
-        state.mut().matches_12.totalStake       = totalStake;
-        state.mut().matches_12.openedTick       = qpi.tick();
-        state.mut().matches_12.serverSigned     = 0;
+        state.mut().matches_12.gameId = input.gameId;
+        state.mut().matches_12.matchType = input.matchType;
+        state.mut().matches_12.state = STATE_PENDING;
+        state.mut().matches_12.playerCount = playerCount;
+        state.mut().matches_12.players_0 = qpi.invocator();
+        state.mut().matches_12.players_1 = input.player1;
+        state.mut().matches_12.players_2 = input.player2;
+        state.mut().matches_12.players_3 = input.player3;
+        state.mut().matches_12.stakes_0 = input.stakePerPlayer;
+        state.mut().matches_12.stakes_1 = input.stakePerPlayer;
+        state.mut().matches_12.stakes_2 = input.stakePerPlayer;
+        state.mut().matches_12.stakes_3 = input.stakePerPlayer;
+        state.mut().matches_12.totalStake = totalStake;
+        state.mut().matches_12.openedTick = qpi.tick();
+        state.mut().matches_12.serverSigned = 0;
         state.mut().matches_12.player0Confirmed = 0;
         state.mut().matches_12.player1Confirmed = 0;
         state.mut().matches_12.player2Confirmed = 0;
         state.mut().matches_12.player3Confirmed = 0;
-        state.mut().matches_12.prizeAwarded     = 0;
-        state.mut().matches_12.burnedAmount     = 0;
+        state.mut().matches_12.prizeAwarded = 0;
+        state.mut().matches_12.burnedAmount = 0;
     }
     else if (slot == 13)
     {
-        state.mut().matches_13.gameId           = input.gameId;
-        state.mut().matches_13.matchType        = input.matchType;
-        state.mut().matches_13.state            = STATE_PENDING;
-        state.mut().matches_13.playerCount      = playerCount;
-        state.mut().matches_13.players_0        = qpi.invocator();
-        state.mut().matches_13.players_1        = input.player1;
-        state.mut().matches_13.players_2        = input.player2;
-        state.mut().matches_13.players_3        = input.player3;
-        state.mut().matches_13.stakes_0         = input.stakePerPlayer;
-        state.mut().matches_13.stakes_1         = input.stakePerPlayer;
-        state.mut().matches_13.stakes_2         = input.stakePerPlayer;
-        state.mut().matches_13.stakes_3         = input.stakePerPlayer;
-        state.mut().matches_13.totalStake       = totalStake;
-        state.mut().matches_13.openedTick       = qpi.tick();
-        state.mut().matches_13.serverSigned     = 0;
+        state.mut().matches_13.gameId = input.gameId;
+        state.mut().matches_13.matchType = input.matchType;
+        state.mut().matches_13.state = STATE_PENDING;
+        state.mut().matches_13.playerCount = playerCount;
+        state.mut().matches_13.players_0 = qpi.invocator();
+        state.mut().matches_13.players_1 = input.player1;
+        state.mut().matches_13.players_2 = input.player2;
+        state.mut().matches_13.players_3 = input.player3;
+        state.mut().matches_13.stakes_0 = input.stakePerPlayer;
+        state.mut().matches_13.stakes_1 = input.stakePerPlayer;
+        state.mut().matches_13.stakes_2 = input.stakePerPlayer;
+        state.mut().matches_13.stakes_3 = input.stakePerPlayer;
+        state.mut().matches_13.totalStake = totalStake;
+        state.mut().matches_13.openedTick = qpi.tick();
+        state.mut().matches_13.serverSigned = 0;
         state.mut().matches_13.player0Confirmed = 0;
         state.mut().matches_13.player1Confirmed = 0;
         state.mut().matches_13.player2Confirmed = 0;
         state.mut().matches_13.player3Confirmed = 0;
-        state.mut().matches_13.prizeAwarded     = 0;
-        state.mut().matches_13.burnedAmount     = 0;
+        state.mut().matches_13.prizeAwarded = 0;
+        state.mut().matches_13.burnedAmount = 0;
     }
     else if (slot == 14)
     {
-        state.mut().matches_14.gameId           = input.gameId;
-        state.mut().matches_14.matchType        = input.matchType;
-        state.mut().matches_14.state            = STATE_PENDING;
-        state.mut().matches_14.playerCount      = playerCount;
-        state.mut().matches_14.players_0        = qpi.invocator();
-        state.mut().matches_14.players_1        = input.player1;
-        state.mut().matches_14.players_2        = input.player2;
-        state.mut().matches_14.players_3        = input.player3;
-        state.mut().matches_14.stakes_0         = input.stakePerPlayer;
-        state.mut().matches_14.stakes_1         = input.stakePerPlayer;
-        state.mut().matches_14.stakes_2         = input.stakePerPlayer;
-        state.mut().matches_14.stakes_3         = input.stakePerPlayer;
-        state.mut().matches_14.totalStake       = totalStake;
-        state.mut().matches_14.openedTick       = qpi.tick();
-        state.mut().matches_14.serverSigned     = 0;
+        state.mut().matches_14.gameId = input.gameId;
+        state.mut().matches_14.matchType = input.matchType;
+        state.mut().matches_14.state = STATE_PENDING;
+        state.mut().matches_14.playerCount = playerCount;
+        state.mut().matches_14.players_0 = qpi.invocator();
+        state.mut().matches_14.players_1 = input.player1;
+        state.mut().matches_14.players_2 = input.player2;
+        state.mut().matches_14.players_3 = input.player3;
+        state.mut().matches_14.stakes_0 = input.stakePerPlayer;
+        state.mut().matches_14.stakes_1 = input.stakePerPlayer;
+        state.mut().matches_14.stakes_2 = input.stakePerPlayer;
+        state.mut().matches_14.stakes_3 = input.stakePerPlayer;
+        state.mut().matches_14.totalStake = totalStake;
+        state.mut().matches_14.openedTick = qpi.tick();
+        state.mut().matches_14.serverSigned = 0;
         state.mut().matches_14.player0Confirmed = 0;
         state.mut().matches_14.player1Confirmed = 0;
         state.mut().matches_14.player2Confirmed = 0;
         state.mut().matches_14.player3Confirmed = 0;
-        state.mut().matches_14.prizeAwarded     = 0;
-        state.mut().matches_14.burnedAmount     = 0;
+        state.mut().matches_14.prizeAwarded = 0;
+        state.mut().matches_14.burnedAmount = 0;
     }
     else if (slot == 15)
     {
-        state.mut().matches_15.gameId           = input.gameId;
-        state.mut().matches_15.matchType        = input.matchType;
-        state.mut().matches_15.state            = STATE_PENDING;
-        state.mut().matches_15.playerCount      = playerCount;
-        state.mut().matches_15.players_0        = qpi.invocator();
-        state.mut().matches_15.players_1        = input.player1;
-        state.mut().matches_15.players_2        = input.player2;
-        state.mut().matches_15.players_3        = input.player3;
-        state.mut().matches_15.stakes_0         = input.stakePerPlayer;
-        state.mut().matches_15.stakes_1         = input.stakePerPlayer;
-        state.mut().matches_15.stakes_2         = input.stakePerPlayer;
-        state.mut().matches_15.stakes_3         = input.stakePerPlayer;
-        state.mut().matches_15.totalStake       = totalStake;
-        state.mut().matches_15.openedTick       = qpi.tick();
-        state.mut().matches_15.serverSigned     = 0;
+        state.mut().matches_15.gameId = input.gameId;
+        state.mut().matches_15.matchType = input.matchType;
+        state.mut().matches_15.state = STATE_PENDING;
+        state.mut().matches_15.playerCount = playerCount;
+        state.mut().matches_15.players_0 = qpi.invocator();
+        state.mut().matches_15.players_1 = input.player1;
+        state.mut().matches_15.players_2 = input.player2;
+        state.mut().matches_15.players_3 = input.player3;
+        state.mut().matches_15.stakes_0 = input.stakePerPlayer;
+        state.mut().matches_15.stakes_1 = input.stakePerPlayer;
+        state.mut().matches_15.stakes_2 = input.stakePerPlayer;
+        state.mut().matches_15.stakes_3 = input.stakePerPlayer;
+        state.mut().matches_15.totalStake = totalStake;
+        state.mut().matches_15.openedTick = qpi.tick();
+        state.mut().matches_15.serverSigned = 0;
         state.mut().matches_15.player0Confirmed = 0;
         state.mut().matches_15.player1Confirmed = 0;
         state.mut().matches_15.player2Confirmed = 0;
         state.mut().matches_15.player3Confirmed = 0;
-        state.mut().matches_15.prizeAwarded     = 0;
-        state.mut().matches_15.burnedAmount     = 0;
+        state.mut().matches_15.prizeAwarded = 0;
+        state.mut().matches_15.burnedAmount = 0;
     }
 
     state.mut().totalQUStaked = state.get().totalQUStaked + totalStake;
@@ -858,145 +858,145 @@ PUBLIC_PROCEDURE(SubmitResult)
     if (input.matchSlot == 0)
     {
         if (state.get().matches_0.state != STATE_PENDING) { output.success = 0; return; }
-        state.mut().matches_0.winnerAddress  = input.winner;
-        state.mut().matches_0.winnerScore    = input.winnerScore;
-        state.mut().matches_0.resultHash     = input.resultHash;
-        state.mut().matches_0.serverSigned   = 1;
+        state.mut().matches_0.winnerAddress = input.winner;
+        state.mut().matches_0.winnerScore = input.winnerScore;
+        state.mut().matches_0.resultHash = input.resultHash;
+        state.mut().matches_0.serverSigned = 1;
         state.mut().matches_0.serverSignTick = qpi.tick();
     }
     else if (input.matchSlot == 1)
     {
         if (state.get().matches_1.state != STATE_PENDING) { output.success = 0; return; }
-        state.mut().matches_1.winnerAddress  = input.winner;
-        state.mut().matches_1.winnerScore    = input.winnerScore;
-        state.mut().matches_1.resultHash     = input.resultHash;
-        state.mut().matches_1.serverSigned   = 1;
+        state.mut().matches_1.winnerAddress = input.winner;
+        state.mut().matches_1.winnerScore = input.winnerScore;
+        state.mut().matches_1.resultHash = input.resultHash;
+        state.mut().matches_1.serverSigned = 1;
         state.mut().matches_1.serverSignTick = qpi.tick();
     }
     else if (input.matchSlot == 2)
     {
         if (state.get().matches_2.state != STATE_PENDING) { output.success = 0; return; }
-        state.mut().matches_2.winnerAddress  = input.winner;
-        state.mut().matches_2.winnerScore    = input.winnerScore;
-        state.mut().matches_2.resultHash     = input.resultHash;
-        state.mut().matches_2.serverSigned   = 1;
+        state.mut().matches_2.winnerAddress = input.winner;
+        state.mut().matches_2.winnerScore = input.winnerScore;
+        state.mut().matches_2.resultHash = input.resultHash;
+        state.mut().matches_2.serverSigned = 1;
         state.mut().matches_2.serverSignTick = qpi.tick();
     }
     else if (input.matchSlot == 3)
     {
         if (state.get().matches_3.state != STATE_PENDING) { output.success = 0; return; }
-        state.mut().matches_3.winnerAddress  = input.winner;
-        state.mut().matches_3.winnerScore    = input.winnerScore;
-        state.mut().matches_3.resultHash     = input.resultHash;
-        state.mut().matches_3.serverSigned   = 1;
+        state.mut().matches_3.winnerAddress = input.winner;
+        state.mut().matches_3.winnerScore = input.winnerScore;
+        state.mut().matches_3.resultHash = input.resultHash;
+        state.mut().matches_3.serverSigned = 1;
         state.mut().matches_3.serverSignTick = qpi.tick();
     }
     else if (input.matchSlot == 4)
     {
         if (state.get().matches_4.state != STATE_PENDING) { output.success = 0; return; }
-        state.mut().matches_4.winnerAddress  = input.winner;
-        state.mut().matches_4.winnerScore    = input.winnerScore;
-        state.mut().matches_4.resultHash     = input.resultHash;
-        state.mut().matches_4.serverSigned   = 1;
+        state.mut().matches_4.winnerAddress = input.winner;
+        state.mut().matches_4.winnerScore = input.winnerScore;
+        state.mut().matches_4.resultHash = input.resultHash;
+        state.mut().matches_4.serverSigned = 1;
         state.mut().matches_4.serverSignTick = qpi.tick();
     }
     else if (input.matchSlot == 5)
     {
         if (state.get().matches_5.state != STATE_PENDING) { output.success = 0; return; }
-        state.mut().matches_5.winnerAddress  = input.winner;
-        state.mut().matches_5.winnerScore    = input.winnerScore;
-        state.mut().matches_5.resultHash     = input.resultHash;
-        state.mut().matches_5.serverSigned   = 1;
+        state.mut().matches_5.winnerAddress = input.winner;
+        state.mut().matches_5.winnerScore = input.winnerScore;
+        state.mut().matches_5.resultHash = input.resultHash;
+        state.mut().matches_5.serverSigned = 1;
         state.mut().matches_5.serverSignTick = qpi.tick();
     }
     else if (input.matchSlot == 6)
     {
         if (state.get().matches_6.state != STATE_PENDING) { output.success = 0; return; }
-        state.mut().matches_6.winnerAddress  = input.winner;
-        state.mut().matches_6.winnerScore    = input.winnerScore;
-        state.mut().matches_6.resultHash     = input.resultHash;
-        state.mut().matches_6.serverSigned   = 1;
+        state.mut().matches_6.winnerAddress = input.winner;
+        state.mut().matches_6.winnerScore = input.winnerScore;
+        state.mut().matches_6.resultHash = input.resultHash;
+        state.mut().matches_6.serverSigned = 1;
         state.mut().matches_6.serverSignTick = qpi.tick();
     }
     else if (input.matchSlot == 7)
     {
         if (state.get().matches_7.state != STATE_PENDING) { output.success = 0; return; }
-        state.mut().matches_7.winnerAddress  = input.winner;
-        state.mut().matches_7.winnerScore    = input.winnerScore;
-        state.mut().matches_7.resultHash     = input.resultHash;
-        state.mut().matches_7.serverSigned   = 1;
+        state.mut().matches_7.winnerAddress = input.winner;
+        state.mut().matches_7.winnerScore = input.winnerScore;
+        state.mut().matches_7.resultHash = input.resultHash;
+        state.mut().matches_7.serverSigned = 1;
         state.mut().matches_7.serverSignTick = qpi.tick();
     }
     else if (input.matchSlot == 8)
     {
         if (state.get().matches_8.state != STATE_PENDING) { output.success = 0; return; }
-        state.mut().matches_8.winnerAddress  = input.winner;
-        state.mut().matches_8.winnerScore    = input.winnerScore;
-        state.mut().matches_8.resultHash     = input.resultHash;
-        state.mut().matches_8.serverSigned   = 1;
+        state.mut().matches_8.winnerAddress = input.winner;
+        state.mut().matches_8.winnerScore = input.winnerScore;
+        state.mut().matches_8.resultHash = input.resultHash;
+        state.mut().matches_8.serverSigned = 1;
         state.mut().matches_8.serverSignTick = qpi.tick();
     }
     else if (input.matchSlot == 9)
     {
         if (state.get().matches_9.state != STATE_PENDING) { output.success = 0; return; }
-        state.mut().matches_9.winnerAddress  = input.winner;
-        state.mut().matches_9.winnerScore    = input.winnerScore;
-        state.mut().matches_9.resultHash     = input.resultHash;
-        state.mut().matches_9.serverSigned   = 1;
+        state.mut().matches_9.winnerAddress = input.winner;
+        state.mut().matches_9.winnerScore = input.winnerScore;
+        state.mut().matches_9.resultHash = input.resultHash;
+        state.mut().matches_9.serverSigned = 1;
         state.mut().matches_9.serverSignTick = qpi.tick();
     }
     else if (input.matchSlot == 10)
     {
         if (state.get().matches_10.state != STATE_PENDING) { output.success = 0; return; }
-        state.mut().matches_10.winnerAddress  = input.winner;
-        state.mut().matches_10.winnerScore    = input.winnerScore;
-        state.mut().matches_10.resultHash     = input.resultHash;
-        state.mut().matches_10.serverSigned   = 1;
+        state.mut().matches_10.winnerAddress = input.winner;
+        state.mut().matches_10.winnerScore = input.winnerScore;
+        state.mut().matches_10.resultHash = input.resultHash;
+        state.mut().matches_10.serverSigned = 1;
         state.mut().matches_10.serverSignTick = qpi.tick();
     }
     else if (input.matchSlot == 11)
     {
         if (state.get().matches_11.state != STATE_PENDING) { output.success = 0; return; }
-        state.mut().matches_11.winnerAddress  = input.winner;
-        state.mut().matches_11.winnerScore    = input.winnerScore;
-        state.mut().matches_11.resultHash     = input.resultHash;
-        state.mut().matches_11.serverSigned   = 1;
+        state.mut().matches_11.winnerAddress = input.winner;
+        state.mut().matches_11.winnerScore = input.winnerScore;
+        state.mut().matches_11.resultHash = input.resultHash;
+        state.mut().matches_11.serverSigned = 1;
         state.mut().matches_11.serverSignTick = qpi.tick();
     }
     else if (input.matchSlot == 12)
     {
         if (state.get().matches_12.state != STATE_PENDING) { output.success = 0; return; }
-        state.mut().matches_12.winnerAddress  = input.winner;
-        state.mut().matches_12.winnerScore    = input.winnerScore;
-        state.mut().matches_12.resultHash     = input.resultHash;
-        state.mut().matches_12.serverSigned   = 1;
+        state.mut().matches_12.winnerAddress = input.winner;
+        state.mut().matches_12.winnerScore = input.winnerScore;
+        state.mut().matches_12.resultHash = input.resultHash;
+        state.mut().matches_12.serverSigned = 1;
         state.mut().matches_12.serverSignTick = qpi.tick();
     }
     else if (input.matchSlot == 13)
     {
         if (state.get().matches_13.state != STATE_PENDING) { output.success = 0; return; }
-        state.mut().matches_13.winnerAddress  = input.winner;
-        state.mut().matches_13.winnerScore    = input.winnerScore;
-        state.mut().matches_13.resultHash     = input.resultHash;
-        state.mut().matches_13.serverSigned   = 1;
+        state.mut().matches_13.winnerAddress = input.winner;
+        state.mut().matches_13.winnerScore = input.winnerScore;
+        state.mut().matches_13.resultHash = input.resultHash;
+        state.mut().matches_13.serverSigned = 1;
         state.mut().matches_13.serverSignTick = qpi.tick();
     }
     else if (input.matchSlot == 14)
     {
         if (state.get().matches_14.state != STATE_PENDING) { output.success = 0; return; }
-        state.mut().matches_14.winnerAddress  = input.winner;
-        state.mut().matches_14.winnerScore    = input.winnerScore;
-        state.mut().matches_14.resultHash     = input.resultHash;
-        state.mut().matches_14.serverSigned   = 1;
+        state.mut().matches_14.winnerAddress = input.winner;
+        state.mut().matches_14.winnerScore = input.winnerScore;
+        state.mut().matches_14.resultHash = input.resultHash;
+        state.mut().matches_14.serverSigned = 1;
         state.mut().matches_14.serverSignTick = qpi.tick();
     }
     else if (input.matchSlot == 15)
     {
         if (state.get().matches_15.state != STATE_PENDING) { output.success = 0; return; }
-        state.mut().matches_15.winnerAddress  = input.winner;
-        state.mut().matches_15.winnerScore    = input.winnerScore;
-        state.mut().matches_15.resultHash     = input.resultHash;
-        state.mut().matches_15.serverSigned   = 1;
+        state.mut().matches_15.winnerAddress = input.winner;
+        state.mut().matches_15.winnerScore = input.winnerScore;
+        state.mut().matches_15.resultHash = input.resultHash;
+        state.mut().matches_15.serverSigned = 1;
         state.mut().matches_15.serverSignTick = qpi.tick();
     }
 
@@ -1074,8 +1074,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             }
             state.mut().matches_0.prizeAwarded = soloReward;
             state.mut().matches_0.burnedAmount = 0;
-            state.mut().matches_0.state        = STATE_SETTLED;
-            state.mut().matches_0.settledTick  = qpi.tick();
+            state.mut().matches_0.state = STATE_SETTLED;
+            state.mut().matches_0.settledTick = qpi.tick();
             state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
             state.mut().totalMatchesSolo = state.get().totalMatchesSolo + 1;
             state.mut().totalPrizesAwarded = state.get().totalPrizesAwarded + soloReward;
@@ -1101,8 +1101,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         state.mut().matches_0.prizeAwarded = div(state.get().matches_0.totalStake * 4500LL, 10000LL).quot;
         state.mut().matches_0.burnedAmount = div(state.get().matches_0.totalStake * 1000LL, 10000LL).quot;
-        state.mut().matches_0.state        = STATE_SETTLED;
-        state.mut().matches_0.settledTick  = qpi.tick();
+        state.mut().matches_0.state = STATE_SETTLED;
+        state.mut().matches_0.settledTick = qpi.tick();
 
         state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
         state.mut().totalQUBurned = state.get().totalQUBurned + state.get().matches_0.burnedAmount;
@@ -1167,8 +1167,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             }
             state.mut().matches_1.prizeAwarded = soloReward;
             state.mut().matches_1.burnedAmount = 0;
-            state.mut().matches_1.state        = STATE_SETTLED;
-            state.mut().matches_1.settledTick  = qpi.tick();
+            state.mut().matches_1.state = STATE_SETTLED;
+            state.mut().matches_1.settledTick = qpi.tick();
             state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
             state.mut().totalMatchesSolo = state.get().totalMatchesSolo + 1;
             state.mut().totalPrizesAwarded = state.get().totalPrizesAwarded + soloReward;
@@ -1194,8 +1194,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         state.mut().matches_1.prizeAwarded = div(state.get().matches_1.totalStake * 4500LL, 10000LL).quot;
         state.mut().matches_1.burnedAmount = div(state.get().matches_1.totalStake * 1000LL, 10000LL).quot;
-        state.mut().matches_1.state        = STATE_SETTLED;
-        state.mut().matches_1.settledTick  = qpi.tick();
+        state.mut().matches_1.state = STATE_SETTLED;
+        state.mut().matches_1.settledTick = qpi.tick();
 
         state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
         state.mut().totalQUBurned = state.get().totalQUBurned + state.get().matches_1.burnedAmount;
@@ -1260,8 +1260,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             }
             state.mut().matches_2.prizeAwarded = soloReward;
             state.mut().matches_2.burnedAmount = 0;
-            state.mut().matches_2.state        = STATE_SETTLED;
-            state.mut().matches_2.settledTick  = qpi.tick();
+            state.mut().matches_2.state = STATE_SETTLED;
+            state.mut().matches_2.settledTick = qpi.tick();
             state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
             state.mut().totalMatchesSolo = state.get().totalMatchesSolo + 1;
             state.mut().totalPrizesAwarded = state.get().totalPrizesAwarded + soloReward;
@@ -1287,8 +1287,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         state.mut().matches_2.prizeAwarded = div(state.get().matches_2.totalStake * 4500LL, 10000LL).quot;
         state.mut().matches_2.burnedAmount = div(state.get().matches_2.totalStake * 1000LL, 10000LL).quot;
-        state.mut().matches_2.state        = STATE_SETTLED;
-        state.mut().matches_2.settledTick  = qpi.tick();
+        state.mut().matches_2.state = STATE_SETTLED;
+        state.mut().matches_2.settledTick = qpi.tick();
 
         state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
         state.mut().totalQUBurned = state.get().totalQUBurned + state.get().matches_2.burnedAmount;
@@ -1353,8 +1353,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             }
             state.mut().matches_3.prizeAwarded = soloReward;
             state.mut().matches_3.burnedAmount = 0;
-            state.mut().matches_3.state        = STATE_SETTLED;
-            state.mut().matches_3.settledTick  = qpi.tick();
+            state.mut().matches_3.state = STATE_SETTLED;
+            state.mut().matches_3.settledTick = qpi.tick();
             state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
             state.mut().totalMatchesSolo = state.get().totalMatchesSolo + 1;
             state.mut().totalPrizesAwarded = state.get().totalPrizesAwarded + soloReward;
@@ -1380,8 +1380,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         state.mut().matches_3.prizeAwarded = div(state.get().matches_3.totalStake * 4500LL, 10000LL).quot;
         state.mut().matches_3.burnedAmount = div(state.get().matches_3.totalStake * 1000LL, 10000LL).quot;
-        state.mut().matches_3.state        = STATE_SETTLED;
-        state.mut().matches_3.settledTick  = qpi.tick();
+        state.mut().matches_3.state = STATE_SETTLED;
+        state.mut().matches_3.settledTick = qpi.tick();
 
         state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
         state.mut().totalQUBurned = state.get().totalQUBurned + state.get().matches_3.burnedAmount;
@@ -1446,8 +1446,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             }
             state.mut().matches_4.prizeAwarded = soloReward;
             state.mut().matches_4.burnedAmount = 0;
-            state.mut().matches_4.state        = STATE_SETTLED;
-            state.mut().matches_4.settledTick  = qpi.tick();
+            state.mut().matches_4.state = STATE_SETTLED;
+            state.mut().matches_4.settledTick = qpi.tick();
             state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
             state.mut().totalMatchesSolo = state.get().totalMatchesSolo + 1;
             state.mut().totalPrizesAwarded = state.get().totalPrizesAwarded + soloReward;
@@ -1473,8 +1473,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         state.mut().matches_4.prizeAwarded = div(state.get().matches_4.totalStake * 4500LL, 10000LL).quot;
         state.mut().matches_4.burnedAmount = div(state.get().matches_4.totalStake * 1000LL, 10000LL).quot;
-        state.mut().matches_4.state        = STATE_SETTLED;
-        state.mut().matches_4.settledTick  = qpi.tick();
+        state.mut().matches_4.state = STATE_SETTLED;
+        state.mut().matches_4.settledTick = qpi.tick();
 
         state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
         state.mut().totalQUBurned = state.get().totalQUBurned + state.get().matches_4.burnedAmount;
@@ -1539,8 +1539,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             }
             state.mut().matches_5.prizeAwarded = soloReward;
             state.mut().matches_5.burnedAmount = 0;
-            state.mut().matches_5.state        = STATE_SETTLED;
-            state.mut().matches_5.settledTick  = qpi.tick();
+            state.mut().matches_5.state = STATE_SETTLED;
+            state.mut().matches_5.settledTick = qpi.tick();
             state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
             state.mut().totalMatchesSolo = state.get().totalMatchesSolo + 1;
             state.mut().totalPrizesAwarded = state.get().totalPrizesAwarded + soloReward;
@@ -1566,8 +1566,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         state.mut().matches_5.prizeAwarded = div(state.get().matches_5.totalStake * 4500LL, 10000LL).quot;
         state.mut().matches_5.burnedAmount = div(state.get().matches_5.totalStake * 1000LL, 10000LL).quot;
-        state.mut().matches_5.state        = STATE_SETTLED;
-        state.mut().matches_5.settledTick  = qpi.tick();
+        state.mut().matches_5.state = STATE_SETTLED;
+        state.mut().matches_5.settledTick = qpi.tick();
 
         state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
         state.mut().totalQUBurned = state.get().totalQUBurned + state.get().matches_5.burnedAmount;
@@ -1632,8 +1632,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             }
             state.mut().matches_6.prizeAwarded = soloReward;
             state.mut().matches_6.burnedAmount = 0;
-            state.mut().matches_6.state        = STATE_SETTLED;
-            state.mut().matches_6.settledTick  = qpi.tick();
+            state.mut().matches_6.state = STATE_SETTLED;
+            state.mut().matches_6.settledTick = qpi.tick();
             state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
             state.mut().totalMatchesSolo = state.get().totalMatchesSolo + 1;
             state.mut().totalPrizesAwarded = state.get().totalPrizesAwarded + soloReward;
@@ -1659,8 +1659,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         state.mut().matches_6.prizeAwarded = div(state.get().matches_6.totalStake * 4500LL, 10000LL).quot;
         state.mut().matches_6.burnedAmount = div(state.get().matches_6.totalStake * 1000LL, 10000LL).quot;
-        state.mut().matches_6.state        = STATE_SETTLED;
-        state.mut().matches_6.settledTick  = qpi.tick();
+        state.mut().matches_6.state = STATE_SETTLED;
+        state.mut().matches_6.settledTick = qpi.tick();
 
         state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
         state.mut().totalQUBurned = state.get().totalQUBurned + state.get().matches_6.burnedAmount;
@@ -1725,8 +1725,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             }
             state.mut().matches_7.prizeAwarded = soloReward;
             state.mut().matches_7.burnedAmount = 0;
-            state.mut().matches_7.state        = STATE_SETTLED;
-            state.mut().matches_7.settledTick  = qpi.tick();
+            state.mut().matches_7.state = STATE_SETTLED;
+            state.mut().matches_7.settledTick = qpi.tick();
             state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
             state.mut().totalMatchesSolo = state.get().totalMatchesSolo + 1;
             state.mut().totalPrizesAwarded = state.get().totalPrizesAwarded + soloReward;
@@ -1752,8 +1752,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         state.mut().matches_7.prizeAwarded = div(state.get().matches_7.totalStake * 4500LL, 10000LL).quot;
         state.mut().matches_7.burnedAmount = div(state.get().matches_7.totalStake * 1000LL, 10000LL).quot;
-        state.mut().matches_7.state        = STATE_SETTLED;
-        state.mut().matches_7.settledTick  = qpi.tick();
+        state.mut().matches_7.state = STATE_SETTLED;
+        state.mut().matches_7.settledTick = qpi.tick();
 
         state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
         state.mut().totalQUBurned = state.get().totalQUBurned + state.get().matches_7.burnedAmount;
@@ -1818,8 +1818,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             }
             state.mut().matches_8.prizeAwarded = soloReward;
             state.mut().matches_8.burnedAmount = 0;
-            state.mut().matches_8.state        = STATE_SETTLED;
-            state.mut().matches_8.settledTick  = qpi.tick();
+            state.mut().matches_8.state = STATE_SETTLED;
+            state.mut().matches_8.settledTick = qpi.tick();
             state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
             state.mut().totalMatchesSolo = state.get().totalMatchesSolo + 1;
             state.mut().totalPrizesAwarded = state.get().totalPrizesAwarded + soloReward;
@@ -1845,8 +1845,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         state.mut().matches_8.prizeAwarded = div(state.get().matches_8.totalStake * 4500LL, 10000LL).quot;
         state.mut().matches_8.burnedAmount = div(state.get().matches_8.totalStake * 1000LL, 10000LL).quot;
-        state.mut().matches_8.state        = STATE_SETTLED;
-        state.mut().matches_8.settledTick  = qpi.tick();
+        state.mut().matches_8.state = STATE_SETTLED;
+        state.mut().matches_8.settledTick = qpi.tick();
 
         state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
         state.mut().totalQUBurned = state.get().totalQUBurned + state.get().matches_8.burnedAmount;
@@ -1911,8 +1911,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             }
             state.mut().matches_9.prizeAwarded = soloReward;
             state.mut().matches_9.burnedAmount = 0;
-            state.mut().matches_9.state        = STATE_SETTLED;
-            state.mut().matches_9.settledTick  = qpi.tick();
+            state.mut().matches_9.state = STATE_SETTLED;
+            state.mut().matches_9.settledTick = qpi.tick();
             state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
             state.mut().totalMatchesSolo = state.get().totalMatchesSolo + 1;
             state.mut().totalPrizesAwarded = state.get().totalPrizesAwarded + soloReward;
@@ -1938,8 +1938,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         state.mut().matches_9.prizeAwarded = div(state.get().matches_9.totalStake * 4500LL, 10000LL).quot;
         state.mut().matches_9.burnedAmount = div(state.get().matches_9.totalStake * 1000LL, 10000LL).quot;
-        state.mut().matches_9.state        = STATE_SETTLED;
-        state.mut().matches_9.settledTick  = qpi.tick();
+        state.mut().matches_9.state = STATE_SETTLED;
+        state.mut().matches_9.settledTick = qpi.tick();
 
         state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
         state.mut().totalQUBurned = state.get().totalQUBurned + state.get().matches_9.burnedAmount;
@@ -2004,8 +2004,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             }
             state.mut().matches_10.prizeAwarded = soloReward;
             state.mut().matches_10.burnedAmount = 0;
-            state.mut().matches_10.state        = STATE_SETTLED;
-            state.mut().matches_10.settledTick  = qpi.tick();
+            state.mut().matches_10.state = STATE_SETTLED;
+            state.mut().matches_10.settledTick = qpi.tick();
             state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
             state.mut().totalMatchesSolo = state.get().totalMatchesSolo + 1;
             state.mut().totalPrizesAwarded = state.get().totalPrizesAwarded + soloReward;
@@ -2031,8 +2031,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         state.mut().matches_10.prizeAwarded = div(state.get().matches_10.totalStake * 4500LL, 10000LL).quot;
         state.mut().matches_10.burnedAmount = div(state.get().matches_10.totalStake * 1000LL, 10000LL).quot;
-        state.mut().matches_10.state        = STATE_SETTLED;
-        state.mut().matches_10.settledTick  = qpi.tick();
+        state.mut().matches_10.state = STATE_SETTLED;
+        state.mut().matches_10.settledTick = qpi.tick();
 
         state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
         state.mut().totalQUBurned = state.get().totalQUBurned + state.get().matches_10.burnedAmount;
@@ -2097,8 +2097,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             }
             state.mut().matches_11.prizeAwarded = soloReward;
             state.mut().matches_11.burnedAmount = 0;
-            state.mut().matches_11.state        = STATE_SETTLED;
-            state.mut().matches_11.settledTick  = qpi.tick();
+            state.mut().matches_11.state = STATE_SETTLED;
+            state.mut().matches_11.settledTick = qpi.tick();
             state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
             state.mut().totalMatchesSolo = state.get().totalMatchesSolo + 1;
             state.mut().totalPrizesAwarded = state.get().totalPrizesAwarded + soloReward;
@@ -2124,8 +2124,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         state.mut().matches_11.prizeAwarded = div(state.get().matches_11.totalStake * 4500LL, 10000LL).quot;
         state.mut().matches_11.burnedAmount = div(state.get().matches_11.totalStake * 1000LL, 10000LL).quot;
-        state.mut().matches_11.state        = STATE_SETTLED;
-        state.mut().matches_11.settledTick  = qpi.tick();
+        state.mut().matches_11.state = STATE_SETTLED;
+        state.mut().matches_11.settledTick = qpi.tick();
 
         state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
         state.mut().totalQUBurned = state.get().totalQUBurned + state.get().matches_11.burnedAmount;
@@ -2190,8 +2190,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             }
             state.mut().matches_12.prizeAwarded = soloReward;
             state.mut().matches_12.burnedAmount = 0;
-            state.mut().matches_12.state        = STATE_SETTLED;
-            state.mut().matches_12.settledTick  = qpi.tick();
+            state.mut().matches_12.state = STATE_SETTLED;
+            state.mut().matches_12.settledTick = qpi.tick();
             state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
             state.mut().totalMatchesSolo = state.get().totalMatchesSolo + 1;
             state.mut().totalPrizesAwarded = state.get().totalPrizesAwarded + soloReward;
@@ -2217,8 +2217,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         state.mut().matches_12.prizeAwarded = div(state.get().matches_12.totalStake * 4500LL, 10000LL).quot;
         state.mut().matches_12.burnedAmount = div(state.get().matches_12.totalStake * 1000LL, 10000LL).quot;
-        state.mut().matches_12.state        = STATE_SETTLED;
-        state.mut().matches_12.settledTick  = qpi.tick();
+        state.mut().matches_12.state = STATE_SETTLED;
+        state.mut().matches_12.settledTick = qpi.tick();
 
         state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
         state.mut().totalQUBurned = state.get().totalQUBurned + state.get().matches_12.burnedAmount;
@@ -2283,8 +2283,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             }
             state.mut().matches_13.prizeAwarded = soloReward;
             state.mut().matches_13.burnedAmount = 0;
-            state.mut().matches_13.state        = STATE_SETTLED;
-            state.mut().matches_13.settledTick  = qpi.tick();
+            state.mut().matches_13.state = STATE_SETTLED;
+            state.mut().matches_13.settledTick = qpi.tick();
             state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
             state.mut().totalMatchesSolo = state.get().totalMatchesSolo + 1;
             state.mut().totalPrizesAwarded = state.get().totalPrizesAwarded + soloReward;
@@ -2310,8 +2310,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         state.mut().matches_13.prizeAwarded = div(state.get().matches_13.totalStake * 4500LL, 10000LL).quot;
         state.mut().matches_13.burnedAmount = div(state.get().matches_13.totalStake * 1000LL, 10000LL).quot;
-        state.mut().matches_13.state        = STATE_SETTLED;
-        state.mut().matches_13.settledTick  = qpi.tick();
+        state.mut().matches_13.state = STATE_SETTLED;
+        state.mut().matches_13.settledTick = qpi.tick();
 
         state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
         state.mut().totalQUBurned = state.get().totalQUBurned + state.get().matches_13.burnedAmount;
@@ -2376,8 +2376,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             }
             state.mut().matches_14.prizeAwarded = soloReward;
             state.mut().matches_14.burnedAmount = 0;
-            state.mut().matches_14.state        = STATE_SETTLED;
-            state.mut().matches_14.settledTick  = qpi.tick();
+            state.mut().matches_14.state = STATE_SETTLED;
+            state.mut().matches_14.settledTick = qpi.tick();
             state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
             state.mut().totalMatchesSolo = state.get().totalMatchesSolo + 1;
             state.mut().totalPrizesAwarded = state.get().totalPrizesAwarded + soloReward;
@@ -2403,8 +2403,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         state.mut().matches_14.prizeAwarded = div(state.get().matches_14.totalStake * 4500LL, 10000LL).quot;
         state.mut().matches_14.burnedAmount = div(state.get().matches_14.totalStake * 1000LL, 10000LL).quot;
-        state.mut().matches_14.state        = STATE_SETTLED;
-        state.mut().matches_14.settledTick  = qpi.tick();
+        state.mut().matches_14.state = STATE_SETTLED;
+        state.mut().matches_14.settledTick = qpi.tick();
 
         state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
         state.mut().totalQUBurned = state.get().totalQUBurned + state.get().matches_14.burnedAmount;
@@ -2469,8 +2469,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
             }
             state.mut().matches_15.prizeAwarded = soloReward;
             state.mut().matches_15.burnedAmount = 0;
-            state.mut().matches_15.state        = STATE_SETTLED;
-            state.mut().matches_15.settledTick  = qpi.tick();
+            state.mut().matches_15.state = STATE_SETTLED;
+            state.mut().matches_15.settledTick = qpi.tick();
             state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
             state.mut().totalMatchesSolo = state.get().totalMatchesSolo + 1;
             state.mut().totalPrizesAwarded = state.get().totalPrizesAwarded + soloReward;
@@ -2496,8 +2496,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         state.mut().matches_15.prizeAwarded = div(state.get().matches_15.totalStake * 4500LL, 10000LL).quot;
         state.mut().matches_15.burnedAmount = div(state.get().matches_15.totalStake * 1000LL, 10000LL).quot;
-        state.mut().matches_15.state        = STATE_SETTLED;
-        state.mut().matches_15.settledTick  = qpi.tick();
+        state.mut().matches_15.state = STATE_SETTLED;
+        state.mut().matches_15.settledTick = qpi.tick();
 
         state.mut().totalMatchesPlayed = state.get().totalMatchesPlayed + 1;
         state.mut().totalQUBurned = state.get().totalQUBurned + state.get().matches_15.burnedAmount;

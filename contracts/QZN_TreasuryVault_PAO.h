@@ -423,21 +423,21 @@ PUBLIC_PROCEDURE(ProposeSpend)
     // Write proposal
     if (slot == 0)
     {
-        state.mut().proposals_0.proposalId        = state.get().nextProposalId;
-        state.mut().proposals_0.category          = input.category;
-        state.mut().proposals_0.state             = PROP_PENDING;
+        state.mut().proposals_0.proposalId = state.get().nextProposalId;
+        state.mut().proposals_0.category = input.category;
+        state.mut().proposals_0.state = PROP_PENDING;
         state.mut().proposals_0.destinationAddress = input.destination;
-        state.mut().proposals_0.amount            = input.amount;
-        state.mut().proposals_0.memo              = input.memo;
-        state.mut().proposals_0.proposedEpoch     = qpi.epoch();
-        state.mut().proposals_0.approvedEpoch     = 0;
+        state.mut().proposals_0.amount = input.amount;
+        state.mut().proposals_0.memo = input.memo;
+        state.mut().proposals_0.proposedEpoch = qpi.epoch();
+        state.mut().proposals_0.approvedEpoch = 0;
         state.mut().proposals_0.executeAfterEpoch = 0;
-        state.mut().proposals_0.executedEpoch     = 0;
-        state.mut().proposals_0.proposerAddress   = qpi.invocator();
-        state.mut().proposals_0.sigCount          = 0;
-        state.mut().proposals_0.sig_0             = 0;
-        state.mut().proposals_0.sig_1             = 0;
-        state.mut().proposals_0.sig_2             = 0;
+        state.mut().proposals_0.executedEpoch = 0;
+        state.mut().proposals_0.proposerAddress = qpi.invocator();
+        state.mut().proposals_0.sigCount = 0;
+        state.mut().proposals_0.sig_0 = 0;
+        state.mut().proposals_0.sig_1 = 0;
+        state.mut().proposals_0.sig_2 = 0;
 
         // Auto-sign for proposer
         if (qpi.invocator() == state.get().signer_0) { state.mut().proposals_0.sig_0 = 1; state.mut().proposals_0.sigCount = 1; }
@@ -496,17 +496,17 @@ PUBLIC_PROCEDURE(SignProposal)
         // Check not already signed by this signer
         if (qpi.invocator() == state.get().signer_0 && !state.get().proposals_0.sig_0)
         {
-            state.mut().proposals_0.sig_0    = 1;
+            state.mut().proposals_0.sig_0 = 1;
             state.mut().proposals_0.sigCount = state.get().proposals_0.sigCount + 1;
         }
         else if (qpi.invocator() == state.get().signer_1 && !state.get().proposals_0.sig_1)
         {
-            state.mut().proposals_0.sig_1    = 1;
+            state.mut().proposals_0.sig_1 = 1;
             state.mut().proposals_0.sigCount = state.get().proposals_0.sigCount + 1;
         }
         else if (qpi.invocator() == state.get().signer_2 && !state.get().proposals_0.sig_2)
         {
-            state.mut().proposals_0.sig_2    = 1;
+            state.mut().proposals_0.sig_2 = 1;
             state.mut().proposals_0.sigCount = state.get().proposals_0.sigCount + 1;
         }
 
@@ -522,7 +522,7 @@ PUBLIC_PROCEDURE(SignProposal)
             // Large spend → timelock
             if (state.get().proposals_0.amount >= TIMELOCK_THRESHOLD)
             {
-                state.mut().proposals_0.state             = PROP_TIMELOCKED;
+                state.mut().proposals_0.state = PROP_TIMELOCKED;
                 state.mut().proposals_0.executeAfterEpoch = qpi.epoch() + TIMELOCK_DELAY_EPOCHS;
                 output.timelocked        = 1;
                 output.executed          = 0;
@@ -530,7 +530,7 @@ PUBLIC_PROCEDURE(SignProposal)
             else
             {
                 // ---- IMMEDIATE EXECUTION (small spend) ----
-                state.mut().proposals_0.state         = PROP_APPROVED;
+                state.mut().proposals_0.state = PROP_APPROVED;
                 state.mut().proposals_0.executedEpoch = qpi.epoch();
 
                 sint64  amt;
@@ -573,7 +573,7 @@ PUBLIC_PROCEDURE(SignProposal)
                     // Calls QZN Core BurnFromTreasury in Phase 2
                 }
 
-                state.mut().proposals_0.state    = PROP_EXECUTED;
+                state.mut().proposals_0.state = PROP_EXECUTED;
                 state.mut().lastSpendEpoch = qpi.epoch();
                 state.mut().lastSpendAmount = amt;
                 state.mut().lastSpendCategory = cat;
@@ -664,7 +664,7 @@ PUBLIC_PROCEDURE(ExecuteProposal)
             state.mut().totalSpent = state.get().totalSpent + amt;
         }
 
-        state.mut().proposals_0.state         = PROP_EXECUTED;
+        state.mut().proposals_0.state = PROP_EXECUTED;
         state.mut().proposals_0.executedEpoch = qpi.epoch();
         state.mut().lastSpendEpoch = qpi.epoch();
         state.mut().lastSpendAmount = amt;

@@ -473,26 +473,26 @@ PUBLIC_PROCEDURE(IssueNode)
     // Write to node slot (slot = nodeId - 1, shown for nodes 1-16)
     if (input.nodeId == 1)
     {
-        state.mut().nodes_1.nodeId         = 1;
-        state.mut().nodes_1.tier           = tier;
-        state.mut().nodes_1.state          = NODE_ACTIVE;
-        state.mut().nodes_1.ownerAddress   = input.ownerAddress;
-        state.mut().nodes_1.shareBPS       = shareBPS;
+        state.mut().nodes_1.nodeId = 1;
+        state.mut().nodes_1.tier = tier;
+        state.mut().nodes_1.state = NODE_ACTIVE;
+        state.mut().nodes_1.ownerAddress = input.ownerAddress;
+        state.mut().nodes_1.shareBPS = shareBPS;
         state.mut().nodes_1.pendingRevenue = 0;
         state.mut().nodes_1.lifetimeRevenue = 0;
-        state.mut().nodes_1.issuedEpoch    = qpi.epoch();
+        state.mut().nodes_1.issuedEpoch = qpi.epoch();
         state.mut().nodes_1.lastClaimEpoch = qpi.epoch();
     }
     else if (input.nodeId == 2)
     {
-        state.mut().nodes_2.nodeId         = 2;
-        state.mut().nodes_2.tier           = tier;
-        state.mut().nodes_2.state          = NODE_ACTIVE;
-        state.mut().nodes_2.ownerAddress   = input.ownerAddress;
-        state.mut().nodes_2.shareBPS       = shareBPS;
+        state.mut().nodes_2.nodeId = 2;
+        state.mut().nodes_2.tier = tier;
+        state.mut().nodes_2.state = NODE_ACTIVE;
+        state.mut().nodes_2.ownerAddress = input.ownerAddress;
+        state.mut().nodes_2.shareBPS = shareBPS;
         state.mut().nodes_2.pendingRevenue = 0;
         state.mut().nodes_2.lifetimeRevenue = 0;
-        state.mut().nodes_2.issuedEpoch    = qpi.epoch();
+        state.mut().nodes_2.issuedEpoch = qpi.epoch();
         state.mut().nodes_2.lastClaimEpoch = qpi.epoch();
     }
     // Nodes 3-16 follow identical pattern
@@ -524,7 +524,7 @@ PUBLIC_PROCEDURE(TransferNode)
 
         id prevOwner;
         prevOwner = state.get().nodes_1.ownerAddress;
-        state.mut().nodes_1.ownerAddress   = input.newOwner;
+        state.mut().nodes_1.ownerAddress = input.newOwner;
         state.mut().nodes_1.lastClaimEpoch = qpi.epoch();
 
         output.success       = 1;
@@ -539,7 +539,7 @@ PUBLIC_PROCEDURE(TransferNode)
 
         id prevOwner;
         prevOwner = state.get().nodes_2.ownerAddress;
-        state.mut().nodes_2.ownerAddress   = input.newOwner;
+        state.mut().nodes_2.ownerAddress = input.newOwner;
         state.mut().nodes_2.lastClaimEpoch = qpi.epoch();
 
         output.success       = 1;
@@ -568,9 +568,9 @@ PUBLIC_PROCEDURE(ClaimNodeRevenue)
         sint64 claimAmt;
         claimAmt = state.get().nodes_1.pendingRevenue;
 
-        state.mut().nodes_1.pendingRevenue  = 0;
+        state.mut().nodes_1.pendingRevenue = 0;
         state.mut().nodes_1.lifetimeRevenue = state.get().nodes_1.lifetimeRevenue + claimAmt;
-        state.mut().nodes_1.lastClaimEpoch  = qpi.epoch();
+        state.mut().nodes_1.lastClaimEpoch = qpi.epoch();
         state.mut().totalRevenueDistributed = state.get().totalRevenueDistributed + claimAmt;
 
         qpi.transfer(qpi.invocator(), claimAmt);
@@ -588,9 +588,9 @@ PUBLIC_PROCEDURE(ClaimNodeRevenue)
         sint64 claimAmt;
         claimAmt = state.get().nodes_2.pendingRevenue;
 
-        state.mut().nodes_2.pendingRevenue  = 0;
+        state.mut().nodes_2.pendingRevenue = 0;
         state.mut().nodes_2.lifetimeRevenue = state.get().nodes_2.lifetimeRevenue + claimAmt;
-        state.mut().nodes_2.lastClaimEpoch  = qpi.epoch();
+        state.mut().nodes_2.lastClaimEpoch = qpi.epoch();
         state.mut().totalRevenueDistributed = state.get().totalRevenueDistributed + claimAmt;
 
         qpi.transfer(qpi.invocator(), claimAmt);
@@ -634,17 +634,17 @@ PUBLIC_PROCEDURE(RegisterGame)
 
     if (slot == 0)
     {
-        state.mut().games_0.gameId           = state.get().nextGameId;
-        state.mut().games_0.state            = GAME_PENDING;
-        state.mut().games_0.builderAddress   = qpi.invocator();
-        state.mut().games_0.builderStake     = input.stakeAmount;
-        state.mut().games_0.nameHash         = input.nameHash;
-        state.mut().games_0.metadataHash     = input.metadataHash;
-        state.mut().games_0.revenueShareBPS  = 0;      // Set by admin on approval
-        state.mut().games_0.totalPlayCount   = 0;
-        state.mut().games_0.totalVolumeQZN   = 0;
-        state.mut().games_0.registeredEpoch  = qpi.epoch();
-        state.mut().games_0.approvedEpoch    = 0;
+        state.mut().games_0.gameId = state.get().nextGameId;
+        state.mut().games_0.state = GAME_PENDING;
+        state.mut().games_0.builderAddress = qpi.invocator();
+        state.mut().games_0.builderStake = input.stakeAmount;
+        state.mut().games_0.nameHash = input.nameHash;
+        state.mut().games_0.metadataHash = input.metadataHash;
+        state.mut().games_0.revenueShareBPS = 0;      // Set by admin on approval
+        state.mut().games_0.totalPlayCount = 0;
+        state.mut().games_0.totalVolumeQZN = 0;
+        state.mut().games_0.registeredEpoch = qpi.epoch();
+        state.mut().games_0.approvedEpoch = 0;
     }
     // Slots 1-15 identical
 
@@ -667,18 +667,18 @@ PUBLIC_PROCEDURE(ApproveGame)
 
     if (state.get().games_0.gameId == input.gameId && state.get().games_0.state == GAME_PENDING)
     {
-        state.mut().games_0.state          = GAME_ACTIVE;
+        state.mut().games_0.state = GAME_ACTIVE;
         state.mut().games_0.revenueShareBPS = input.revenueShareBPS;
-        state.mut().games_0.approvedEpoch  = qpi.epoch();
+        state.mut().games_0.approvedEpoch = qpi.epoch();
         state.mut().totalGamesActive = state.get().totalGamesActive + 1;
         output.success = 1;
         output.gameId  = input.gameId;
     }
     else if (state.get().games_1.gameId == input.gameId && state.get().games_1.state == GAME_PENDING)
     {
-        state.mut().games_1.state          = GAME_ACTIVE;
+        state.mut().games_1.state = GAME_ACTIVE;
         state.mut().games_1.revenueShareBPS = input.revenueShareBPS;
-        state.mut().games_1.approvedEpoch  = qpi.epoch();
+        state.mut().games_1.approvedEpoch = qpi.epoch();
         state.mut().totalGamesActive = state.get().totalGamesActive + 1;
         output.success = 1;
         output.gameId  = input.gameId;

@@ -186,39 +186,39 @@ public:
     {
         if (state.get().initialized) { return; }
 
-        state.mut().treasuryAddress     = input.treasuryAddr;
-        state.mut().founderAddress      = input.founderAddr;
-        state.mut().liquidityAddress    = input.liquidityAddr;
-        state.mut().portalNodeAddress   = input.portalNodeAddr;
-        state.mut().portalProtoAddress  = input.portalProtoAddr;
-        state.mut().qswapProtoAddress   = input.qswapProtoAddr;
-        state.mut().adminAddress        = qpi.invocator();
+        state.mut().treasuryAddress = input.treasuryAddr;
+        state.mut().founderAddress = input.founderAddr;
+        state.mut().liquidityAddress = input.liquidityAddr;
+        state.mut().portalNodeAddress = input.portalNodeAddr;
+        state.mut().portalProtoAddress = input.portalProtoAddr;
+        state.mut().qswapProtoAddress = input.qswapProtoAddr;
+        state.mut().adminAddress = qpi.invocator();
 
-        state.mut().totalSupply         = QZN_TOTAL_SUPPLY;
-        state.mut().treasuryBalance     = QZN_TREASURY_ALLOC;
+        state.mut().totalSupply = QZN_TOTAL_SUPPLY;
+        state.mut().treasuryBalance = QZN_TREASURY_ALLOC;
         state.mut().teamAllocationTotal = QZN_TEAM_ALLOC;
-        state.mut().teamTokensClaimed   = 0;
-        state.mut().liquidityBalance    = QZN_LIQUIDITY_ALLOC;
-        state.mut().ecosystemBalance    = QZN_ECOSYSTEM_ALLOC;
-        state.mut().circulatingSupply   = QZN_LIQUIDITY_ALLOC;
+        state.mut().teamTokensClaimed = 0;
+        state.mut().liquidityBalance = QZN_LIQUIDITY_ALLOC;
+        state.mut().ecosystemBalance = QZN_ECOSYSTEM_ALLOC;
+        state.mut().circulatingSupply = QZN_LIQUIDITY_ALLOC;
 
         if (input.vestingStartEpochOverride > 0)
             state.mut().vestingStartEpoch = input.vestingStartEpochOverride;
         else
             state.mut().vestingStartEpoch = qpi.epoch();
 
-        state.mut().vestingInitialized    = 1;
-        state.mut().totalBurned           = 0;
-        state.mut().protocolFeeBalance    = 0;
-        state.mut().totalMatchStake       = 0;
+        state.mut().vestingInitialized = 1;
+        state.mut().totalBurned = 0;
+        state.mut().protocolFeeBalance = 0;
+        state.mut().totalMatchStake = 0;
         state.mut().totalPrizeDistributed = 0;
-        state.mut().totalRouteBurned      = 0;
-        state.mut().totalRouteLiquidity   = 0;
-        state.mut().totalRouteTreasury    = 0;
-        state.mut().totalRoutePortalNode  = 0;
+        state.mut().totalRouteBurned = 0;
+        state.mut().totalRouteLiquidity = 0;
+        state.mut().totalRouteTreasury = 0;
+        state.mut().totalRoutePortalNode = 0;
         state.mut().totalRoutePortalProto = 0;
-        state.mut().totalRouteQswapProto  = 0;
-        state.mut().initialized           = 1;
+        state.mut().totalRouteQswapProto = 0;
+        state.mut().initialized = 1;
 
         output.totalSupply       = state.get().totalSupply;
         output.treasuryLocked    = state.get().treasuryBalance;
@@ -244,27 +244,27 @@ public:
 
         qpi.transferShareOwnershipAndPossession(QZN_ASSET_NAME, SELF, SELF, SELF, prizeShare, input.winnerAddress);
 
-        state.mut().treasuryBalance       = state.get().treasuryBalance + treasuryShare;
-        state.mut().totalRouteTreasury    = state.get().totalRouteTreasury + treasuryShare;
-        state.mut().liquidityBalance      = state.get().liquidityBalance + liquidityShare;
-        state.mut().totalRouteLiquidity   = state.get().totalRouteLiquidity + liquidityShare;
+        state.mut().treasuryBalance = state.get().treasuryBalance + treasuryShare;
+        state.mut().totalRouteTreasury = state.get().totalRouteTreasury + treasuryShare;
+        state.mut().liquidityBalance = state.get().liquidityBalance + liquidityShare;
+        state.mut().totalRouteLiquidity = state.get().totalRouteLiquidity + liquidityShare;
 
         qpi.transferShareOwnershipAndPossession(QZN_ASSET_NAME, SELF, SELF, SELF, burnShare, NULL_ID);
-        state.mut().totalBurned           = state.get().totalBurned + burnShare;
-        state.mut().circulatingSupply     = state.get().circulatingSupply - burnShare;
-        state.mut().totalRouteBurned      = state.get().totalRouteBurned + burnShare;
+        state.mut().totalBurned = state.get().totalBurned + burnShare;
+        state.mut().circulatingSupply = state.get().circulatingSupply - burnShare;
+        state.mut().totalRouteBurned = state.get().totalRouteBurned + burnShare;
 
         qpi.transferShareOwnershipAndPossession(QZN_ASSET_NAME, SELF, SELF, SELF, nodeShare, state.get().portalNodeAddress);
-        state.mut().totalRoutePortalNode  = state.get().totalRoutePortalNode + nodeShare;
+        state.mut().totalRoutePortalNode = state.get().totalRoutePortalNode + nodeShare;
 
         qpi.transferShareOwnershipAndPossession(QZN_ASSET_NAME, SELF, SELF, SELF, portalProtoShare, state.get().portalProtoAddress);
         state.mut().totalRoutePortalProto = state.get().totalRoutePortalProto + portalProtoShare;
 
         qpi.transferShareOwnershipAndPossession(QZN_ASSET_NAME, SELF, SELF, SELF, qswapProtoShare, state.get().qswapProtoAddress);
-        state.mut().totalRouteQswapProto  = state.get().totalRouteQswapProto + qswapProtoShare;
+        state.mut().totalRouteQswapProto = state.get().totalRouteQswapProto + qswapProtoShare;
 
-        state.mut().protocolFeeBalance    = state.get().protocolFeeBalance + protocolShare;
-        state.mut().totalMatchStake       = state.get().totalMatchStake + input.totalStake;
+        state.mut().protocolFeeBalance = state.get().protocolFeeBalance + protocolShare;
+        state.mut().totalMatchStake = state.get().totalMatchStake + input.totalStake;
         state.mut().totalPrizeDistributed = state.get().totalPrizeDistributed + prizeShare;
 
         output.prizeAwarded     = prizeShare;
@@ -328,8 +328,8 @@ public:
         if (qpi.invocator() != state.get().adminAddress) { return; }
         if (input.amount <= 0 || input.amount > state.get().treasuryBalance) { return; }
 
-        state.mut().treasuryBalance   = state.get().treasuryBalance - input.amount;
-        state.mut().totalBurned       = state.get().totalBurned + input.amount;
+        state.mut().treasuryBalance = state.get().treasuryBalance - input.amount;
+        state.mut().totalBurned = state.get().totalBurned + input.amount;
         state.mut().circulatingSupply = state.get().circulatingSupply - input.amount;
         qpi.transferShareOwnershipAndPossession(QZN_ASSET_NAME, SELF, SELF, SELF, input.amount, NULL_ID);
 

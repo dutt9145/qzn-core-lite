@@ -84,7 +84,7 @@ struct TournamentMatch
     bit    settled;
 };
 
-struct PlayerRecord
+struct TournamentTournamentPlayerRecord
 {
     id     wallet;
     uint32 wins;
@@ -115,7 +115,7 @@ struct TournamentRecord
     id              second;
     id              third;
     bit             prizesDistributed;
-    PlayerRecord    players[QZN_TOURNAMENT_MAX_PLAYERS];
+    TournamentPlayerRecord    players[QZN_TOURNAMENT_MAX_PLAYERS];
     TournamentMatch matches[QZN_TOURNAMENT_MAX_MATCHES];
 };
 
@@ -257,7 +257,7 @@ struct GetPlayerRecord_input
 };
 struct GetPlayerRecord_output
 {
-    PlayerRecord record;
+    TournamentPlayerRecord record;
     bit          found;
 };
 
@@ -340,23 +340,23 @@ PUBLIC_PROCEDURE(CreateTournament)
 
     uint32 tIdx = state.get().tournamentCount;
 
-    state.get().tournaments[tIdx].tournamentId      = tIdx;
-    state.get().tournaments[tIdx].format            = input.format;
-    state.get().tournaments[tIdx].tstate            = TSTATE_REGISTRATION;
-    state.get().tournaments[tIdx].registeredCount   = 0;
-    state.get().tournaments[tIdx].maxPlayers        = input.maxPlayers;
-    state.get().tournaments[tIdx].entryFee          = input.entryFee;
-    state.get().tournaments[tIdx].prizePool         = 0;
-    state.get().tournaments[tIdx].currentRound      = 0;
-    state.get().tournaments[tIdx].totalRounds       = 0;
-    state.get().tournaments[tIdx].matchCount        = 0;
-    state.get().tournaments[tIdx].settledMatchCount = 0;
-    state.get().tournaments[tIdx].admin             = qpi.invocator();
-    state.get().tournaments[tIdx].cabinetPAO        = input.cabinetPAO;
-    state.get().tournaments[tIdx].prizesDistributed = 0;
-    state.get().tournaments[tIdx].first             = NULL_ID;
-    state.get().tournaments[tIdx].second            = NULL_ID;
-    state.get().tournaments[tIdx].third             = NULL_ID;
+    state.mut().tournaments[tIdx].tournamentId = tIdx;
+    state.mut().tournaments[tIdx].format = input.format;
+    state.mut().tournaments[tIdx].tstate = TSTATE_REGISTRATION;
+    state.mut().tournaments[tIdx].registeredCount = 0;
+    state.mut().tournaments[tIdx].maxPlayers = input.maxPlayers;
+    state.mut().tournaments[tIdx].entryFee = input.entryFee;
+    state.mut().tournaments[tIdx].prizePool = 0;
+    state.mut().tournaments[tIdx].currentRound = 0;
+    state.mut().tournaments[tIdx].totalRounds = 0;
+    state.mut().tournaments[tIdx].matchCount = 0;
+    state.mut().tournaments[tIdx].settledMatchCount = 0;
+    state.mut().tournaments[tIdx].admin = qpi.invocator();
+    state.mut().tournaments[tIdx].cabinetPAO = input.cabinetPAO;
+    state.mut().tournaments[tIdx].prizesDistributed = 0;
+    state.mut().tournaments[tIdx].first = NULL_ID;
+    state.mut().tournaments[tIdx].second = NULL_ID;
+    state.mut().tournaments[tIdx].third = NULL_ID;
 
     state.mut().tournamentCount = state.get().tournamentCount + 1;
 
@@ -419,17 +419,17 @@ PUBLIC_PROCEDURE(RegisterPlayer)
 
     uint8 slot = state.get().tournaments[tIdx].registeredCount;
 
-    state.get().tournaments[tIdx].players[slot].wallet          = caller;
-    state.get().tournaments[tIdx].players[slot].wins            = 0;
-    state.get().tournaments[tIdx].players[slot].losses          = 0;
-    state.get().tournaments[tIdx].players[slot].draws           = 0;
-    state.get().tournaments[tIdx].players[slot].points          = 0;
-    state.get().tournaments[tIdx].players[slot].eliminated      = 0;
-    state.get().tournaments[tIdx].players[slot].inLosersBracket = 0;
-    state.get().tournaments[tIdx].players[slot].registered      = 1;
+    state.mut().tournaments[tIdx].players[slot].wallet = caller;
+    state.mut().tournaments[tIdx].players[slot].wins = 0;
+    state.mut().tournaments[tIdx].players[slot].losses = 0;
+    state.mut().tournaments[tIdx].players[slot].draws = 0;
+    state.mut().tournaments[tIdx].players[slot].points = 0;
+    state.mut().tournaments[tIdx].players[slot].eliminated = 0;
+    state.mut().tournaments[tIdx].players[slot].inLosersBracket = 0;
+    state.mut().tournaments[tIdx].players[slot].registered = 1;
 
-    state.get().tournaments[tIdx].prizePool        = state.get().tournaments[tIdx].prizePool + state.get().tournaments[tIdx].entryFee;
-    state.get().tournaments[tIdx].registeredCount  = state.get().tournaments[tIdx].registeredCount + 1;
+    state.mut().tournaments[tIdx].prizePool = state.get().tournaments[tIdx].prizePool + state.get().tournaments[tIdx].entryFee;
+    state.mut().tournaments[tIdx].registeredCount = state.get().tournaments[tIdx].registeredCount + 1;
 
     output.slotIndex = slot;
     output.success   = 1;
@@ -480,13 +480,13 @@ PUBLIC_PROCEDURE(StartTournament)
         // Pair players: 0v1, 2v3, 4v5, ... for round 1
         for (uint32 i = 0; i < n; i = i + 2)
         {
-            state.get().tournaments[tIdx].matches[mIdx].matchIndex  = mIdx;
-            state.get().tournaments[tIdx].matches[mIdx].playerA     = state.get().tournaments[tIdx].players[i].wallet;
-            state.get().tournaments[tIdx].matches[mIdx].playerB     = state.get().tournaments[tIdx].players[i + 1].wallet;
-            state.get().tournaments[tIdx].matches[mIdx].result      = TMATCH_PENDING;
-            state.get().tournaments[tIdx].matches[mIdx].bracketSide = BRACKET_WINNERS;
-            state.get().tournaments[tIdx].matches[mIdx].round       = 1;
-            state.get().tournaments[tIdx].matches[mIdx].settled     = 0;
+            state.mut().tournaments[tIdx].matches[mIdx].matchIndex = mIdx;
+            state.mut().tournaments[tIdx].matches[mIdx].playerA = state.get().tournaments[tIdx].players[i].wallet;
+            state.mut().tournaments[tIdx].matches[mIdx].playerB = state.get().tournaments[tIdx].players[i + 1].wallet;
+            state.mut().tournaments[tIdx].matches[mIdx].result = TMATCH_PENDING;
+            state.mut().tournaments[tIdx].matches[mIdx].bracketSide = BRACKET_WINNERS;
+            state.mut().tournaments[tIdx].matches[mIdx].round = 1;
+            state.mut().tournaments[tIdx].matches[mIdx].settled = 0;
             mIdx = mIdx + 1;
         }
 
@@ -499,22 +499,22 @@ PUBLIC_PROCEDURE(StartTournament)
             roundsCalc = roundsCalc + 1;
         }
 
-        state.get().tournaments[tIdx].matchCount   = mIdx;
-        state.get().tournaments[tIdx].totalRounds  = roundsCalc;
-        state.get().tournaments[tIdx].currentRound = 1;
+        state.mut().tournaments[tIdx].matchCount = mIdx;
+        state.mut().tournaments[tIdx].totalRounds = roundsCalc;
+        state.mut().tournaments[tIdx].currentRound = 1;
     }
     else if (state.get().tournaments[tIdx].format == FORMAT_DOUBLE_ELIMINATION)
     {
         // Winners bracket round 1 only — losers bracket generated dynamically
         for (uint32 i = 0; i < n; i = i + 2)
         {
-            state.get().tournaments[tIdx].matches[mIdx].matchIndex  = mIdx;
-            state.get().tournaments[tIdx].matches[mIdx].playerA     = state.get().tournaments[tIdx].players[i].wallet;
-            state.get().tournaments[tIdx].matches[mIdx].playerB     = state.get().tournaments[tIdx].players[i + 1].wallet;
-            state.get().tournaments[tIdx].matches[mIdx].result      = TMATCH_PENDING;
-            state.get().tournaments[tIdx].matches[mIdx].bracketSide = BRACKET_WINNERS;
-            state.get().tournaments[tIdx].matches[mIdx].round       = 1;
-            state.get().tournaments[tIdx].matches[mIdx].settled     = 0;
+            state.mut().tournaments[tIdx].matches[mIdx].matchIndex = mIdx;
+            state.mut().tournaments[tIdx].matches[mIdx].playerA = state.get().tournaments[tIdx].players[i].wallet;
+            state.mut().tournaments[tIdx].matches[mIdx].playerB = state.get().tournaments[tIdx].players[i + 1].wallet;
+            state.mut().tournaments[tIdx].matches[mIdx].result = TMATCH_PENDING;
+            state.mut().tournaments[tIdx].matches[mIdx].bracketSide = BRACKET_WINNERS;
+            state.mut().tournaments[tIdx].matches[mIdx].round = 1;
+            state.mut().tournaments[tIdx].matches[mIdx].settled = 0;
             mIdx = mIdx + 1;
         }
 
@@ -526,9 +526,9 @@ PUBLIC_PROCEDURE(StartTournament)
             roundsCalc = roundsCalc + 1;
         }
 
-        state.get().tournaments[tIdx].matchCount   = mIdx;
-        state.get().tournaments[tIdx].totalRounds  = roundsCalc * 2 + 1; // approx for double elim
-        state.get().tournaments[tIdx].currentRound = 1;
+        state.mut().tournaments[tIdx].matchCount = mIdx;
+        state.mut().tournaments[tIdx].totalRounds = roundsCalc * 2 + 1; // approx for double elim
+        state.mut().tournaments[tIdx].currentRound = 1;
     }
     else // FORMAT_ROUND_ROBIN
     {
@@ -538,7 +538,7 @@ PUBLIC_PROCEDURE(StartTournament)
 
         for (uint32 i = 0; i < n; i = i + 1)
         {
-            state.get().scratchIds[i] = state.get().tournaments[tIdx].players[i].wallet;
+            state.mut().scratchIds[i] = state.get().tournaments[tIdx].players[i].wallet;
         }
 
         uint32 round = 1;
@@ -550,13 +550,13 @@ PUBLIC_PROCEDURE(StartTournament)
             {
                 uint32 j = n - 1 - i;
 
-                state.get().tournaments[tIdx].matches[mIdx].matchIndex  = mIdx;
-                state.get().tournaments[tIdx].matches[mIdx].playerA     = state.get().scratchIds[i];
-                state.get().tournaments[tIdx].matches[mIdx].playerB     = state.get().scratchIds[j];
-                state.get().tournaments[tIdx].matches[mIdx].result      = TMATCH_PENDING;
-                state.get().tournaments[tIdx].matches[mIdx].bracketSide = BRACKET_WINNERS;
-                state.get().tournaments[tIdx].matches[mIdx].round       = round;
-                state.get().tournaments[tIdx].matches[mIdx].settled     = 0;
+                state.mut().tournaments[tIdx].matches[mIdx].matchIndex = mIdx;
+                state.mut().tournaments[tIdx].matches[mIdx].playerA = state.get().scratchIds[i];
+                state.mut().tournaments[tIdx].matches[mIdx].playerB = state.get().scratchIds[j];
+                state.mut().tournaments[tIdx].matches[mIdx].result = TMATCH_PENDING;
+                state.mut().tournaments[tIdx].matches[mIdx].bracketSide = BRACKET_WINNERS;
+                state.mut().tournaments[tIdx].matches[mIdx].round = round;
+                state.mut().tournaments[tIdx].matches[mIdx].settled = 0;
                 mIdx = mIdx + 1;
             }
 
@@ -566,17 +566,17 @@ PUBLIC_PROCEDURE(StartTournament)
             id lastId = state.get().scratchIds[n - 1];
             for (uint32 k = n - 1; k > 1; k = k - 1)
             {
-                state.get().scratchIds[k] = state.get().scratchIds[k - 1];
+                state.mut().scratchIds[k] = state.get().scratchIds[k - 1];
             }
-            state.get().scratchIds[1] = lastId;
+            state.mut().scratchIds[1] = lastId;
         }
 
-        state.get().tournaments[tIdx].matchCount   = mIdx;
-        state.get().tournaments[tIdx].totalRounds  = n - 1;
-        state.get().tournaments[tIdx].currentRound = 1;
+        state.mut().tournaments[tIdx].matchCount = mIdx;
+        state.mut().tournaments[tIdx].totalRounds = n - 1;
+        state.mut().tournaments[tIdx].currentRound = 1;
     }
 
-    state.get().tournaments[tIdx].tstate = TSTATE_IN_PROGRESS;
+    state.mut().tournaments[tIdx].tstate = TSTATE_IN_PROGRESS;
 
     output.matchCount = state.get().tournaments[tIdx].matchCount;
     output.success    = 1;
@@ -646,22 +646,22 @@ PUBLIC_PROCEDURE(SubmitMatchResult)
     }
 
     // Record match result
-    state.get().tournaments[tIdx].matches[input.matchIndex].winner     = input.winner;
-    state.get().tournaments[tIdx].matches[input.matchIndex].resultHash = input.resultHash;
-    state.get().tournaments[tIdx].matches[input.matchIndex].settled    = 1;
+    state.mut().tournaments[tIdx].matches[input.matchIndex].winner = input.winner;
+    state.mut().tournaments[tIdx].matches[input.matchIndex].resultHash = input.resultHash;
+    state.mut().tournaments[tIdx].matches[input.matchIndex].settled = 1;
 
     if (input.winner == mPlayerA)
     {
-        state.get().tournaments[tIdx].matches[input.matchIndex].loser  = mPlayerB;
-        state.get().tournaments[tIdx].matches[input.matchIndex].result = TMATCH_PLAYER_A;
+        state.mut().tournaments[tIdx].matches[input.matchIndex].loser = mPlayerB;
+        state.mut().tournaments[tIdx].matches[input.matchIndex].result = TMATCH_PLAYER_A;
     }
     else
     {
-        state.get().tournaments[tIdx].matches[input.matchIndex].loser  = mPlayerA;
-        state.get().tournaments[tIdx].matches[input.matchIndex].result = TMATCH_PLAYER_B;
+        state.mut().tournaments[tIdx].matches[input.matchIndex].loser = mPlayerA;
+        state.mut().tournaments[tIdx].matches[input.matchIndex].result = TMATCH_PLAYER_B;
     }
 
-    state.get().tournaments[tIdx].settledMatchCount = state.get().tournaments[tIdx].settledMatchCount + 1;
+    state.mut().tournaments[tIdx].settledMatchCount = state.get().tournaments[tIdx].settledMatchCount + 1;
 
     id matchLoser  = state.get().tournaments[tIdx].matches[input.matchIndex].loser;
     uint32 regCount = state.get().tournaments[tIdx].registeredCount;
@@ -671,8 +671,8 @@ PUBLIC_PROCEDURE(SubmitMatchResult)
     {
         if (state.get().tournaments[tIdx].players[ii].wallet == input.winner)
         {
-            state.get().tournaments[tIdx].players[ii].wins   = state.get().tournaments[tIdx].players[ii].wins + 1;
-            state.get().tournaments[tIdx].players[ii].points = state.get().tournaments[tIdx].players[ii].points + 3;
+            state.mut().tournaments[tIdx].players[ii].wins = state.get().tournaments[tIdx].players[ii].wins + 1;
+            state.mut().tournaments[tIdx].players[ii].points = state.get().tournaments[tIdx].players[ii].points + 3;
         }
     }
 
@@ -681,13 +681,13 @@ PUBLIC_PROCEDURE(SubmitMatchResult)
     {
         if (state.get().tournaments[tIdx].players[ii].wallet == matchLoser)
         {
-            state.get().tournaments[tIdx].players[ii].losses = state.get().tournaments[tIdx].players[ii].losses + 1;
+            state.mut().tournaments[tIdx].players[ii].losses = state.get().tournaments[tIdx].players[ii].losses + 1;
 
             // Eliminate only if single elim, or already in losers bracket (double elim)
             if (state.get().tournaments[tIdx].format != FORMAT_DOUBLE_ELIMINATION ||
                 state.get().tournaments[tIdx].players[ii].inLosersBracket)
             {
-                state.get().tournaments[tIdx].players[ii].eliminated = 1;
+                state.mut().tournaments[tIdx].players[ii].eliminated = 1;
             }
         }
     }
@@ -727,7 +727,7 @@ PUBLIC_PROCEDURE(SubmitMatchResult)
             if (state.get().tournaments[tIdx].matches[ii].round == currentRound &&
                 state.get().tournaments[tIdx].matches[ii].bracketSide == BRACKET_WINNERS)
             {
-                state.get().scratchIds[winnerCount] = state.get().tournaments[tIdx].matches[ii].winner;
+                state.mut().scratchIds[winnerCount] = state.get().tournaments[tIdx].matches[ii].winner;
                 winnerCount = winnerCount + 1;
             }
         }
@@ -735,14 +735,14 @@ PUBLIC_PROCEDURE(SubmitMatchResult)
         if (winnerCount == 1)
         {
             // Finals complete — determine placements
-            state.get().tournaments[tIdx].first = state.get().scratchIds[0];
+            state.mut().tournaments[tIdx].first = state.get().scratchIds[0];
 
             // Second = loser of the grand final match
             for (uint32 ii = 0; ii < state.get().tournaments[tIdx].matchCount; ii = ii + 1)
             {
                 if (state.get().tournaments[tIdx].matches[ii].round == currentRound)
                 {
-                    state.get().tournaments[tIdx].second = state.get().tournaments[tIdx].matches[ii].loser;
+                    state.mut().tournaments[tIdx].second = state.get().tournaments[tIdx].matches[ii].loser;
                 }
             }
 
@@ -754,14 +754,14 @@ PUBLIC_PROCEDURE(SubmitMatchResult)
                     state.get().tournaments[tIdx].matches[ii].loser != finalist &&
                     state.get().tournaments[tIdx].third == NULL_ID)
                 {
-                    state.get().tournaments[tIdx].third = state.get().tournaments[tIdx].matches[ii].loser;
+                    state.mut().tournaments[tIdx].third = state.get().tournaments[tIdx].matches[ii].loser;
                 }
             }
 
             // Distribute prizes: 60 / 30 / 10 via div()
             if (state.get().tournaments[tIdx].prizesDistributed == 0)
             {
-                state.get().tournaments[tIdx].tstate = TSTATE_FINALIZING;
+                state.mut().tournaments[tIdx].tstate = TSTATE_FINALIZING;
 
                 uint64 total  = state.get().tournaments[tIdx].prizePool;
                 uint64 first  = div(total * QZN_TOURNAMENT_PRIZE_FIRST,  (uint64).quot100);
@@ -772,9 +772,9 @@ PUBLIC_PROCEDURE(SubmitMatchResult)
                 if (state.get().tournaments[tIdx].second != NULL_ID) qpi.transfer(state.get().tournaments[tIdx].second, second);
                 if (state.get().tournaments[tIdx].third  != NULL_ID) qpi.transfer(state.get().tournaments[tIdx].third,  third);
 
-                state.get().tournaments[tIdx].prizesDistributed = 1;
+                state.mut().tournaments[tIdx].prizesDistributed = 1;
                 state.mut().totalPrizesDistributed = state.get().totalPrizesDistributed + total;
-                state.get().tournaments[tIdx].tstate = TSTATE_COMPLETE;
+                state.mut().tournaments[tIdx].tstate = TSTATE_COMPLETE;
             }
 
             output.tournamentComplete = 1;
@@ -787,18 +787,18 @@ PUBLIC_PROCEDURE(SubmitMatchResult)
 
         for (uint32 i = 0; i + 1 < winnerCount; i = i + 2)
         {
-            state.get().tournaments[tIdx].matches[mIdx].matchIndex  = mIdx;
-            state.get().tournaments[tIdx].matches[mIdx].playerA     = state.get().scratchIds[i];
-            state.get().tournaments[tIdx].matches[mIdx].playerB     = state.get().scratchIds[i + 1];
-            state.get().tournaments[tIdx].matches[mIdx].result      = TMATCH_PENDING;
-            state.get().tournaments[tIdx].matches[mIdx].bracketSide = BRACKET_WINNERS;
-            state.get().tournaments[tIdx].matches[mIdx].round       = nextRound;
-            state.get().tournaments[tIdx].matches[mIdx].settled     = 0;
+            state.mut().tournaments[tIdx].matches[mIdx].matchIndex = mIdx;
+            state.mut().tournaments[tIdx].matches[mIdx].playerA = state.get().scratchIds[i];
+            state.mut().tournaments[tIdx].matches[mIdx].playerB = state.get().scratchIds[i + 1];
+            state.mut().tournaments[tIdx].matches[mIdx].result = TMATCH_PENDING;
+            state.mut().tournaments[tIdx].matches[mIdx].bracketSide = BRACKET_WINNERS;
+            state.mut().tournaments[tIdx].matches[mIdx].round = nextRound;
+            state.mut().tournaments[tIdx].matches[mIdx].settled = 0;
             mIdx = mIdx + 1;
         }
 
-        state.get().tournaments[tIdx].matchCount   = mIdx;
-        state.get().tournaments[tIdx].currentRound = nextRound;
+        state.mut().tournaments[tIdx].matchCount = mIdx;
+        state.mut().tournaments[tIdx].currentRound = nextRound;
     }
 
     // ── Double Elimination advancement ───────────────────────
@@ -817,8 +817,8 @@ PUBLIC_PROCEDURE(SubmitMatchResult)
             if (state.get().tournaments[tIdx].matches[ii].round == currentRound &&
                 state.get().tournaments[tIdx].matches[ii].bracketSide == BRACKET_WINNERS)
             {
-                state.get().scratchIds[wCount]        = state.get().tournaments[tIdx].matches[ii].winner;
-                state.get().scratchIds[32 + lCount]   = state.get().tournaments[tIdx].matches[ii].loser;
+                state.mut().scratchIds[wCount] = state.get().tournaments[tIdx].matches[ii].winner;
+                state.mut().scratchIds[32 + lCount] = state.get().tournaments[tIdx].matches[ii].loser;
                 wCount = wCount + 1;
                 lCount = lCount + 1;
 
@@ -827,7 +827,7 @@ PUBLIC_PROCEDURE(SubmitMatchResult)
                 {
                     if (state.get().tournaments[tIdx].players[jj].wallet == state.get().tournaments[tIdx].matches[ii].loser)
                     {
-                        state.get().tournaments[tIdx].players[jj].inLosersBracket = 1;
+                        state.mut().tournaments[tIdx].players[jj].inLosersBracket = 1;
                     }
                 }
             }
@@ -856,25 +856,25 @@ PUBLIC_PROCEDURE(SubmitMatchResult)
             if (lbFound && lbFinalist != NULL_ID)
             {
                 // Grand final match
-                state.get().tournaments[tIdx].matches[mIdx].matchIndex  = mIdx;
-                state.get().tournaments[tIdx].matches[mIdx].playerA     = state.get().scratchIds[0];
-                state.get().tournaments[tIdx].matches[mIdx].playerB     = lbFinalist;
-                state.get().tournaments[tIdx].matches[mIdx].result      = TMATCH_PENDING;
-                state.get().tournaments[tIdx].matches[mIdx].bracketSide = BRACKET_WINNERS;
-                state.get().tournaments[tIdx].matches[mIdx].round       = nextRound;
-                state.get().tournaments[tIdx].matches[mIdx].settled     = 0;
+                state.mut().tournaments[tIdx].matches[mIdx].matchIndex = mIdx;
+                state.mut().tournaments[tIdx].matches[mIdx].playerA = state.get().scratchIds[0];
+                state.mut().tournaments[tIdx].matches[mIdx].playerB = lbFinalist;
+                state.mut().tournaments[tIdx].matches[mIdx].result = TMATCH_PENDING;
+                state.mut().tournaments[tIdx].matches[mIdx].bracketSide = BRACKET_WINNERS;
+                state.mut().tournaments[tIdx].matches[mIdx].round = nextRound;
+                state.mut().tournaments[tIdx].matches[mIdx].settled = 0;
 
-                state.get().tournaments[tIdx].matchCount   = mIdx + 1;
-                state.get().tournaments[tIdx].currentRound = nextRound;
+                state.mut().tournaments[tIdx].matchCount = mIdx + 1;
+                state.mut().tournaments[tIdx].currentRound = nextRound;
                 return;
             }
 
             // No losers-bracket finalist — tournament complete
-            state.get().tournaments[tIdx].first = state.get().scratchIds[0];
+            state.mut().tournaments[tIdx].first = state.get().scratchIds[0];
 
             if (state.get().tournaments[tIdx].prizesDistributed == 0)
             {
-                state.get().tournaments[tIdx].tstate = TSTATE_FINALIZING;
+                state.mut().tournaments[tIdx].tstate = TSTATE_FINALIZING;
 
                 uint64 total  = state.get().tournaments[tIdx].prizePool;
                 uint64 first  = div(total * QZN_TOURNAMENT_PRIZE_FIRST,  (uint64).quot100);
@@ -885,9 +885,9 @@ PUBLIC_PROCEDURE(SubmitMatchResult)
                 if (state.get().tournaments[tIdx].second != NULL_ID) qpi.transfer(state.get().tournaments[tIdx].second, second);
                 if (state.get().tournaments[tIdx].third  != NULL_ID) qpi.transfer(state.get().tournaments[tIdx].third,  third);
 
-                state.get().tournaments[tIdx].prizesDistributed = 1;
+                state.mut().tournaments[tIdx].prizesDistributed = 1;
                 state.mut().totalPrizesDistributed = state.get().totalPrizesDistributed + total;
-                state.get().tournaments[tIdx].tstate = TSTATE_COMPLETE;
+                state.mut().tournaments[tIdx].tstate = TSTATE_COMPLETE;
             }
 
             output.tournamentComplete = 1;
@@ -897,31 +897,31 @@ PUBLIC_PROCEDURE(SubmitMatchResult)
         // Pair winners-bracket survivors (scratchIds[0..wCount-1])
         for (uint32 i = 0; i + 1 < wCount; i = i + 2)
         {
-            state.get().tournaments[tIdx].matches[mIdx].matchIndex  = mIdx;
-            state.get().tournaments[tIdx].matches[mIdx].playerA     = state.get().scratchIds[i];
-            state.get().tournaments[tIdx].matches[mIdx].playerB     = state.get().scratchIds[i + 1];
-            state.get().tournaments[tIdx].matches[mIdx].result      = TMATCH_PENDING;
-            state.get().tournaments[tIdx].matches[mIdx].bracketSide = BRACKET_WINNERS;
-            state.get().tournaments[tIdx].matches[mIdx].round       = nextRound;
-            state.get().tournaments[tIdx].matches[mIdx].settled     = 0;
+            state.mut().tournaments[tIdx].matches[mIdx].matchIndex = mIdx;
+            state.mut().tournaments[tIdx].matches[mIdx].playerA = state.get().scratchIds[i];
+            state.mut().tournaments[tIdx].matches[mIdx].playerB = state.get().scratchIds[i + 1];
+            state.mut().tournaments[tIdx].matches[mIdx].result = TMATCH_PENDING;
+            state.mut().tournaments[tIdx].matches[mIdx].bracketSide = BRACKET_WINNERS;
+            state.mut().tournaments[tIdx].matches[mIdx].round = nextRound;
+            state.mut().tournaments[tIdx].matches[mIdx].settled = 0;
             mIdx = mIdx + 1;
         }
 
         // Pair losers-bracket players (scratchIds[32..32+lCount-1])
         for (uint32 i = 0; i + 1 < lCount; i = i + 2)
         {
-            state.get().tournaments[tIdx].matches[mIdx].matchIndex  = mIdx;
-            state.get().tournaments[tIdx].matches[mIdx].playerA     = state.get().scratchIds[32 + i];
-            state.get().tournaments[tIdx].matches[mIdx].playerB     = state.get().scratchIds[32 + i + 1];
-            state.get().tournaments[tIdx].matches[mIdx].result      = TMATCH_PENDING;
-            state.get().tournaments[tIdx].matches[mIdx].bracketSide = BRACKET_LOSERS;
-            state.get().tournaments[tIdx].matches[mIdx].round       = nextRound;
-            state.get().tournaments[tIdx].matches[mIdx].settled     = 0;
+            state.mut().tournaments[tIdx].matches[mIdx].matchIndex = mIdx;
+            state.mut().tournaments[tIdx].matches[mIdx].playerA = state.get().scratchIds[32 + i];
+            state.mut().tournaments[tIdx].matches[mIdx].playerB = state.get().scratchIds[32 + i + 1];
+            state.mut().tournaments[tIdx].matches[mIdx].result = TMATCH_PENDING;
+            state.mut().tournaments[tIdx].matches[mIdx].bracketSide = BRACKET_LOSERS;
+            state.mut().tournaments[tIdx].matches[mIdx].round = nextRound;
+            state.mut().tournaments[tIdx].matches[mIdx].settled = 0;
             mIdx = mIdx + 1;
         }
 
-        state.get().tournaments[tIdx].matchCount   = mIdx;
-        state.get().tournaments[tIdx].currentRound = nextRound;
+        state.mut().tournaments[tIdx].matchCount = mIdx;
+        state.mut().tournaments[tIdx].currentRound = nextRound;
     }
 
     // ── Round Robin advancement ───────────────────────────────
@@ -934,25 +934,25 @@ PUBLIC_PROCEDURE(SubmitMatchResult)
 
             for (uint32 i = 1; i < rc; i = i + 1)
             {
-                PlayerRecord keyRecord = state.get().tournaments[tIdx].players[i];
+                TournamentPlayerRecord keyRecord = state.get().tournaments[tIdx].players[i];
                 sint32 j = (sint32)i - 1;
 
                 while (j >= 0 && state.get().tournaments[tIdx].players[j].points < keyRecord.points)
                 {
-                    state.get().tournaments[tIdx].players[j + 1] = state.get().tournaments[tIdx].players[j];
+                    state.mut().tournaments[tIdx].players[j + 1] = state.get().tournaments[tIdx].players[j];
                     j = j - 1;
                 }
 
-                state.get().tournaments[tIdx].players[j + 1] = keyRecord;
+                state.mut().tournaments[tIdx].players[j + 1] = keyRecord;
             }
 
-            state.get().tournaments[tIdx].first  = state.get().tournaments[tIdx].players[0].wallet;
-            state.get().tournaments[tIdx].second = state.get().tournaments[tIdx].players[1].wallet;
-            state.get().tournaments[tIdx].third  = state.get().tournaments[tIdx].players[2].wallet;
+            state.mut().tournaments[tIdx].first = state.get().tournaments[tIdx].players[0].wallet;
+            state.mut().tournaments[tIdx].second = state.get().tournaments[tIdx].players[1].wallet;
+            state.mut().tournaments[tIdx].third = state.get().tournaments[tIdx].players[2].wallet;
 
             if (state.get().tournaments[tIdx].prizesDistributed == 0)
             {
-                state.get().tournaments[tIdx].tstate = TSTATE_FINALIZING;
+                state.mut().tournaments[tIdx].tstate = TSTATE_FINALIZING;
 
                 uint64 total  = state.get().tournaments[tIdx].prizePool;
                 uint64 first  = div(total * QZN_TOURNAMENT_PRIZE_FIRST,  (uint64).quot100);
@@ -963,16 +963,16 @@ PUBLIC_PROCEDURE(SubmitMatchResult)
                 if (state.get().tournaments[tIdx].second != NULL_ID) qpi.transfer(state.get().tournaments[tIdx].second, second);
                 if (state.get().tournaments[tIdx].third  != NULL_ID) qpi.transfer(state.get().tournaments[tIdx].third,  third);
 
-                state.get().tournaments[tIdx].prizesDistributed = 1;
+                state.mut().tournaments[tIdx].prizesDistributed = 1;
                 state.mut().totalPrizesDistributed = state.get().totalPrizesDistributed + total;
-                state.get().tournaments[tIdx].tstate = TSTATE_COMPLETE;
+                state.mut().tournaments[tIdx].tstate = TSTATE_COMPLETE;
             }
 
             output.tournamentComplete = 1;
         }
         else
         {
-            state.get().tournaments[tIdx].currentRound = state.get().tournaments[tIdx].currentRound + 1;
+            state.mut().tournaments[tIdx].currentRound = state.get().tournaments[tIdx].currentRound + 1;
         }
     }
 }
@@ -1013,8 +1013,8 @@ PUBLIC_PROCEDURE(CancelTournament)
         }
     }
 
-    state.get().tournaments[tIdx].tstate   = TSTATE_CANCELLED;
-    state.get().tournaments[tIdx].prizePool = 0;
+    state.mut().tournaments[tIdx].tstate = TSTATE_CANCELLED;
+    state.mut().tournaments[tIdx].prizePool = 0;
     output.success = 1;
 }
 

@@ -944,30 +944,30 @@ PUBLIC_PROCEDURE(RegisterPlayer)
     // Write player record
     if (slot == 0)
     {
-        state.mut().players_0.walletAddress       = qpi.invocator();
-        state.mut().players_0.currentEpoch        = qpi.epoch();
-        state.mut().players_0.epochEarned         = 0;
-        state.mut().players_0.pendingBalance      = 0;
-        state.mut().players_0.lifetimeEarned      = 0;
-        state.mut().players_0.stakedAmount        = input.initialStake;
-        state.mut().players_0.stakeMultiplierBPS  = multBPS;
-        state.mut().players_0.totalMatchesPlayed  = 0;
-        state.mut().players_0.totalMatchesWon     = 0;
-        state.mut().players_0.currentWinStreak    = 0;
-        state.mut().players_0.bestWinStreak       = 0;
-        state.mut().players_0.wonSnaqe            = 0;
-        state.mut().players_0.wonPaqman           = 0;
-        state.mut().players_0.wonTanq             = 0;
-        state.mut().players_0.achFirstWin         = 0;
-        state.mut().players_0.achStreak5          = 0;
-        state.mut().players_0.achStreak10         = 0;
-        state.mut().players_0.achMatches100       = 0;
-        state.mut().players_0.achMatches1000      = 0;
-        state.mut().players_0.achHighStake        = 0;
-        state.mut().players_0.achAllGames         = 0;
-        state.mut().players_0.achTopLeaderboard   = 0;
-        state.mut().players_0.epochScore          = 0;
-        state.mut().players_0.active              = 1;
+        state.mut().players_0.walletAddress = qpi.invocator();
+        state.mut().players_0.currentEpoch = qpi.epoch();
+        state.mut().players_0.epochEarned = 0;
+        state.mut().players_0.pendingBalance = 0;
+        state.mut().players_0.lifetimeEarned = 0;
+        state.mut().players_0.stakedAmount = input.initialStake;
+        state.mut().players_0.stakeMultiplierBPS = multBPS;
+        state.mut().players_0.totalMatchesPlayed = 0;
+        state.mut().players_0.totalMatchesWon = 0;
+        state.mut().players_0.currentWinStreak = 0;
+        state.mut().players_0.bestWinStreak = 0;
+        state.mut().players_0.wonSnaqe = 0;
+        state.mut().players_0.wonPaqman = 0;
+        state.mut().players_0.wonTanq = 0;
+        state.mut().players_0.achFirstWin = 0;
+        state.mut().players_0.achStreak5 = 0;
+        state.mut().players_0.achStreak10 = 0;
+        state.mut().players_0.achMatches100 = 0;
+        state.mut().players_0.achMatches1000 = 0;
+        state.mut().players_0.achHighStake = 0;
+        state.mut().players_0.achAllGames = 0;
+        state.mut().players_0.achTopLeaderboard = 0;
+        state.mut().players_0.epochScore = 0;
+        state.mut().players_0.active = 1;
     }
     // Slots 1-15 follow identical pattern in full deployment
 
@@ -1627,8 +1627,8 @@ PUBLIC_PROCEDURE(ReportMatchResult)
         if (state.get().players_0.currentEpoch != qpi.epoch())
         {
             state.mut().players_0.currentEpoch = qpi.epoch();
-            state.mut().players_0.epochEarned  = 0;
-            state.mut().players_0.epochScore   = 0;
+            state.mut().players_0.epochEarned = 0;
+            state.mut().players_0.epochScore = 0;
         }
 
         // ---- COMPUTE BASE REWARD WITH MULTIPLIER ----
@@ -1654,14 +1654,14 @@ PUBLIC_PROCEDURE(ReportMatchResult)
 
         // Credit base reward
         state.mut().players_0.pendingBalance = state.get().players_0.pendingBalance + multipliedReward;
-        state.mut().players_0.epochEarned    = state.get().players_0.epochEarned + multipliedReward;
+        state.mut().players_0.epochEarned = state.get().players_0.epochEarned + multipliedReward;
         state.mut().players_0.lifetimeEarned = state.get().players_0.lifetimeEarned + multipliedReward;
 
         // Update match stats
         state.mut().players_0.totalMatchesPlayed = state.get().players_0.totalMatchesPlayed + 1;
-        state.mut().players_0.totalMatchesWon    = state.get().players_0.totalMatchesWon + 1;
-        state.mut().players_0.currentWinStreak   = state.get().players_0.currentWinStreak + 1;
-        state.mut().players_0.epochScore         = state.get().players_0.epochScore + multipliedReward;
+        state.mut().players_0.totalMatchesWon = state.get().players_0.totalMatchesWon + 1;
+        state.mut().players_0.currentWinStreak = state.get().players_0.currentWinStreak + 1;
+        state.mut().players_0.epochScore = state.get().players_0.epochScore + multipliedReward;
 
         if (state.get().players_0.currentWinStreak > state.get().players_0.bestWinStreak)
         {
@@ -1669,9 +1669,9 @@ PUBLIC_PROCEDURE(ReportMatchResult)
         }
 
         // Track per-game wins for ALL_GAMES achievement
-        if (input.gameId == 1) { state.mut().players_0.wonSnaqe  = 1; }
+        if (input.gameId == 1) { state.mut().players_0.wonSnaqe = 1; }
         if (input.gameId == 2) { state.mut().players_0.wonPaqman = 1; }
-        if (input.gameId == 3) { state.mut().players_0.wonTanq   = 1; }
+        if (input.gameId == 3) { state.mut().players_0.wonTanq = 1; }
 
         // ---- ACHIEVEMENT CHECKS ----
         // Achievement bonuses bypass epoch cap — intentional design
@@ -1681,7 +1681,7 @@ PUBLIC_PROCEDURE(ReportMatchResult)
         if (!state.get().players_0.achFirstWin &&
             state.get().players_0.totalMatchesWon >= 1)
         {
-            state.mut().players_0.achFirstWin    = 1;
+            state.mut().players_0.achFirstWin = 1;
             state.mut().players_0.pendingBalance = state.get().players_0.pendingBalance + ACH_FIRST_WIN;
             achBonus = achBonus + ACH_FIRST_WIN;
             state.mut().totalAchievementsAwarded = state.get().totalAchievementsAwarded + 1;
@@ -1691,7 +1691,7 @@ PUBLIC_PROCEDURE(ReportMatchResult)
         if (!state.get().players_0.achStreak5 &&
             state.get().players_0.currentWinStreak >= 5)
         {
-            state.mut().players_0.achStreak5     = 1;
+            state.mut().players_0.achStreak5 = 1;
             state.mut().players_0.pendingBalance = state.get().players_0.pendingBalance + ACH_STREAK_5;
             achBonus = achBonus + ACH_STREAK_5;
             state.mut().totalAchievementsAwarded = state.get().totalAchievementsAwarded + 1;
@@ -1701,7 +1701,7 @@ PUBLIC_PROCEDURE(ReportMatchResult)
         if (!state.get().players_0.achStreak10 &&
             state.get().players_0.currentWinStreak >= 10)
         {
-            state.mut().players_0.achStreak10    = 1;
+            state.mut().players_0.achStreak10 = 1;
             state.mut().players_0.pendingBalance = state.get().players_0.pendingBalance + ACH_STREAK_10;
             achBonus = achBonus + ACH_STREAK_10;
             state.mut().totalAchievementsAwarded = state.get().totalAchievementsAwarded + 1;
@@ -1711,7 +1711,7 @@ PUBLIC_PROCEDURE(ReportMatchResult)
         if (!state.get().players_0.achMatches100 &&
             state.get().players_0.totalMatchesPlayed >= 100)
         {
-            state.mut().players_0.achMatches100  = 1;
+            state.mut().players_0.achMatches100 = 1;
             state.mut().players_0.pendingBalance = state.get().players_0.pendingBalance + ACH_MATCHES_100;
             achBonus = achBonus + ACH_MATCHES_100;
             state.mut().totalAchievementsAwarded = state.get().totalAchievementsAwarded + 1;
@@ -1731,7 +1731,7 @@ PUBLIC_PROCEDURE(ReportMatchResult)
         if (!state.get().players_0.achHighStake &&
             input.stakeAmount >= ACH_HIGH_STAKE_MIN)
         {
-            state.mut().players_0.achHighStake   = 1;
+            state.mut().players_0.achHighStake = 1;
             state.mut().players_0.pendingBalance = state.get().players_0.pendingBalance + ACH_HIGH_STAKE;
             achBonus = achBonus + ACH_HIGH_STAKE;
             state.mut().totalAchievementsAwarded = state.get().totalAchievementsAwarded + 1;
@@ -1743,7 +1743,7 @@ PUBLIC_PROCEDURE(ReportMatchResult)
             state.get().players_0.wonPaqman &&
             state.get().players_0.wonTanq)
         {
-            state.mut().players_0.achAllGames    = 1;
+            state.mut().players_0.achAllGames = 1;
             state.mut().players_0.pendingBalance = state.get().players_0.pendingBalance + ACH_ALL_GAMES;
             achBonus = achBonus + ACH_ALL_GAMES;
             state.mut().totalAchievementsAwarded = state.get().totalAchievementsAwarded + 1;
@@ -1759,7 +1759,7 @@ PUBLIC_PROCEDURE(ReportMatchResult)
         if (playerEpochScore > state.get().board_9.score)
         {
             state.mut().board_9.walletAddress = input.winnerAddress;
-            state.mut().board_9.score         = playerEpochScore;
+            state.mut().board_9.score = playerEpochScore;
             // Full sort happens in BEGIN_EPOCH()
         }
 
@@ -1829,7 +1829,7 @@ PUBLIC_PROCEDURE(ClaimRewards)
         }
 
         // Execute transfer
-        state.mut().players_0.pendingBalance    = 0;
+        state.mut().players_0.pendingBalance = 0;
         state.mut().totalQZNDistributed = state.get().totalQZNDistributed + claimAmount;
         state.mut().epochTotalDistributed = state.get().epochTotalDistributed + claimAmount;
 
@@ -2029,7 +2029,7 @@ BEGIN_EPOCH()
             if (!state.get().players_0.achTopLeaderboard)
             {
                 state.mut().players_0.achTopLeaderboard = 1;
-                state.mut().players_0.pendingBalance    = state.get().players_0.pendingBalance + ACH_TOP_LEADERBOARD;
+                state.mut().players_0.pendingBalance = state.get().players_0.pendingBalance + ACH_TOP_LEADERBOARD;
                 state.mut().totalAchievementsAwarded = state.get().totalAchievementsAwarded + 1;
             }
         }
