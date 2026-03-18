@@ -1091,7 +1091,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.totalStake    = state.get().matches_0.totalStake;
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
-            QZN_TOKEN_CONTRACT_INDEX_LOCAL,
+            QZN,
             QZN_SETTLE_MATCH_PROC_ID,
             settlementCall,
             sizeof(settlementCall),
@@ -1183,7 +1183,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.totalStake    = state.get().matches_1.totalStake;
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
-            QZN_TOKEN_CONTRACT_INDEX_LOCAL,
+            QZN,
             QZN_SETTLE_MATCH_PROC_ID,
             settlementCall,
             sizeof(settlementCall),
@@ -1275,7 +1275,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.totalStake    = state.get().matches_2.totalStake;
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
-            QZN_TOKEN_CONTRACT_INDEX_LOCAL,
+            QZN,
             QZN_SETTLE_MATCH_PROC_ID,
             settlementCall,
             sizeof(settlementCall),
@@ -1367,7 +1367,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.totalStake    = state.get().matches_3.totalStake;
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
-            QZN_TOKEN_CONTRACT_INDEX_LOCAL,
+            QZN,
             QZN_SETTLE_MATCH_PROC_ID,
             settlementCall,
             sizeof(settlementCall),
@@ -1459,7 +1459,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.totalStake    = state.get().matches_4.totalStake;
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
-            QZN_TOKEN_CONTRACT_INDEX_LOCAL,
+            QZN,
             QZN_SETTLE_MATCH_PROC_ID,
             settlementCall,
             sizeof(settlementCall),
@@ -1551,7 +1551,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.totalStake    = state.get().matches_5.totalStake;
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
-            QZN_TOKEN_CONTRACT_INDEX_LOCAL,
+            QZN,
             QZN_SETTLE_MATCH_PROC_ID,
             settlementCall,
             sizeof(settlementCall),
@@ -1643,7 +1643,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.totalStake    = state.get().matches_6.totalStake;
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
-            QZN_TOKEN_CONTRACT_INDEX_LOCAL,
+            QZN,
             QZN_SETTLE_MATCH_PROC_ID,
             settlementCall,
             sizeof(settlementCall),
@@ -1735,7 +1735,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.totalStake    = state.get().matches_7.totalStake;
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
-            QZN_TOKEN_CONTRACT_INDEX_LOCAL,
+            QZN,
             QZN_SETTLE_MATCH_PROC_ID,
             settlementCall,
             sizeof(settlementCall),
@@ -1827,7 +1827,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.totalStake    = state.get().matches_8.totalStake;
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
-            QZN_TOKEN_CONTRACT_INDEX_LOCAL,
+            QZN,
             QZN_SETTLE_MATCH_PROC_ID,
             settlementCall,
             sizeof(settlementCall),
@@ -1919,7 +1919,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.totalStake    = state.get().matches_9.totalStake;
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
-            QZN_TOKEN_CONTRACT_INDEX_LOCAL,
+            QZN,
             QZN_SETTLE_MATCH_PROC_ID,
             settlementCall,
             sizeof(settlementCall),
@@ -2011,7 +2011,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.totalStake    = state.get().matches_10.totalStake;
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
-            QZN_TOKEN_CONTRACT_INDEX_LOCAL,
+            QZN,
             QZN_SETTLE_MATCH_PROC_ID,
             settlementCall,
             sizeof(settlementCall),
@@ -2103,7 +2103,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.totalStake    = state.get().matches_11.totalStake;
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
-            QZN_TOKEN_CONTRACT_INDEX_LOCAL,
+            QZN,
             QZN_SETTLE_MATCH_PROC_ID,
             settlementCall,
             sizeof(settlementCall),
@@ -2195,7 +2195,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.totalStake    = state.get().matches_12.totalStake;
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
-            QZN_TOKEN_CONTRACT_INDEX_LOCAL,
+            QZN,
             QZN_SETTLE_MATCH_PROC_ID,
             settlementCall,
             sizeof(settlementCall),
@@ -2287,7 +2287,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.totalStake    = state.get().matches_13.totalStake;
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
-            QZN_TOKEN_CONTRACT_INDEX_LOCAL,
+            QZN,
             QZN_SETTLE_MATCH_PROC_ID,
             settlementCall,
             sizeof(settlementCall),
@@ -2379,7 +2379,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.totalStake    = state.get().matches_14.totalStake;
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
-            QZN_TOKEN_CONTRACT_INDEX_LOCAL,
+            QZN,
             QZN_SETTLE_MATCH_PROC_ID,
             settlementCall,
             sizeof(settlementCall),
@@ -2471,7 +2471,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.totalStake    = state.get().matches_15.totalStake;
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
-            QZN_TOKEN_CONTRACT_INDEX_LOCAL,
+            QZN,
             QZN_SETTLE_MATCH_PROC_ID,
             settlementCall,
             sizeof(settlementCall),
