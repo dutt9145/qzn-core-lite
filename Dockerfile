@@ -45,7 +45,8 @@ RUN mkdir -p build && cd build && \
     cmake .. \
       -DCMAKE_C_COMPILER=clang-18 \
       -DCMAKE_CXX_COMPILER=clang++-18 \
-      -DCMAKE_BUILD_TYPE=Release && \
+      -DCMAKE_BUILD_TYPE=Release \
+    || (cat /app/build/CMakeFiles/CMakeError.log && exit 1) && \
     make -j$(nproc) Qubic
 
 # Build and run tests (fails build if tests fail)
