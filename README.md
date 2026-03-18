@@ -26,4 +26,4 @@ https://your-service.up.railway.app/query/v1  → query contracts
 ## Notes
 - Runs in local testnet mode (single node devnet, no mainnet connection)
 - 676 test seeds each pre-funded with 10B QU for testing
-- Default epoch duration is 3000 ticks
+- Default epoch duration is 3000 ticks# qzn-core-lite
