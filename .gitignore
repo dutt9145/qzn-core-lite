@@ -4,4 +4,4 @@ build/
 system
 spectrum.*
 universe.*
-contract*.???
+.DS_Store
