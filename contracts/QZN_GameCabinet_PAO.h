@@ -1086,7 +1086,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         }
 
         // ---- DUEL / MULTI: cross-contract call → Token_v2 SettleMatch ----
-        TokenSettleMatch_input settlementCall;
+        QZN::SettleMatch_input settlementCall;
         settlementCall.winnerAddress = state.get().matches_0.winnerAddress;
         settlementCall.totalStake    = state.get().matches_0.totalStake;
 
@@ -1178,7 +1178,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         }
 
         // ---- DUEL / MULTI: cross-contract call → Token_v2 SettleMatch ----
-        TokenSettleMatch_input settlementCall;
+        QZN::SettleMatch_input settlementCall;
         settlementCall.winnerAddress = state.get().matches_1.winnerAddress;
         settlementCall.totalStake    = state.get().matches_1.totalStake;
 
@@ -1270,7 +1270,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         }
 
         // ---- DUEL / MULTI: cross-contract call → Token_v2 SettleMatch ----
-        TokenSettleMatch_input settlementCall;
+        QZN::SettleMatch_input settlementCall;
         settlementCall.winnerAddress = state.get().matches_2.winnerAddress;
         settlementCall.totalStake    = state.get().matches_2.totalStake;
 
@@ -1362,7 +1362,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         }
 
         // ---- DUEL / MULTI: cross-contract call → Token_v2 SettleMatch ----
-        TokenSettleMatch_input settlementCall;
+        QZN::SettleMatch_input settlementCall;
         settlementCall.winnerAddress = state.get().matches_3.winnerAddress;
         settlementCall.totalStake    = state.get().matches_3.totalStake;
 
@@ -1454,7 +1454,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         }
 
         // ---- DUEL / MULTI: cross-contract call → Token_v2 SettleMatch ----
-        TokenSettleMatch_input settlementCall;
+        QZN::SettleMatch_input settlementCall;
         settlementCall.winnerAddress = state.get().matches_4.winnerAddress;
         settlementCall.totalStake    = state.get().matches_4.totalStake;
 
@@ -1546,7 +1546,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         }
 
         // ---- DUEL / MULTI: cross-contract call → Token_v2 SettleMatch ----
-        TokenSettleMatch_input settlementCall;
+        QZN::SettleMatch_input settlementCall;
         settlementCall.winnerAddress = state.get().matches_5.winnerAddress;
         settlementCall.totalStake    = state.get().matches_5.totalStake;
 
@@ -1638,7 +1638,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         }
 
         // ---- DUEL / MULTI: cross-contract call → Token_v2 SettleMatch ----
-        TokenSettleMatch_input settlementCall;
+        QZN::SettleMatch_input settlementCall;
         settlementCall.winnerAddress = state.get().matches_6.winnerAddress;
         settlementCall.totalStake    = state.get().matches_6.totalStake;
 
@@ -1730,7 +1730,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         }
 
         // ---- DUEL / MULTI: cross-contract call → Token_v2 SettleMatch ----
-        TokenSettleMatch_input settlementCall;
+        QZN::SettleMatch_input settlementCall;
         settlementCall.winnerAddress = state.get().matches_7.winnerAddress;
         settlementCall.totalStake    = state.get().matches_7.totalStake;
 
@@ -1822,7 +1822,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         }
 
         // ---- DUEL / MULTI: cross-contract call → Token_v2 SettleMatch ----
-        TokenSettleMatch_input settlementCall;
+        QZN::SettleMatch_input settlementCall;
         settlementCall.winnerAddress = state.get().matches_8.winnerAddress;
         settlementCall.totalStake    = state.get().matches_8.totalStake;
 
@@ -1914,7 +1914,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         }
 
         // ---- DUEL / MULTI: cross-contract call → Token_v2 SettleMatch ----
-        TokenSettleMatch_input settlementCall;
+        QZN::SettleMatch_input settlementCall;
         settlementCall.winnerAddress = state.get().matches_9.winnerAddress;
         settlementCall.totalStake    = state.get().matches_9.totalStake;
 
@@ -2006,7 +2006,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         }
 
         // ---- DUEL / MULTI: cross-contract call → Token_v2 SettleMatch ----
-        TokenSettleMatch_input settlementCall;
+        QZN::SettleMatch_input settlementCall;
         settlementCall.winnerAddress = state.get().matches_10.winnerAddress;
         settlementCall.totalStake    = state.get().matches_10.totalStake;
 
@@ -2098,7 +2098,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         }
 
         // ---- DUEL / MULTI: cross-contract call → Token_v2 SettleMatch ----
-        TokenSettleMatch_input settlementCall;
+        QZN::SettleMatch_input settlementCall;
         settlementCall.winnerAddress = state.get().matches_11.winnerAddress;
         settlementCall.totalStake    = state.get().matches_11.totalStake;
 
@@ -2190,7 +2190,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         }
 
         // ---- DUEL / MULTI: cross-contract call → Token_v2 SettleMatch ----
-        TokenSettleMatch_input settlementCall;
+        QZN::SettleMatch_input settlementCall;
         settlementCall.winnerAddress = state.get().matches_12.winnerAddress;
         settlementCall.totalStake    = state.get().matches_12.totalStake;
 
@@ -2282,7 +2282,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         }
 
         // ---- DUEL / MULTI: cross-contract call → Token_v2 SettleMatch ----
-        TokenSettleMatch_input settlementCall;
+        QZN::SettleMatch_input settlementCall;
         settlementCall.winnerAddress = state.get().matches_13.winnerAddress;
         settlementCall.totalStake    = state.get().matches_13.totalStake;
 
@@ -2374,7 +2374,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         }
 
         // ---- DUEL / MULTI: cross-contract call → Token_v2 SettleMatch ----
-        TokenSettleMatch_input settlementCall;
+        QZN::SettleMatch_input settlementCall;
         settlementCall.winnerAddress = state.get().matches_14.winnerAddress;
         settlementCall.totalStake    = state.get().matches_14.totalStake;
 
@@ -2466,7 +2466,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
         }
 
         // ---- DUEL / MULTI: cross-contract call → Token_v2 SettleMatch ----
-        TokenSettleMatch_input settlementCall;
+        QZN::SettleMatch_input settlementCall;
         settlementCall.winnerAddress = state.get().matches_15.winnerAddress;
         settlementCall.totalStake    = state.get().matches_15.totalStake;
 
