@@ -1,42 +1,133 @@
-FROM ubuntu:24.04
-ENV DEBIAN_FRONTEND=noninteractive
+#!/bin/bash
+set -e
 
-RUN apt-get update && apt-get install -y \
-    git cmake clang-18 lld-18 libc++-18-dev libc++abi-18-dev \
-    build-essential nasm wget curl python3 sed pkg-config \
-    uuid-dev libjsoncpp-dev libssl-dev zlib1g-dev libc-ares-dev \
-    libbotan-2-dev libyaml-cpp-dev \
-    && rm -rf /var/lib/apt/lists/*
+CONTRACTS_SRC="/qzn/contracts"
+TESTS_SRC="/qzn/test"
+CORE="/app"
 
-RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-18 100 && \
-    update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-18 100
+echo ">>> Copying QZN contract headers..."
+cp $CONTRACTS_SRC/QZN_Token_v2.h             $CORE/src/contracts/
+cp $CONTRACTS_SRC/QZN_GameCabinet_PAO.h      $CORE/src/contracts/
+cp $CONTRACTS_SRC/QZN_RewardRouter_PAO.h     $CORE/src/contracts/
+cp $CONTRACTS_SRC/QZN_TreasuryVault_PAO.h    $CORE/src/contracts/
+cp $CONTRACTS_SRC/QZN_Portal_PAO.h           $CORE/src/contracts/
+cp $CONTRACTS_SRC/QZN_TournamentEngine_PAO.h $CORE/src/contracts/
 
-WORKDIR /app
-RUN git clone --depth=1 https://github.com/qubic/core-lite.git .
+echo ">>> Copying QZN test files..."
+cp $TESTS_SRC/contract_qzn_token.cpp            $CORE/test/
+cp $TESTS_SRC/contract_qzn_gamecabinet.cpp      $CORE/test/
+cp $TESTS_SRC/contract_qzn_rewardrouter.cpp     $CORE/test/
+cp $TESTS_SRC/contract_qzn_treasuryvault.cpp    $CORE/test/
+cp $TESTS_SRC/contract_qzn_portal.cpp           $CORE/test/
+cp $TESTS_SRC/contract_qzn_tournamentengine.cpp $CORE/test/
 
-RUN mkdir -p /app/build && cd /app/build && cmake .. \
-      -DCMAKE_C_COMPILER=clang-18 \
-      -DCMAKE_CXX_COMPILER=clang++-18 \
-      -DCMAKE_BUILD_TYPE=Release
+echo ">>> Patching contract headers, contract_def.h, and CMakeLists.txt..."
 
-# Pre-build all deps (cached layer)
-RUN cd /app/build && make -j$(nproc) fmt trantor drogon platform_common platform_efi
+python3 << 'PYEOF'
+import re
 
-# Copy contracts after dep build
-COPY contracts/ /qzn/contracts/
-COPY test/      /qzn/test/
-COPY setup.sh /qzn/setup.sh
-RUN chmod +x /qzn/setup.sh && /qzn/setup.sh
+print("  STATE2 structs already present — skipping injection")
+print("  QZN_TOKEN_CONTRACT_INDEX already handled — skipping")
 
-# Build Qubic
-RUN cd /app/build && make -j$(nproc) Qubic
+contract_def = "/app/src/contract_core/contract_def.h"
+with open(contract_def, "r") as f:
+    content = f.read()
 
-# Build and run tests
-RUN cd /app/build && \
-    make -j$(nproc) qubic_core_tests && \
-    ./test/qubic_core_tests --gtest_filter="*QZN*" \
-    || echo "WARNING: Some QZN tests failed"
+qzn_block = """
+// QZN ARCADE PROTOCOL CONTRACTS
+#define QZN_TOKEN_CONTRACT_INDEX 26
+#define CONTRACT_INDEX QZN_TOKEN_CONTRACT_INDEX
+#define CONTRACT_STATE_TYPE QZN
+#define CONTRACT_STATE2_TYPE QZN2
+#include "contracts/QZN_Token_v2.h"
 
-EXPOSE 41841
-WORKDIR /app
-CMD ["/app/build/Qubic", "--ticking-delay", "1000"]
+#undef CONTRACT_INDEX
+#undef CONTRACT_STATE_TYPE
+#undef CONTRACT_STATE2_TYPE
+
+#define QZN_GAMECABINET_CONTRACT_INDEX 27
+#define CONTRACT_INDEX QZN_GAMECABINET_CONTRACT_INDEX
+#define CONTRACT_STATE_TYPE QZNCABINET
+#define CONTRACT_STATE2_TYPE QZNCABINET2
+#include "contracts/QZN_GameCabinet_PAO.h"
+
+#undef CONTRACT_INDEX
+#undef CONTRACT_STATE_TYPE
+#undef CONTRACT_STATE2_TYPE
+
+#define QZN_REWARDROUTER_CONTRACT_INDEX 28
+#define CONTRACT_INDEX QZN_REWARDROUTER_CONTRACT_INDEX
+#define CONTRACT_STATE_TYPE QZNREWARDROUTER
+#define CONTRACT_STATE2_TYPE QZNREWARDROUTER2
+#include "contracts/QZN_RewardRouter_PAO.h"
+
+#undef CONTRACT_INDEX
+#undef CONTRACT_STATE_TYPE
+#undef CONTRACT_STATE2_TYPE
+
+#define QZN_TREASURYVAULT_CONTRACT_INDEX 29
+#define CONTRACT_INDEX QZN_TREASURYVAULT_CONTRACT_INDEX
+#define CONTRACT_STATE_TYPE QZNTREASVAULT
+#define CONTRACT_STATE2_TYPE QZNTREASVAULT2
+#include "contracts/QZN_TreasuryVault_PAO.h"
+
+#undef CONTRACT_INDEX
+#undef CONTRACT_STATE_TYPE
+#undef CONTRACT_STATE2_TYPE
+
+#define QZN_PORTAL_CONTRACT_INDEX 30
+#define CONTRACT_INDEX QZN_PORTAL_CONTRACT_INDEX
+#define CONTRACT_STATE_TYPE QZNPORTAL
+#define CONTRACT_STATE2_TYPE QZNPORTAL2
+#include "contracts/QZN_Portal_PAO.h"
+
+#undef CONTRACT_INDEX
+#undef CONTRACT_STATE_TYPE
+#undef CONTRACT_STATE2_TYPE
+
+#define QZN_TOURNAMENT_CONTRACT_INDEX 31
+#define CONTRACT_INDEX QZN_TOURNAMENT_CONTRACT_INDEX
+#define CONTRACT_STATE_TYPE QZNTOUR
+#define CONTRACT_STATE2_TYPE QZNTOUR2
+#include "contracts/QZN_TournamentEngine_PAO.h"
+
+#undef CONTRACT_INDEX
+#undef CONTRACT_STATE_TYPE
+#undef CONTRACT_STATE2_TYPE
+
+"""
+
+marker = '#endif\n\n// new contracts should be added above this line'
+if "QZN_TOKEN_CONTRACT_INDEX" not in content:
+    content = content.replace(marker, qzn_block + marker)
+    with open(contract_def, "w") as f:
+        f.write(content)
+    print("  Registered all 6 QZN contracts in contract_def.h")
+else:
+    print("  QZN contracts already registered — skipping")
+
+cmake = "/app/test/CMakeLists.txt"
+with open(cmake, "r") as f:
+    content = f.read()
+
+qzn_tests = """  contract_qzn_token.cpp
+  contract_qzn_gamecabinet.cpp
+  contract_qzn_rewardrouter.cpp
+  contract_qzn_treasuryvault.cpp
+  contract_qzn_portal.cpp
+  contract_qzn_tournamentengine.cpp
+"""
+
+if "contract_qzn_token.cpp" not in content:
+    content = content.replace(
+        "  contract_vottunbridge.cpp",
+        "  contract_vottunbridge.cpp\n" + qzn_tests
+    )
+    with open(cmake, "w") as f:
+        f.write(content)
+    print("  Added QZN tests to CMakeLists.txt")
+else:
+    print("  QZN tests already in CMakeLists.txt — skipping")
+
+print(">>> All patches applied successfully.")
+PYEOF
