@@ -24,7 +24,6 @@ RUN cd /app/build && \
     make -j$(nproc) qubic_core_tests && \
     ./test/qubic_core_tests --gtest_filter="*QZN*" \
     || echo "WARNING: Some QZN tests failed"
-RUN find / -maxdepth 8 -type f -executable 2>/dev/null | grep -iv proc | grep -iv sys
 EXPOSE 41841
 WORKDIR /app
-CMD ["sh", "-c", "find / -maxdepth 8 -type f -executable 2>/dev/null | grep -iv proc | grep -iv sys"]
+CMD ["/app/build/src/Qubic", "--ticking-delay", "1000"]
