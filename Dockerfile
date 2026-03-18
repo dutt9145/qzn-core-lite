@@ -19,20 +19,24 @@ RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-18 100 && 
 WORKDIR /app
 RUN git clone --depth=1 https://github.com/qubic/core-lite.git .
 
+# Configure (cached layer — only reruns if CMakeLists changes)
+RUN mkdir -p /app/build && cd /app/build && cmake .. \
+      -DCMAKE_C_COMPILER=clang-18 \
+      -DCMAKE_CXX_COMPILER=clang++-18 \
+      -DCMAKE_BUILD_TYPE=Release
+
+# Pre-build all deps except qubic.cpp (cached — only reruns if deps change)
+RUN cd /app/build && make -j$(nproc) fmt trantor drogon platform_common platform_efi
+
+# NOW copy QZN contracts and patch (after dep build so contract changes don't rebuild deps)
 COPY contracts/ /qzn/contracts/
 COPY test/      /qzn/test/
 COPY setup.sh /qzn/setup.sh
 RUN chmod +x /qzn/setup.sh && /qzn/setup.sh
 
-RUN mkdir -p /app/build
-
-RUN cd /app/build && cmake .. \
-      -DCMAKE_C_COMPILER=clang-18 \
-      -DCMAKE_CXX_COMPILER=clang++-18 \
-      -DCMAKE_BUILD_TYPE=Release
-
-# Build with limited parallelism to keep output readable
-RUN cd /app/build && make -j1 Qubic
+# Build only the Qubic target (qubic.cpp + our contracts) — errors visible here
+RUN cd /app/build && make -j1 Qubic 2>&1 | grep -E "error:|warning: |^\[|^make" | tail -50; \
+    cd /app/build && make -j1 Qubic
 
 # Build and run tests
 RUN cd /app/build && \
