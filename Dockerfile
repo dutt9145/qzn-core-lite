@@ -28,13 +28,14 @@ COPY test/      /qzn/test/
 COPY setup.sh /qzn/setup.sh
 RUN chmod +x /qzn/setup.sh && /qzn/setup.sh
 
-# Build — write errors to file then print them clearly
-RUN cd /app/build && make -j1 Qubic > /tmp/build.log 2>&1; \
-    EXIT=$?; \
-    echo "=== BUILD OUTPUT ==="; \
-    cat /tmp/build.log; \
-    echo "=== END BUILD OUTPUT ==="; \
-    exit $EXIT
+# Step 1: build and save errors (always succeeds so next step runs)
+RUN cd /app/build && make -j1 Qubic > /tmp/build.log 2>&1; echo $? > /tmp/exit_code; true
+
+# Step 2: print ONLY errors - one per line, no noise
+RUN echo "=== QZN CONTRACT ERRORS ===" && \
+    grep "error:" /tmp/build.log | grep "QZN_" | sort -u && \
+    echo "=== END ERRORS ===" && \
+    test $(cat /tmp/exit_code) -eq 0
 
 # Build and run tests
 RUN cd /app/build && \
