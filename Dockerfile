@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y \
     wget \
     curl \
     python3 \
+    nasm \
     sed \
     && rm -rf /var/lib/apt/lists/*
 
