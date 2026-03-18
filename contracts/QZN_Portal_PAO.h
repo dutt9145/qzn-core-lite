@@ -406,28 +406,28 @@ struct GetPortalStats_output
 
 PUBLIC_PROCEDURE(InitializePortal)
 {
-    if (state.initialized) { return; }
+    if (state.get().initialized) { return; }
 
-    state.adminAddress       = qpi.invocator();
-    state.treasuryAddress    = input.treasuryAddr;
-    state.qznCoreAddress     = input.qznCoreAddr;
-    state.gameCabinetAddress = input.gameCabinetAddr;
+    state.mut().adminAddress = qpi.invocator();
+    state.mut().treasuryAddress = input.treasuryAddr;
+    state.mut().qznCoreAddress = input.qznCoreAddr;
+    state.mut().gameCabinetAddress = input.gameCabinetAddr;
 
-    state.totalNodesIssued          = 0;
-    state.totalActiveNodes          = 0;
-    state.genesisNodesIssued        = 0;
-    state.coreNodesIssued           = 0;
-    state.standardNodesIssued       = 0;
-    state.totalGamesRegistered      = 0;
-    state.totalGamesActive          = 0;
-    state.nextGameId                = 1;
-    state.currentEpochRevenuePool   = 0;
-    state.totalRevenueDistributed   = 0;
-    state.totalRevenueReturned      = 0;
-    state.pendingDistribution       = 0;
-    state.playerCount               = 0;
-    state.portalActive              = 1;
-    state.initialized               = 1;
+    state.mut().totalNodesIssued = 0;
+    state.mut().totalActiveNodes = 0;
+    state.mut().genesisNodesIssued = 0;
+    state.mut().coreNodesIssued = 0;
+    state.mut().standardNodesIssued = 0;
+    state.mut().totalGamesRegistered = 0;
+    state.mut().totalGamesActive = 0;
+    state.mut().nextGameId = 1;
+    state.mut().currentEpochRevenuePool = 0;
+    state.mut().totalRevenueDistributed = 0;
+    state.mut().totalRevenueReturned = 0;
+    state.mut().pendingDistribution = 0;
+    state.mut().playerCount = 0;
+    state.mut().portalActive = 1;
+    state.mut().initialized = 1;
 
     output.success = 1;
 }
@@ -444,7 +444,7 @@ PUBLIC_PROCEDURE(IssueNode)
  * After issuance, nodes can be traded on QX.
  */
 {
-    if (qpi.invocator() != state.adminAddress) { return; }
+    if (qpi.invocator() != state.get().adminAddress) { return; }
     if (input.nodeId < 1 || input.nodeId > MAX_PORTAL_NODES) { return; }
 
     // Determine tier and share
@@ -455,51 +455,51 @@ PUBLIC_PROCEDURE(IssueNode)
     {
         tier     = TIER_GENESIS;
         shareBPS = GENESIS_SHARE_BPS;
-        state.genesisNodesIssued = state.genesisNodesIssued + 1;
+        state.mut().genesisNodesIssued = state.get().genesisNodesIssued + 1;
     }
     else if (input.nodeId <= GENESIS_NODE_COUNT + CORE_NODE_COUNT)
     {
         tier     = TIER_CORE;
         shareBPS = CORE_SHARE_BPS;
-        state.coreNodesIssued = state.coreNodesIssued + 1;
+        state.mut().coreNodesIssued = state.get().coreNodesIssued + 1;
     }
     else
     {
         tier     = TIER_STANDARD;
         shareBPS = STANDARD_SHARE_BPS;
-        state.standardNodesIssued = state.standardNodesIssued + 1;
+        state.mut().standardNodesIssued = state.get().standardNodesIssued + 1;
     }
 
     // Write to node slot (slot = nodeId - 1, shown for nodes 1-16)
     if (input.nodeId == 1)
     {
-        state.nodes_1.nodeId         = 1;
-        state.nodes_1.tier           = tier;
-        state.nodes_1.state          = NODE_ACTIVE;
-        state.nodes_1.ownerAddress   = input.ownerAddress;
-        state.nodes_1.shareBPS       = shareBPS;
-        state.nodes_1.pendingRevenue = 0;
-        state.nodes_1.lifetimeRevenue = 0;
-        state.nodes_1.issuedEpoch    = qpi.epoch();
-        state.nodes_1.lastClaimEpoch = qpi.epoch();
+        state.get().nodes_1.nodeId         = 1;
+        state.get().nodes_1.tier           = tier;
+        state.get().nodes_1.state          = NODE_ACTIVE;
+        state.get().nodes_1.ownerAddress   = input.ownerAddress;
+        state.get().nodes_1.shareBPS       = shareBPS;
+        state.get().nodes_1.pendingRevenue = 0;
+        state.get().nodes_1.lifetimeRevenue = 0;
+        state.get().nodes_1.issuedEpoch    = qpi.epoch();
+        state.get().nodes_1.lastClaimEpoch = qpi.epoch();
     }
     else if (input.nodeId == 2)
     {
-        state.nodes_2.nodeId         = 2;
-        state.nodes_2.tier           = tier;
-        state.nodes_2.state          = NODE_ACTIVE;
-        state.nodes_2.ownerAddress   = input.ownerAddress;
-        state.nodes_2.shareBPS       = shareBPS;
-        state.nodes_2.pendingRevenue = 0;
-        state.nodes_2.lifetimeRevenue = 0;
-        state.nodes_2.issuedEpoch    = qpi.epoch();
-        state.nodes_2.lastClaimEpoch = qpi.epoch();
+        state.get().nodes_2.nodeId         = 2;
+        state.get().nodes_2.tier           = tier;
+        state.get().nodes_2.state          = NODE_ACTIVE;
+        state.get().nodes_2.ownerAddress   = input.ownerAddress;
+        state.get().nodes_2.shareBPS       = shareBPS;
+        state.get().nodes_2.pendingRevenue = 0;
+        state.get().nodes_2.lifetimeRevenue = 0;
+        state.get().nodes_2.issuedEpoch    = qpi.epoch();
+        state.get().nodes_2.lastClaimEpoch = qpi.epoch();
     }
     // Nodes 3-16 follow identical pattern
     // Full deployment expands to all 100
 
-    state.totalNodesIssued = state.totalNodesIssued + 1;
-    state.totalActiveNodes = state.totalActiveNodes + 1;
+    state.mut().totalNodesIssued = state.get().totalNodesIssued + 1;
+    state.mut().totalActiveNodes = state.get().totalActiveNodes + 1;
 
     output.nodeId   = input.nodeId;
     output.tier     = tier;
@@ -519,13 +519,13 @@ PUBLIC_PROCEDURE(TransferNode)
 
     if (input.nodeId == 1)
     {
-        if (qpi.invocator() != state.nodes_1.ownerAddress) { output.success = 0; return; }
-        if (state.nodes_1.state != NODE_ACTIVE)            { output.success = 0; return; }
+        if (qpi.invocator() != state.get().nodes_1.ownerAddress) { output.success = 0; return; }
+        if (state.get().nodes_1.state != NODE_ACTIVE)            { output.success = 0; return; }
 
         id prevOwner;
-        prevOwner = state.nodes_1.ownerAddress;
-        state.nodes_1.ownerAddress   = input.newOwner;
-        state.nodes_1.lastClaimEpoch = qpi.epoch();
+        prevOwner = state.get().nodes_1.ownerAddress;
+        state.get().nodes_1.ownerAddress   = input.newOwner;
+        state.get().nodes_1.lastClaimEpoch = qpi.epoch();
 
         output.success       = 1;
         output.nodeId        = 1;
@@ -534,13 +534,13 @@ PUBLIC_PROCEDURE(TransferNode)
     }
     else if (input.nodeId == 2)
     {
-        if (qpi.invocator() != state.nodes_2.ownerAddress) { output.success = 0; return; }
-        if (state.nodes_2.state != NODE_ACTIVE)            { output.success = 0; return; }
+        if (qpi.invocator() != state.get().nodes_2.ownerAddress) { output.success = 0; return; }
+        if (state.get().nodes_2.state != NODE_ACTIVE)            { output.success = 0; return; }
 
         id prevOwner;
-        prevOwner = state.nodes_2.ownerAddress;
-        state.nodes_2.ownerAddress   = input.newOwner;
-        state.nodes_2.lastClaimEpoch = qpi.epoch();
+        prevOwner = state.get().nodes_2.ownerAddress;
+        state.get().nodes_2.ownerAddress   = input.newOwner;
+        state.get().nodes_2.lastClaimEpoch = qpi.epoch();
 
         output.success       = 1;
         output.nodeId        = 2;
@@ -561,43 +561,43 @@ PUBLIC_PROCEDURE(ClaimNodeRevenue)
 
     if (input.nodeId == 1)
     {
-        if (qpi.invocator() != state.nodes_1.ownerAddress)  { return; }
-        if (state.nodes_1.state != NODE_ACTIVE)              { return; }
-        if (state.nodes_1.pendingRevenue <= 0)               { return; }
+        if (qpi.invocator() != state.get().nodes_1.ownerAddress)  { return; }
+        if (state.get().nodes_1.state != NODE_ACTIVE)              { return; }
+        if (state.get().nodes_1.pendingRevenue <= 0)               { return; }
 
         sint64 claimAmt;
-        claimAmt = state.nodes_1.pendingRevenue;
+        claimAmt = state.get().nodes_1.pendingRevenue;
 
-        state.nodes_1.pendingRevenue  = 0;
-        state.nodes_1.lifetimeRevenue = state.nodes_1.lifetimeRevenue + claimAmt;
-        state.nodes_1.lastClaimEpoch  = qpi.epoch();
-        state.totalRevenueDistributed = state.totalRevenueDistributed + claimAmt;
+        state.get().nodes_1.pendingRevenue  = 0;
+        state.get().nodes_1.lifetimeRevenue = state.get().nodes_1.lifetimeRevenue + claimAmt;
+        state.get().nodes_1.lastClaimEpoch  = qpi.epoch();
+        state.mut().totalRevenueDistributed = state.get().totalRevenueDistributed + claimAmt;
 
         qpi.transfer(qpi.invocator(), claimAmt);
 
         output.amountClaimed    = claimAmt;
         output.pendingRemaining = 0;
-        output.lifetimeRevenue  = state.nodes_1.lifetimeRevenue;
+        output.lifetimeRevenue  = state.get().nodes_1.lifetimeRevenue;
     }
     else if (input.nodeId == 2)
     {
-        if (qpi.invocator() != state.nodes_2.ownerAddress)  { return; }
-        if (state.nodes_2.state != NODE_ACTIVE)              { return; }
-        if (state.nodes_2.pendingRevenue <= 0)               { return; }
+        if (qpi.invocator() != state.get().nodes_2.ownerAddress)  { return; }
+        if (state.get().nodes_2.state != NODE_ACTIVE)              { return; }
+        if (state.get().nodes_2.pendingRevenue <= 0)               { return; }
 
         sint64 claimAmt;
-        claimAmt = state.nodes_2.pendingRevenue;
+        claimAmt = state.get().nodes_2.pendingRevenue;
 
-        state.nodes_2.pendingRevenue  = 0;
-        state.nodes_2.lifetimeRevenue = state.nodes_2.lifetimeRevenue + claimAmt;
-        state.nodes_2.lastClaimEpoch  = qpi.epoch();
-        state.totalRevenueDistributed = state.totalRevenueDistributed + claimAmt;
+        state.get().nodes_2.pendingRevenue  = 0;
+        state.get().nodes_2.lifetimeRevenue = state.get().nodes_2.lifetimeRevenue + claimAmt;
+        state.get().nodes_2.lastClaimEpoch  = qpi.epoch();
+        state.mut().totalRevenueDistributed = state.get().totalRevenueDistributed + claimAmt;
 
         qpi.transfer(qpi.invocator(), claimAmt);
 
         output.amountClaimed    = claimAmt;
         output.pendingRemaining = 0;
-        output.lifetimeRevenue  = state.nodes_2.lifetimeRevenue;
+        output.lifetimeRevenue  = state.get().nodes_2.lifetimeRevenue;
     }
     // Nodes 3-16 identical
 }
@@ -612,46 +612,46 @@ PUBLIC_PROCEDURE(RegisterGame)
  * and share in protocol revenue routing.
  */
 {
-    if (!state.portalActive) { return; }
+    if (!state.get().portalActive) { return; }
     if (input.stakeAmount < BUILDER_STAKE_REQUIRED) { return; }
-    if (state.totalGamesRegistered >= MAX_REGISTERED_GAMES) { return; }
+    if (state.get().totalGamesRegistered >= MAX_REGISTERED_GAMES) { return; }
 
     // Find free game slot
     sint64 slot;
     slot = -1;
 
-    if (state.games_0.state == 0 || state.games_0.state == GAME_RETIRED)  { slot = 0; }
-    else if (state.games_1.state == 0 || state.games_1.state == GAME_RETIRED)  { slot = 1; }
-    else if (state.games_2.state == 0 || state.games_2.state == GAME_RETIRED)  { slot = 2; }
-    else if (state.games_3.state == 0 || state.games_3.state == GAME_RETIRED)  { slot = 3; }
-    else if (state.games_4.state == 0 || state.games_4.state == GAME_RETIRED)  { slot = 4; }
-    else if (state.games_5.state == 0 || state.games_5.state == GAME_RETIRED)  { slot = 5; }
-    else if (state.games_6.state == 0 || state.games_6.state == GAME_RETIRED)  { slot = 6; }
-    else if (state.games_7.state == 0 || state.games_7.state == GAME_RETIRED)  { slot = 7; }
+    if (state.get().games_0.state == 0 || state.get().games_0.state == GAME_RETIRED)  { slot = 0; }
+    else if (state.get().games_1.state == 0 || state.get().games_1.state == GAME_RETIRED)  { slot = 1; }
+    else if (state.get().games_2.state == 0 || state.get().games_2.state == GAME_RETIRED)  { slot = 2; }
+    else if (state.get().games_3.state == 0 || state.get().games_3.state == GAME_RETIRED)  { slot = 3; }
+    else if (state.get().games_4.state == 0 || state.get().games_4.state == GAME_RETIRED)  { slot = 4; }
+    else if (state.get().games_5.state == 0 || state.get().games_5.state == GAME_RETIRED)  { slot = 5; }
+    else if (state.get().games_6.state == 0 || state.get().games_6.state == GAME_RETIRED)  { slot = 6; }
+    else if (state.get().games_7.state == 0 || state.get().games_7.state == GAME_RETIRED)  { slot = 7; }
     // Slots 8-15 identical
 
     if (slot < 0) { output.success = 0; return; }
 
     if (slot == 0)
     {
-        state.games_0.gameId           = state.nextGameId;
-        state.games_0.state            = GAME_PENDING;
-        state.games_0.builderAddress   = qpi.invocator();
-        state.games_0.builderStake     = input.stakeAmount;
-        state.games_0.nameHash         = input.nameHash;
-        state.games_0.metadataHash     = input.metadataHash;
-        state.games_0.revenueShareBPS  = 0;      // Set by admin on approval
-        state.games_0.totalPlayCount   = 0;
-        state.games_0.totalVolumeQZN   = 0;
-        state.games_0.registeredEpoch  = qpi.epoch();
-        state.games_0.approvedEpoch    = 0;
+        state.get().games_0.gameId           = state.get().nextGameId;
+        state.get().games_0.state            = GAME_PENDING;
+        state.get().games_0.builderAddress   = qpi.invocator();
+        state.get().games_0.builderStake     = input.stakeAmount;
+        state.get().games_0.nameHash         = input.nameHash;
+        state.get().games_0.metadataHash     = input.metadataHash;
+        state.get().games_0.revenueShareBPS  = 0;      // Set by admin on approval
+        state.get().games_0.totalPlayCount   = 0;
+        state.get().games_0.totalVolumeQZN   = 0;
+        state.get().games_0.registeredEpoch  = qpi.epoch();
+        state.get().games_0.approvedEpoch    = 0;
     }
     // Slots 1-15 identical
 
-    state.nextGameId             = state.nextGameId + 1;
-    state.totalGamesRegistered   = state.totalGamesRegistered + 1;
+    state.mut().nextGameId = state.get().nextGameId + 1;
+    state.mut().totalGamesRegistered = state.get().totalGamesRegistered + 1;
 
-    output.gameId        = state.nextGameId - 1;
+    output.gameId        = state.get().nextGameId - 1;
     output.success       = 1;
     output.stakeRequired = BUILDER_STAKE_REQUIRED;
 }
@@ -663,23 +663,23 @@ PUBLIC_PROCEDURE(ApproveGame)
  * Game goes live in PORTAL discovery index immediately.
  */
 {
-    if (qpi.invocator() != state.adminAddress) { return; }
+    if (qpi.invocator() != state.get().adminAddress) { return; }
 
-    if (state.games_0.gameId == input.gameId && state.games_0.state == GAME_PENDING)
+    if (state.get().games_0.gameId == input.gameId && state.get().games_0.state == GAME_PENDING)
     {
-        state.games_0.state          = GAME_ACTIVE;
-        state.games_0.revenueShareBPS = input.revenueShareBPS;
-        state.games_0.approvedEpoch  = qpi.epoch();
-        state.totalGamesActive       = state.totalGamesActive + 1;
+        state.get().games_0.state          = GAME_ACTIVE;
+        state.get().games_0.revenueShareBPS = input.revenueShareBPS;
+        state.get().games_0.approvedEpoch  = qpi.epoch();
+        state.mut().totalGamesActive = state.get().totalGamesActive + 1;
         output.success = 1;
         output.gameId  = input.gameId;
     }
-    else if (state.games_1.gameId == input.gameId && state.games_1.state == GAME_PENDING)
+    else if (state.get().games_1.gameId == input.gameId && state.get().games_1.state == GAME_PENDING)
     {
-        state.games_1.state          = GAME_ACTIVE;
-        state.games_1.revenueShareBPS = input.revenueShareBPS;
-        state.games_1.approvedEpoch  = qpi.epoch();
-        state.totalGamesActive       = state.totalGamesActive + 1;
+        state.get().games_1.state          = GAME_ACTIVE;
+        state.get().games_1.revenueShareBPS = input.revenueShareBPS;
+        state.get().games_1.approvedEpoch  = qpi.epoch();
+        state.mut().totalGamesActive = state.get().totalGamesActive + 1;
         output.success = 1;
         output.gameId  = input.gameId;
     }
@@ -693,22 +693,22 @@ PUBLIC_PROCEDURE(UpdateGameState)
  * Retired games are removed from discovery index.
  */
 {
-    if (qpi.invocator() != state.adminAddress) { return; }
+    if (qpi.invocator() != state.get().adminAddress) { return; }
 
-    if (state.games_0.gameId == input.gameId)
+    if (state.get().games_0.gameId == input.gameId)
     {
-        state.games_0.state = input.newState;
+        state.get().games_0.state = input.newState;
 
         if (input.newState == GAME_RETIRED)
         {
             // Refund builder stake
-            qpi.transfer(state.games_0.builderAddress, state.games_0.builderStake);
-            output.stakeRefunded = state.games_0.builderStake;
-            state.games_0.builderStake = 0;
+            qpi.transfer(state.get().games_0.builderAddress, state.get().games_0.builderStake);
+            output.stakeRefunded = state.get().games_0.builderStake;
+            state.get().games_0.builderStake = 0;
 
-            if (state.totalGamesActive > 0)
+            if (state.get().totalGamesActive > 0)
             {
-                state.totalGamesActive = state.totalGamesActive - 1;
+                state.mut().totalGamesActive = state.get().totalGamesActive - 1;
             }
         }
         output.success = 1;
@@ -733,45 +733,45 @@ PUBLIC_PROCEDURE(StakeForAccess)
     sint64 slot;
     slot = -1;
 
-    if (state.playerWallet_0 == qpi.invocator())  { slot = 0; }
-    else if (state.playerWallet_1 == qpi.invocator())  { slot = 1; }
-    else if (state.playerWallet_2 == qpi.invocator())  { slot = 2; }
-    else if (state.playerWallet_3 == qpi.invocator())  { slot = 3; }
-    else if (state.playerWallet_4 == qpi.invocator())  { slot = 4; }
-    else if (state.playerWallet_5 == qpi.invocator())  { slot = 5; }
-    else if (state.playerWallet_6 == qpi.invocator())  { slot = 6; }
-    else if (state.playerWallet_7 == qpi.invocator())  { slot = 7; }
-    else if (state.playerWallet_8 == qpi.invocator())  { slot = 8; }
-    else if (state.playerWallet_9 == qpi.invocator())  { slot = 9; }
-    else if (state.playerWallet_10 == qpi.invocator()) { slot = 10; }
-    else if (state.playerWallet_11 == qpi.invocator()) { slot = 11; }
-    else if (state.playerWallet_12 == qpi.invocator()) { slot = 12; }
-    else if (state.playerWallet_13 == qpi.invocator()) { slot = 13; }
-    else if (state.playerWallet_14 == qpi.invocator()) { slot = 14; }
-    else if (state.playerWallet_15 == qpi.invocator()) { slot = 15; }
+    if (state.get().playerWallet_0 == qpi.invocator())  { slot = 0; }
+    else if (state.get().playerWallet_1 == qpi.invocator())  { slot = 1; }
+    else if (state.get().playerWallet_2 == qpi.invocator())  { slot = 2; }
+    else if (state.get().playerWallet_3 == qpi.invocator())  { slot = 3; }
+    else if (state.get().playerWallet_4 == qpi.invocator())  { slot = 4; }
+    else if (state.get().playerWallet_5 == qpi.invocator())  { slot = 5; }
+    else if (state.get().playerWallet_6 == qpi.invocator())  { slot = 6; }
+    else if (state.get().playerWallet_7 == qpi.invocator())  { slot = 7; }
+    else if (state.get().playerWallet_8 == qpi.invocator())  { slot = 8; }
+    else if (state.get().playerWallet_9 == qpi.invocator())  { slot = 9; }
+    else if (state.get().playerWallet_10 == qpi.invocator()) { slot = 10; }
+    else if (state.get().playerWallet_11 == qpi.invocator()) { slot = 11; }
+    else if (state.get().playerWallet_12 == qpi.invocator()) { slot = 12; }
+    else if (state.get().playerWallet_13 == qpi.invocator()) { slot = 13; }
+    else if (state.get().playerWallet_14 == qpi.invocator()) { slot = 14; }
+    else if (state.get().playerWallet_15 == qpi.invocator()) { slot = 15; }
 
     // New player — assign slot
-    if (slot < 0 && state.playerCount < 16)
+    if (slot < 0 && state.get().playerCount < 16)
     {
-        slot = state.playerCount;
-        state.playerCount = state.playerCount + 1;
+        slot = state.get().playerCount;
+        state.mut().playerCount = state.get().playerCount + 1;
 
-        if (slot == 0)  { state.playerWallet_0  = qpi.invocator(); state.playerStake_0  = 0; }
-        else if (slot == 1)  { state.playerWallet_1  = qpi.invocator(); state.playerStake_1  = 0; }
-        else if (slot == 2)  { state.playerWallet_2  = qpi.invocator(); state.playerStake_2  = 0; }
-        else if (slot == 3)  { state.playerWallet_3  = qpi.invocator(); state.playerStake_3  = 0; }
-        else if (slot == 4)  { state.playerWallet_4  = qpi.invocator(); state.playerStake_4  = 0; }
-        else if (slot == 5)  { state.playerWallet_5  = qpi.invocator(); state.playerStake_5  = 0; }
-        else if (slot == 6)  { state.playerWallet_6  = qpi.invocator(); state.playerStake_6  = 0; }
-        else if (slot == 7)  { state.playerWallet_7  = qpi.invocator(); state.playerStake_7  = 0; }
-        else if (slot == 8)  { state.playerWallet_8  = qpi.invocator(); state.playerStake_8  = 0; }
-        else if (slot == 9)  { state.playerWallet_9  = qpi.invocator(); state.playerStake_9  = 0; }
-        else if (slot == 10) { state.playerWallet_10 = qpi.invocator(); state.playerStake_10 = 0; }
-        else if (slot == 11) { state.playerWallet_11 = qpi.invocator(); state.playerStake_11 = 0; }
-        else if (slot == 12) { state.playerWallet_12 = qpi.invocator(); state.playerStake_12 = 0; }
-        else if (slot == 13) { state.playerWallet_13 = qpi.invocator(); state.playerStake_13 = 0; }
-        else if (slot == 14) { state.playerWallet_14 = qpi.invocator(); state.playerStake_14 = 0; }
-        else if (slot == 15) { state.playerWallet_15 = qpi.invocator(); state.playerStake_15 = 0; }
+        if (slot == 0)  { state.mut().playerWallet_0 = qpi.invocator(); state.mut().playerStake_0 = 0; }
+        else if (slot == 1)  { state.mut().playerWallet_1 = qpi.invocator(); state.mut().playerStake_1 = 0; }
+        else if (slot == 2)  { state.mut().playerWallet_2 = qpi.invocator(); state.mut().playerStake_2 = 0; }
+        else if (slot == 3)  { state.mut().playerWallet_3 = qpi.invocator(); state.mut().playerStake_3 = 0; }
+        else if (slot == 4)  { state.mut().playerWallet_4 = qpi.invocator(); state.mut().playerStake_4 = 0; }
+        else if (slot == 5)  { state.mut().playerWallet_5 = qpi.invocator(); state.mut().playerStake_5 = 0; }
+        else if (slot == 6)  { state.mut().playerWallet_6 = qpi.invocator(); state.mut().playerStake_6 = 0; }
+        else if (slot == 7)  { state.mut().playerWallet_7 = qpi.invocator(); state.mut().playerStake_7 = 0; }
+        else if (slot == 8)  { state.mut().playerWallet_8 = qpi.invocator(); state.mut().playerStake_8 = 0; }
+        else if (slot == 9)  { state.mut().playerWallet_9 = qpi.invocator(); state.mut().playerStake_9 = 0; }
+        else if (slot == 10) { state.mut().playerWallet_10 = qpi.invocator(); state.mut().playerStake_10 = 0; }
+        else if (slot == 11) { state.mut().playerWallet_11 = qpi.invocator(); state.mut().playerStake_11 = 0; }
+        else if (slot == 12) { state.mut().playerWallet_12 = qpi.invocator(); state.mut().playerStake_12 = 0; }
+        else if (slot == 13) { state.mut().playerWallet_13 = qpi.invocator(); state.mut().playerStake_13 = 0; }
+        else if (slot == 14) { state.mut().playerWallet_14 = qpi.invocator(); state.mut().playerStake_14 = 0; }
+        else if (slot == 15) { state.mut().playerWallet_15 = qpi.invocator(); state.mut().playerStake_15 = 0; }
     }
 
     if (slot < 0) { return; }
@@ -780,14 +780,14 @@ PUBLIC_PROCEDURE(StakeForAccess)
     sint64 newStake;
     newStake = 0;
 
-    if (slot == 0)  { state.playerStake_0  = state.playerStake_0  + input.amount; newStake = state.playerStake_0; }
-    else if (slot == 1)  { state.playerStake_1  = state.playerStake_1  + input.amount; newStake = state.playerStake_1; }
-    else if (slot == 2)  { state.playerStake_2  = state.playerStake_2  + input.amount; newStake = state.playerStake_2; }
-    else if (slot == 3)  { state.playerStake_3  = state.playerStake_3  + input.amount; newStake = state.playerStake_3; }
-    else if (slot == 4)  { state.playerStake_4  = state.playerStake_4  + input.amount; newStake = state.playerStake_4; }
-    else if (slot == 5)  { state.playerStake_5  = state.playerStake_5  + input.amount; newStake = state.playerStake_5; }
-    else if (slot == 6)  { state.playerStake_6  = state.playerStake_6  + input.amount; newStake = state.playerStake_6; }
-    else if (slot == 7)  { state.playerStake_7  = state.playerStake_7  + input.amount; newStake = state.playerStake_7; }
+    if (slot == 0)  { state.mut().playerStake_0 = state.get().playerStake_0  + input.amount; newStake = state.get().playerStake_0; }
+    else if (slot == 1)  { state.mut().playerStake_1 = state.get().playerStake_1  + input.amount; newStake = state.get().playerStake_1; }
+    else if (slot == 2)  { state.mut().playerStake_2 = state.get().playerStake_2  + input.amount; newStake = state.get().playerStake_2; }
+    else if (slot == 3)  { state.mut().playerStake_3 = state.get().playerStake_3  + input.amount; newStake = state.get().playerStake_3; }
+    else if (slot == 4)  { state.mut().playerStake_4 = state.get().playerStake_4  + input.amount; newStake = state.get().playerStake_4; }
+    else if (slot == 5)  { state.mut().playerStake_5 = state.get().playerStake_5  + input.amount; newStake = state.get().playerStake_5; }
+    else if (slot == 6)  { state.mut().playerStake_6 = state.get().playerStake_6  + input.amount; newStake = state.get().playerStake_6; }
+    else if (slot == 7)  { state.mut().playerStake_7 = state.get().playerStake_7  + input.amount; newStake = state.get().playerStake_7; }
     // Slots 8-15 identical
 
     // Compute access tier
@@ -819,8 +819,8 @@ PUBLIC_PROCEDURE(ReceiveProtocolFees)
  * Remainder stays in protocol treasury.
  */
 {
-    if (qpi.invocator() != state.qznCoreAddress &&
-        qpi.invocator() != state.adminAddress)
+    if (qpi.invocator() != state.get().qznCoreAddress &&
+        qpi.invocator() != state.get().adminAddress)
     {
         return;
     }
@@ -828,11 +828,11 @@ PUBLIC_PROCEDURE(ReceiveProtocolFees)
     sint64 nodePool;
     nodePool = div(input.amount * NODE_REVENUE_POOL_BPS, REVENUE_BPS_DENOM).quot;
 
-    state.currentEpochRevenuePool = state.currentEpochRevenuePool + nodePool;
-    state.pendingDistribution     = state.pendingDistribution + nodePool;
+    state.mut().currentEpochRevenuePool = state.get().currentEpochRevenuePool + nodePool;
+    state.mut().pendingDistribution = state.get().pendingDistribution + nodePool;
 
     output.addedToPool  = nodePool;
-    output.currentPool  = state.currentEpochRevenuePool;
+    output.currentPool  = state.get().currentEpochRevenuePool;
 }
 
 // ============================================================
@@ -844,14 +844,14 @@ PUBLIC_FUNCTION(GetPlayerAccess)
     sint64 stake;
     stake = 0;
 
-    if (state.playerWallet_0 == input.walletAddress)  { stake = state.playerStake_0; }
-    else if (state.playerWallet_1 == input.walletAddress)  { stake = state.playerStake_1; }
-    else if (state.playerWallet_2 == input.walletAddress)  { stake = state.playerStake_2; }
-    else if (state.playerWallet_3 == input.walletAddress)  { stake = state.playerStake_3; }
-    else if (state.playerWallet_4 == input.walletAddress)  { stake = state.playerStake_4; }
-    else if (state.playerWallet_5 == input.walletAddress)  { stake = state.playerStake_5; }
-    else if (state.playerWallet_6 == input.walletAddress)  { stake = state.playerStake_6; }
-    else if (state.playerWallet_7 == input.walletAddress)  { stake = state.playerStake_7; }
+    if (state.get().playerWallet_0 == input.walletAddress)  { stake = state.get().playerStake_0; }
+    else if (state.get().playerWallet_1 == input.walletAddress)  { stake = state.get().playerStake_1; }
+    else if (state.get().playerWallet_2 == input.walletAddress)  { stake = state.get().playerStake_2; }
+    else if (state.get().playerWallet_3 == input.walletAddress)  { stake = state.get().playerStake_3; }
+    else if (state.get().playerWallet_4 == input.walletAddress)  { stake = state.get().playerStake_4; }
+    else if (state.get().playerWallet_5 == input.walletAddress)  { stake = state.get().playerStake_5; }
+    else if (state.get().playerWallet_6 == input.walletAddress)  { stake = state.get().playerStake_6; }
+    else if (state.get().playerWallet_7 == input.walletAddress)  { stake = state.get().playerStake_7; }
     // Slots 8-15 identical
 
     uint8 tier;
@@ -869,47 +869,47 @@ PUBLIC_FUNCTION(GetNode)
 {
     if (input.nodeId == 1)
     {
-        output.tier           = state.nodes_1.tier;
-        output.state          = state.nodes_1.state;
-        output.owner          = state.nodes_1.ownerAddress;
-        output.shareBPS       = state.nodes_1.shareBPS;
-        output.pendingRevenue = state.nodes_1.pendingRevenue;
-        output.lifetimeRevenue = state.nodes_1.lifetimeRevenue;
+        output.tier           = state.get().nodes_1.tier;
+        output.state          = state.get().nodes_1.state;
+        output.owner          = state.get().nodes_1.ownerAddress;
+        output.shareBPS       = state.get().nodes_1.shareBPS;
+        output.pendingRevenue = state.get().nodes_1.pendingRevenue;
+        output.lifetimeRevenue = state.get().nodes_1.lifetimeRevenue;
     }
     else if (input.nodeId == 2)
     {
-        output.tier           = state.nodes_2.tier;
-        output.state          = state.nodes_2.state;
-        output.owner          = state.nodes_2.ownerAddress;
-        output.shareBPS       = state.nodes_2.shareBPS;
-        output.pendingRevenue = state.nodes_2.pendingRevenue;
-        output.lifetimeRevenue = state.nodes_2.lifetimeRevenue;
+        output.tier           = state.get().nodes_2.tier;
+        output.state          = state.get().nodes_2.state;
+        output.owner          = state.get().nodes_2.ownerAddress;
+        output.shareBPS       = state.get().nodes_2.shareBPS;
+        output.pendingRevenue = state.get().nodes_2.pendingRevenue;
+        output.lifetimeRevenue = state.get().nodes_2.lifetimeRevenue;
     }
     // Nodes 3-16 identical
 }
 
 PUBLIC_FUNCTION(GetGame)
 {
-    if (state.games_0.gameId == input.gameId)
+    if (state.get().games_0.gameId == input.gameId)
     {
-        output.state           = state.games_0.state;
-        output.builder         = state.games_0.builderAddress;
-        output.nameHash        = state.games_0.nameHash;
-        output.totalPlayCount  = state.games_0.totalPlayCount;
-        output.totalVolumeQZN  = state.games_0.totalVolumeQZN;
-        output.revenueShareBPS = state.games_0.revenueShareBPS;
-        output.registeredEpoch = state.games_0.registeredEpoch;
+        output.state           = state.get().games_0.state;
+        output.builder         = state.get().games_0.builderAddress;
+        output.nameHash        = state.get().games_0.nameHash;
+        output.totalPlayCount  = state.get().games_0.totalPlayCount;
+        output.totalVolumeQZN  = state.get().games_0.totalVolumeQZN;
+        output.revenueShareBPS = state.get().games_0.revenueShareBPS;
+        output.registeredEpoch = state.get().games_0.registeredEpoch;
     }
     // Slots 1-15 identical
 }
 
 PUBLIC_FUNCTION(GetPortalStats)
 {
-    output.totalNodesIssued        = state.totalNodesIssued;
-    output.totalActiveNodes        = state.totalActiveNodes;
-    output.totalGamesActive        = state.totalGamesActive;
-    output.totalRevenueDistributed = state.totalRevenueDistributed;
-    output.currentEpochPool        = state.currentEpochRevenuePool;
+    output.totalNodesIssued        = state.get().totalNodesIssued;
+    output.totalActiveNodes        = state.get().totalActiveNodes;
+    output.totalGamesActive        = state.get().totalGamesActive;
+    output.totalRevenueDistributed = state.get().totalRevenueDistributed;
+    output.currentEpochPool        = state.get().currentEpochRevenuePool;
 }
 
 // ============================================================
@@ -947,71 +947,71 @@ BEGIN_EPOCH()
  * 3. Reset epoch revenue pool
  */
 {
-    if (state.pendingDistribution <= 0) { return; }
+    if (state.get().pendingDistribution <= 0) { return; }
 
     // ---- COMPUTE TOTAL WEIGHTED SHARES ----
     // Sum of (shareBPS) for all active nodes
     sint64 totalWeightedShares;
     totalWeightedShares = 0;
 
-    if (state.nodes_1.state == NODE_ACTIVE)  { totalWeightedShares = totalWeightedShares + state.nodes_1.shareBPS; }
-    if (state.nodes_2.state == NODE_ACTIVE)  { totalWeightedShares = totalWeightedShares + state.nodes_2.shareBPS; }
-    if (state.nodes_3.state == NODE_ACTIVE)  { totalWeightedShares = totalWeightedShares + state.nodes_3.shareBPS; }
-    if (state.nodes_4.state == NODE_ACTIVE)  { totalWeightedShares = totalWeightedShares + state.nodes_4.shareBPS; }
-    if (state.nodes_5.state == NODE_ACTIVE)  { totalWeightedShares = totalWeightedShares + state.nodes_5.shareBPS; }
-    if (state.nodes_6.state == NODE_ACTIVE)  { totalWeightedShares = totalWeightedShares + state.nodes_6.shareBPS; }
-    if (state.nodes_7.state == NODE_ACTIVE)  { totalWeightedShares = totalWeightedShares + state.nodes_7.shareBPS; }
-    if (state.nodes_8.state == NODE_ACTIVE)  { totalWeightedShares = totalWeightedShares + state.nodes_8.shareBPS; }
-    if (state.nodes_9.state == NODE_ACTIVE)  { totalWeightedShares = totalWeightedShares + state.nodes_9.shareBPS; }
-    if (state.nodes_10.state == NODE_ACTIVE) { totalWeightedShares = totalWeightedShares + state.nodes_10.shareBPS; }
-    if (state.nodes_11.state == NODE_ACTIVE) { totalWeightedShares = totalWeightedShares + state.nodes_11.shareBPS; }
-    if (state.nodes_12.state == NODE_ACTIVE) { totalWeightedShares = totalWeightedShares + state.nodes_12.shareBPS; }
-    if (state.nodes_13.state == NODE_ACTIVE) { totalWeightedShares = totalWeightedShares + state.nodes_13.shareBPS; }
-    if (state.nodes_14.state == NODE_ACTIVE) { totalWeightedShares = totalWeightedShares + state.nodes_14.shareBPS; }
-    if (state.nodes_15.state == NODE_ACTIVE) { totalWeightedShares = totalWeightedShares + state.nodes_15.shareBPS; }
-    if (state.nodes_16.state == NODE_ACTIVE) { totalWeightedShares = totalWeightedShares + state.nodes_16.shareBPS; }
+    if (state.get().nodes_1.state == NODE_ACTIVE)  { totalWeightedShares = totalWeightedShares + state.get().nodes_1.shareBPS; }
+    if (state.get().nodes_2.state == NODE_ACTIVE)  { totalWeightedShares = totalWeightedShares + state.get().nodes_2.shareBPS; }
+    if (state.get().nodes_3.state == NODE_ACTIVE)  { totalWeightedShares = totalWeightedShares + state.get().nodes_3.shareBPS; }
+    if (state.get().nodes_4.state == NODE_ACTIVE)  { totalWeightedShares = totalWeightedShares + state.get().nodes_4.shareBPS; }
+    if (state.get().nodes_5.state == NODE_ACTIVE)  { totalWeightedShares = totalWeightedShares + state.get().nodes_5.shareBPS; }
+    if (state.get().nodes_6.state == NODE_ACTIVE)  { totalWeightedShares = totalWeightedShares + state.get().nodes_6.shareBPS; }
+    if (state.get().nodes_7.state == NODE_ACTIVE)  { totalWeightedShares = totalWeightedShares + state.get().nodes_7.shareBPS; }
+    if (state.get().nodes_8.state == NODE_ACTIVE)  { totalWeightedShares = totalWeightedShares + state.get().nodes_8.shareBPS; }
+    if (state.get().nodes_9.state == NODE_ACTIVE)  { totalWeightedShares = totalWeightedShares + state.get().nodes_9.shareBPS; }
+    if (state.get().nodes_10.state == NODE_ACTIVE) { totalWeightedShares = totalWeightedShares + state.get().nodes_10.shareBPS; }
+    if (state.get().nodes_11.state == NODE_ACTIVE) { totalWeightedShares = totalWeightedShares + state.get().nodes_11.shareBPS; }
+    if (state.get().nodes_12.state == NODE_ACTIVE) { totalWeightedShares = totalWeightedShares + state.get().nodes_12.shareBPS; }
+    if (state.get().nodes_13.state == NODE_ACTIVE) { totalWeightedShares = totalWeightedShares + state.get().nodes_13.shareBPS; }
+    if (state.get().nodes_14.state == NODE_ACTIVE) { totalWeightedShares = totalWeightedShares + state.get().nodes_14.shareBPS; }
+    if (state.get().nodes_15.state == NODE_ACTIVE) { totalWeightedShares = totalWeightedShares + state.get().nodes_15.shareBPS; }
+    if (state.get().nodes_16.state == NODE_ACTIVE) { totalWeightedShares = totalWeightedShares + state.get().nodes_16.shareBPS; }
 
     if (totalWeightedShares <= 0) { return; }
 
     // ---- DISTRIBUTE REVENUE TO EACH ACTIVE NODE ----
     sint64 pool;
-    pool = state.pendingDistribution;
+    pool = state.get().pendingDistribution;
 
-    if (state.nodes_1.state == NODE_ACTIVE)
+    if (state.get().nodes_1.state == NODE_ACTIVE)
     {
         sint64 nodeShare;
-        nodeShare = div(pool * state.nodes_1.shareBPS, totalWeightedShares).quot;
-        state.nodes_1.pendingRevenue = state.nodes_1.pendingRevenue + nodeShare;
+        nodeShare = div(pool * state.get().nodes_1.shareBPS, totalWeightedShares).quot;
+        state.get().nodes_1.pendingRevenue = state.get().nodes_1.pendingRevenue + nodeShare;
     }
-    if (state.nodes_2.state == NODE_ACTIVE)
+    if (state.get().nodes_2.state == NODE_ACTIVE)
     {
         sint64 nodeShare;
-        nodeShare = div(pool * state.nodes_2.shareBPS, totalWeightedShares).quot;
-        state.nodes_2.pendingRevenue = state.nodes_2.pendingRevenue + nodeShare;
+        nodeShare = div(pool * state.get().nodes_2.shareBPS, totalWeightedShares).quot;
+        state.get().nodes_2.pendingRevenue = state.get().nodes_2.pendingRevenue + nodeShare;
     }
     // Nodes 3-16 identical distribution pattern
 
     // ---- UNCLAIMED SWEEP ----
     // Return stale revenue to treasury
-    if (state.nodes_1.state == NODE_ACTIVE &&
-        state.nodes_1.pendingRevenue > 0 &&
-        qpi.epoch() > state.nodes_1.lastClaimEpoch + REVENUE_CLAIM_EPOCHS)
+    if (state.get().nodes_1.state == NODE_ACTIVE &&
+        state.get().nodes_1.pendingRevenue > 0 &&
+        qpi.epoch() > state.get().nodes_1.lastClaimEpoch + REVENUE_CLAIM_EPOCHS)
     {
-        state.totalRevenueReturned   = state.totalRevenueReturned + state.nodes_1.pendingRevenue;
-        state.nodes_1.pendingRevenue = 0;
+        state.mut().totalRevenueReturned = state.get().totalRevenueReturned + state.get().nodes_1.pendingRevenue;
+        state.get().nodes_1.pendingRevenue = 0;
     }
-    if (state.nodes_2.state == NODE_ACTIVE &&
-        state.nodes_2.pendingRevenue > 0 &&
-        qpi.epoch() > state.nodes_2.lastClaimEpoch + REVENUE_CLAIM_EPOCHS)
+    if (state.get().nodes_2.state == NODE_ACTIVE &&
+        state.get().nodes_2.pendingRevenue > 0 &&
+        qpi.epoch() > state.get().nodes_2.lastClaimEpoch + REVENUE_CLAIM_EPOCHS)
     {
-        state.totalRevenueReturned   = state.totalRevenueReturned + state.nodes_2.pendingRevenue;
-        state.nodes_2.pendingRevenue = 0;
+        state.mut().totalRevenueReturned = state.get().totalRevenueReturned + state.get().nodes_2.pendingRevenue;
+        state.get().nodes_2.pendingRevenue = 0;
     }
     // Nodes 3-16 identical sweep
 
     // Reset pool
-    state.pendingDistribution       = 0;
-    state.currentEpochRevenuePool   = 0;
+    state.mut().pendingDistribution = 0;
+    state.mut().currentEpochRevenuePool = 0;
 }
 
 END_TICK() {}

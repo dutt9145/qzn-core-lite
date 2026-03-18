@@ -311,38 +311,38 @@ PRIVATE_PROCEDURE(_executeSpend)
 
 PUBLIC_PROCEDURE(InitializeVault)
 {
-    if (state.initialized)
+    if (state.get().initialized)
     {
         return;
     }
 
-    state.adminAddress          = qpi.invocator();
-    state.signer_0              = input.signer0;
-    state.signer_1              = input.signer1;
-    state.signer_2              = input.signer2;
-    state.signer_0_active       = 1;
-    state.signer_1_active       = 1;
-    state.signer_2_active       = 1;
-    state.rewardRouterAddress   = input.rewardRouterAddr;
-    state.qznCoreAddress        = input.qznCoreAddr;
-    state.treasuryBalance       = input.initialBalance;
-    state.totalReceived         = input.initialBalance;
+    state.mut().adminAddress = qpi.invocator();
+    state.mut().signer_0 = input.signer0;
+    state.mut().signer_1 = input.signer1;
+    state.mut().signer_2 = input.signer2;
+    state.mut().signer_0_active = 1;
+    state.mut().signer_1_active = 1;
+    state.mut().signer_2_active = 1;
+    state.mut().rewardRouterAddress = input.rewardRouterAddr;
+    state.mut().qznCoreAddress = input.qznCoreAddr;
+    state.mut().treasuryBalance = input.initialBalance;
+    state.mut().totalReceived = input.initialBalance;
 
     // Default epoch funding
-    state.epochRewardFundAmount     = DEFAULT_EPOCH_REWARD_FUND;
-    state.epochAchievementAmount    = DEFAULT_ACHIEVEMENT_FUND;
-    state.autoFundEnabled           = 1;   // Auto-fund on by default
+    state.mut().epochRewardFundAmount = DEFAULT_EPOCH_REWARD_FUND;
+    state.mut().epochAchievementAmount = DEFAULT_ACHIEVEMENT_FUND;
+    state.mut().autoFundEnabled = 1;   // Auto-fund on by default
 
     // Reset counters
-    state.totalSpent            = 0;
-    state.totalBurned           = 0;
-    state.totalEpochFunded      = 0;
-    state.nextProposalId        = 1;
-    state.paused                = 0;
-    state.initialized           = 1;
+    state.mut().totalSpent = 0;
+    state.mut().totalBurned = 0;
+    state.mut().totalEpochFunded = 0;
+    state.mut().nextProposalId = 1;
+    state.mut().paused = 0;
+    state.mut().initialized = 1;
 
     output.success              = 1;
-    output.vaultBalance         = state.treasuryBalance;
+    output.vaultBalance         = state.get().treasuryBalance;
 }
 
 PUBLIC_PROCEDURE(ProposeSpend)
@@ -357,19 +357,19 @@ PUBLIC_PROCEDURE(ProposeSpend)
  * All proposals are public — full transparency.
  */
 {
-    if (state.paused) { return; }
+    if (state.get().paused) { return; }
 
     // Only keyholders can propose
     bit isSigner;
     isSigner = 0;
-    if (qpi.invocator() == state.signer_0 && state.signer_0_active) { isSigner = 1; }
-    if (qpi.invocator() == state.signer_1 && state.signer_1_active) { isSigner = 1; }
-    if (qpi.invocator() == state.signer_2 && state.signer_2_active) { isSigner = 1; }
+    if (qpi.invocator() == state.get().signer_0 && state.get().signer_0_active) { isSigner = 1; }
+    if (qpi.invocator() == state.get().signer_1 && state.get().signer_1_active) { isSigner = 1; }
+    if (qpi.invocator() == state.get().signer_2 && state.get().signer_2_active) { isSigner = 1; }
 
     if (!isSigner) { return; }
 
     // Validate amount
-    if (input.amount <= 0 || input.amount > state.treasuryBalance) { return; }
+    if (input.amount <= 0 || input.amount > state.get().treasuryBalance) { return; }
 
     // Validate category
     if (input.category < SPEND_EPOCH_REWARD || input.category > SPEND_SIGNER_CHANGE) { return; }
@@ -381,29 +381,29 @@ PUBLIC_PROCEDURE(ProposeSpend)
     sint64 slot;
     slot = -1;
 
-    if (state.proposals_0.state == PROP_EMPTY || state.proposals_0.state == PROP_EXECUTED ||
-        state.proposals_0.state == PROP_EXPIRED || state.proposals_0.state == PROP_CANCELLED)
+    if (state.get().proposals_0.state == PROP_EMPTY || state.get().proposals_0.state == PROP_EXECUTED ||
+        state.get().proposals_0.state == PROP_EXPIRED || state.get().proposals_0.state == PROP_CANCELLED)
     { slot = 0; }
-    else if (state.proposals_1.state == PROP_EMPTY || state.proposals_1.state == PROP_EXECUTED ||
-             state.proposals_1.state == PROP_EXPIRED || state.proposals_1.state == PROP_CANCELLED)
+    else if (state.get().proposals_1.state == PROP_EMPTY || state.get().proposals_1.state == PROP_EXECUTED ||
+             state.get().proposals_1.state == PROP_EXPIRED || state.get().proposals_1.state == PROP_CANCELLED)
     { slot = 1; }
-    else if (state.proposals_2.state == PROP_EMPTY || state.proposals_2.state == PROP_EXECUTED ||
-             state.proposals_2.state == PROP_EXPIRED || state.proposals_2.state == PROP_CANCELLED)
+    else if (state.get().proposals_2.state == PROP_EMPTY || state.get().proposals_2.state == PROP_EXECUTED ||
+             state.get().proposals_2.state == PROP_EXPIRED || state.get().proposals_2.state == PROP_CANCELLED)
     { slot = 2; }
-    else if (state.proposals_3.state == PROP_EMPTY || state.proposals_3.state == PROP_EXECUTED ||
-             state.proposals_3.state == PROP_EXPIRED || state.proposals_3.state == PROP_CANCELLED)
+    else if (state.get().proposals_3.state == PROP_EMPTY || state.get().proposals_3.state == PROP_EXECUTED ||
+             state.get().proposals_3.state == PROP_EXPIRED || state.get().proposals_3.state == PROP_CANCELLED)
     { slot = 3; }
-    else if (state.proposals_4.state == PROP_EMPTY || state.proposals_4.state == PROP_EXECUTED ||
-             state.proposals_4.state == PROP_EXPIRED || state.proposals_4.state == PROP_CANCELLED)
+    else if (state.get().proposals_4.state == PROP_EMPTY || state.get().proposals_4.state == PROP_EXECUTED ||
+             state.get().proposals_4.state == PROP_EXPIRED || state.get().proposals_4.state == PROP_CANCELLED)
     { slot = 4; }
-    else if (state.proposals_5.state == PROP_EMPTY || state.proposals_5.state == PROP_EXECUTED ||
-             state.proposals_5.state == PROP_EXPIRED || state.proposals_5.state == PROP_CANCELLED)
+    else if (state.get().proposals_5.state == PROP_EMPTY || state.get().proposals_5.state == PROP_EXECUTED ||
+             state.get().proposals_5.state == PROP_EXPIRED || state.get().proposals_5.state == PROP_CANCELLED)
     { slot = 5; }
-    else if (state.proposals_6.state == PROP_EMPTY || state.proposals_6.state == PROP_EXECUTED ||
-             state.proposals_6.state == PROP_EXPIRED || state.proposals_6.state == PROP_CANCELLED)
+    else if (state.get().proposals_6.state == PROP_EMPTY || state.get().proposals_6.state == PROP_EXECUTED ||
+             state.get().proposals_6.state == PROP_EXPIRED || state.get().proposals_6.state == PROP_CANCELLED)
     { slot = 6; }
-    else if (state.proposals_7.state == PROP_EMPTY || state.proposals_7.state == PROP_EXECUTED ||
-             state.proposals_7.state == PROP_EXPIRED || state.proposals_7.state == PROP_CANCELLED)
+    else if (state.get().proposals_7.state == PROP_EMPTY || state.get().proposals_7.state == PROP_EXECUTED ||
+             state.get().proposals_7.state == PROP_EXPIRED || state.get().proposals_7.state == PROP_CANCELLED)
     { slot = 7; }
 
     if (slot < 0) { return; } // All slots full
@@ -417,32 +417,32 @@ PUBLIC_PROCEDURE(ProposeSpend)
     // Write proposal
     if (slot == 0)
     {
-        state.proposals_0.proposalId        = state.nextProposalId;
-        state.proposals_0.category          = input.category;
-        state.proposals_0.state             = PROP_PENDING;
-        state.proposals_0.destinationAddress = input.destination;
-        state.proposals_0.amount            = input.amount;
-        state.proposals_0.memo              = input.memo;
-        state.proposals_0.proposedEpoch     = qpi.epoch();
-        state.proposals_0.approvedEpoch     = 0;
-        state.proposals_0.executeAfterEpoch = 0;
-        state.proposals_0.executedEpoch     = 0;
-        state.proposals_0.proposerAddress   = qpi.invocator();
-        state.proposals_0.sigCount          = 0;
-        state.proposals_0.sig_0             = 0;
-        state.proposals_0.sig_1             = 0;
-        state.proposals_0.sig_2             = 0;
+        state.get().proposals_0.proposalId        = state.get().nextProposalId;
+        state.get().proposals_0.category          = input.category;
+        state.get().proposals_0.state             = PROP_PENDING;
+        state.get().proposals_0.destinationAddress = input.destination;
+        state.get().proposals_0.amount            = input.amount;
+        state.get().proposals_0.memo              = input.memo;
+        state.get().proposals_0.proposedEpoch     = qpi.epoch();
+        state.get().proposals_0.approvedEpoch     = 0;
+        state.get().proposals_0.executeAfterEpoch = 0;
+        state.get().proposals_0.executedEpoch     = 0;
+        state.get().proposals_0.proposerAddress   = qpi.invocator();
+        state.get().proposals_0.sigCount          = 0;
+        state.get().proposals_0.sig_0             = 0;
+        state.get().proposals_0.sig_1             = 0;
+        state.get().proposals_0.sig_2             = 0;
 
         // Auto-sign for proposer
-        if (qpi.invocator() == state.signer_0) { state.proposals_0.sig_0 = 1; state.proposals_0.sigCount = 1; }
-        if (qpi.invocator() == state.signer_1) { state.proposals_0.sig_1 = 1; state.proposals_0.sigCount = 1; }
-        if (qpi.invocator() == state.signer_2) { state.proposals_0.sig_2 = 1; state.proposals_0.sigCount = 1; }
+        if (qpi.invocator() == state.get().signer_0) { state.get().proposals_0.sig_0 = 1; state.get().proposals_0.sigCount = 1; }
+        if (qpi.invocator() == state.get().signer_1) { state.get().proposals_0.sig_1 = 1; state.get().proposals_0.sigCount = 1; }
+        if (qpi.invocator() == state.get().signer_2) { state.get().proposals_0.sig_2 = 1; state.get().proposals_0.sigCount = 1; }
     }
     // Slots 1-7 follow identical pattern
 
-    state.nextProposalId = state.nextProposalId + 1;
+    state.mut().nextProposalId = state.get().nextProposalId + 1;
 
-    output.proposalId        = state.nextProposalId - 1;
+    output.proposalId        = state.get().nextProposalId - 1;
     output.proposalSlot      = slot;
     output.timelockRequired  = needsTimelock;
     output.executeAfterEpoch = execAfter;
@@ -459,14 +459,14 @@ PUBLIC_PROCEDURE(SignProposal)
  * Large spends must call ExecuteProposal after timelock.
  */
 {
-    if (state.paused) { return; }
+    if (state.get().paused) { return; }
 
     // Verify signer
     bit isSigner;
     isSigner = 0;
-    if (qpi.invocator() == state.signer_0 && state.signer_0_active) { isSigner = 1; }
-    if (qpi.invocator() == state.signer_1 && state.signer_1_active) { isSigner = 1; }
-    if (qpi.invocator() == state.signer_2 && state.signer_2_active) { isSigner = 1; }
+    if (qpi.invocator() == state.get().signer_0 && state.get().signer_0_active) { isSigner = 1; }
+    if (qpi.invocator() == state.get().signer_1 && state.get().signer_1_active) { isSigner = 1; }
+    if (qpi.invocator() == state.get().signer_2 && state.get().signer_2_active) { isSigner = 1; }
 
     if (!isSigner) { return; }
 
@@ -474,103 +474,103 @@ PUBLIC_PROCEDURE(SignProposal)
     sint64 slot;
     slot = -1;
 
-    if (state.proposals_0.proposalId == input.proposalId && state.proposals_0.state == PROP_PENDING) { slot = 0; }
-    else if (state.proposals_1.proposalId == input.proposalId && state.proposals_1.state == PROP_PENDING) { slot = 1; }
-    else if (state.proposals_2.proposalId == input.proposalId && state.proposals_2.state == PROP_PENDING) { slot = 2; }
-    else if (state.proposals_3.proposalId == input.proposalId && state.proposals_3.state == PROP_PENDING) { slot = 3; }
-    else if (state.proposals_4.proposalId == input.proposalId && state.proposals_4.state == PROP_PENDING) { slot = 4; }
-    else if (state.proposals_5.proposalId == input.proposalId && state.proposals_5.state == PROP_PENDING) { slot = 5; }
-    else if (state.proposals_6.proposalId == input.proposalId && state.proposals_6.state == PROP_PENDING) { slot = 6; }
-    else if (state.proposals_7.proposalId == input.proposalId && state.proposals_7.state == PROP_PENDING) { slot = 7; }
+    if (state.get().proposals_0.proposalId == input.proposalId && state.get().proposals_0.state == PROP_PENDING) { slot = 0; }
+    else if (state.get().proposals_1.proposalId == input.proposalId && state.get().proposals_1.state == PROP_PENDING) { slot = 1; }
+    else if (state.get().proposals_2.proposalId == input.proposalId && state.get().proposals_2.state == PROP_PENDING) { slot = 2; }
+    else if (state.get().proposals_3.proposalId == input.proposalId && state.get().proposals_3.state == PROP_PENDING) { slot = 3; }
+    else if (state.get().proposals_4.proposalId == input.proposalId && state.get().proposals_4.state == PROP_PENDING) { slot = 4; }
+    else if (state.get().proposals_5.proposalId == input.proposalId && state.get().proposals_5.state == PROP_PENDING) { slot = 5; }
+    else if (state.get().proposals_6.proposalId == input.proposalId && state.get().proposals_6.state == PROP_PENDING) { slot = 6; }
+    else if (state.get().proposals_7.proposalId == input.proposalId && state.get().proposals_7.state == PROP_PENDING) { slot = 7; }
 
     if (slot < 0) { return; }
 
     if (slot == 0)
     {
         // Check not already signed by this signer
-        if (qpi.invocator() == state.signer_0 && !state.proposals_0.sig_0)
+        if (qpi.invocator() == state.get().signer_0 && !state.get().proposals_0.sig_0)
         {
-            state.proposals_0.sig_0    = 1;
-            state.proposals_0.sigCount = state.proposals_0.sigCount + 1;
+            state.get().proposals_0.sig_0    = 1;
+            state.get().proposals_0.sigCount = state.get().proposals_0.sigCount + 1;
         }
-        else if (qpi.invocator() == state.signer_1 && !state.proposals_0.sig_1)
+        else if (qpi.invocator() == state.get().signer_1 && !state.get().proposals_0.sig_1)
         {
-            state.proposals_0.sig_1    = 1;
-            state.proposals_0.sigCount = state.proposals_0.sigCount + 1;
+            state.get().proposals_0.sig_1    = 1;
+            state.get().proposals_0.sigCount = state.get().proposals_0.sigCount + 1;
         }
-        else if (qpi.invocator() == state.signer_2 && !state.proposals_0.sig_2)
+        else if (qpi.invocator() == state.get().signer_2 && !state.get().proposals_0.sig_2)
         {
-            state.proposals_0.sig_2    = 1;
-            state.proposals_0.sigCount = state.proposals_0.sigCount + 1;
+            state.get().proposals_0.sig_2    = 1;
+            state.get().proposals_0.sigCount = state.get().proposals_0.sigCount + 1;
         }
 
-        output.sigsCollected = state.proposals_0.sigCount;
+        output.sigsCollected = state.get().proposals_0.sigCount;
         output.sigsRequired  = REQUIRED_SIGS;
 
         // Check if threshold met
-        if (state.proposals_0.sigCount >= REQUIRED_SIGS)
+        if (state.get().proposals_0.sigCount >= REQUIRED_SIGS)
         {
-            state.proposals_0.approvedEpoch = qpi.epoch();
+            state.get().proposals_0.approvedEpoch = qpi.epoch();
             output.approved = 1;
 
             // Large spend → timelock
-            if (state.proposals_0.amount >= TIMELOCK_THRESHOLD)
+            if (state.get().proposals_0.amount >= TIMELOCK_THRESHOLD)
             {
-                state.proposals_0.state             = PROP_TIMELOCKED;
-                state.proposals_0.executeAfterEpoch = qpi.epoch() + TIMELOCK_DELAY_EPOCHS;
+                state.get().proposals_0.state             = PROP_TIMELOCKED;
+                state.get().proposals_0.executeAfterEpoch = qpi.epoch() + TIMELOCK_DELAY_EPOCHS;
                 output.timelocked        = 1;
                 output.executed          = 0;
             }
             else
             {
                 // ---- IMMEDIATE EXECUTION (small spend) ----
-                state.proposals_0.state         = PROP_APPROVED;
-                state.proposals_0.executedEpoch = qpi.epoch();
+                state.get().proposals_0.state         = PROP_APPROVED;
+                state.get().proposals_0.executedEpoch = qpi.epoch();
 
                 sint64  amt;
                 uint8   cat;
                 id      dest;
 
-                amt  = state.proposals_0.amount;
-                cat  = state.proposals_0.category;
-                dest = state.proposals_0.destinationAddress;
+                amt  = state.get().proposals_0.amount;
+                cat  = state.get().proposals_0.category;
+                dest = state.get().proposals_0.destinationAddress;
 
                 // Route by category
                 if (cat == SPEND_EPOCH_REWARD || cat == SPEND_ACHIEVEMENT_FUND)
                 {
                     // Transfer to Reward Router reserve
                     qpi.transfer(dest, amt);
-                    state.treasuryBalance   = state.treasuryBalance - amt;
-                    state.totalSpent        = state.totalSpent + amt;
-                    state.totalEpochFunded  = state.totalEpochFunded + amt;
+                    state.mut().treasuryBalance = state.get().treasuryBalance - amt;
+                    state.mut().totalSpent = state.get().totalSpent + amt;
+                    state.mut().totalEpochFunded = state.get().totalEpochFunded + amt;
                 }
                 else if (cat == SPEND_LIQUIDITY_INJECT)
                 {
                     // Transfer to liquidity pool
                     qpi.transfer(dest, amt);
-                    state.treasuryBalance = state.treasuryBalance - amt;
-                    state.totalSpent      = state.totalSpent + amt;
+                    state.mut().treasuryBalance = state.get().treasuryBalance - amt;
+                    state.mut().totalSpent = state.get().totalSpent + amt;
                 }
                 else if (cat == SPEND_ECOSYSTEM_GRANT)
                 {
                     // Transfer to ecosystem fund
                     qpi.transfer(dest, amt);
-                    state.treasuryBalance = state.treasuryBalance - amt;
-                    state.totalSpent      = state.totalSpent + amt;
+                    state.mut().treasuryBalance = state.get().treasuryBalance - amt;
+                    state.mut().totalSpent = state.get().totalSpent + amt;
                 }
                 else if (cat == SPEND_BURN_EVENT)
                 {
                     // Burn from treasury — deflationary event
-                    state.treasuryBalance = state.treasuryBalance - amt;
-                    state.totalBurned     = state.totalBurned + amt;
-                    state.totalSpent      = state.totalSpent + amt;
+                    state.mut().treasuryBalance = state.get().treasuryBalance - amt;
+                    state.mut().totalBurned = state.get().totalBurned + amt;
+                    state.mut().totalSpent = state.get().totalSpent + amt;
                     // Calls QZN Core BurnFromTreasury in Phase 2
                 }
 
-                state.proposals_0.state    = PROP_EXECUTED;
-                state.lastSpendEpoch       = qpi.epoch();
-                state.lastSpendAmount      = amt;
-                state.lastSpendCategory    = cat;
+                state.get().proposals_0.state    = PROP_EXECUTED;
+                state.mut().lastSpendEpoch = qpi.epoch();
+                state.mut().lastSpendAmount = amt;
+                state.mut().lastSpendCategory = cat;
 
                 output.timelocked = 0;
                 output.executed   = 1;
@@ -594,14 +594,14 @@ PUBLIC_PROCEDURE(ExecuteProposal)
  * before large funds move.
  */
 {
-    if (state.paused) { return; }
+    if (state.get().paused) { return; }
 
     // Verify signer
     bit isSigner;
     isSigner = 0;
-    if (qpi.invocator() == state.signer_0 && state.signer_0_active) { isSigner = 1; }
-    if (qpi.invocator() == state.signer_1 && state.signer_1_active) { isSigner = 1; }
-    if (qpi.invocator() == state.signer_2 && state.signer_2_active) { isSigner = 1; }
+    if (qpi.invocator() == state.get().signer_0 && state.get().signer_0_active) { isSigner = 1; }
+    if (qpi.invocator() == state.get().signer_1 && state.get().signer_1_active) { isSigner = 1; }
+    if (qpi.invocator() == state.get().signer_2 && state.get().signer_2_active) { isSigner = 1; }
 
     if (!isSigner) { return; }
 
@@ -609,21 +609,21 @@ PUBLIC_PROCEDURE(ExecuteProposal)
     sint64 slot;
     slot = -1;
 
-    if (state.proposals_0.proposalId == input.proposalId && state.proposals_0.state == PROP_TIMELOCKED) { slot = 0; }
-    else if (state.proposals_1.proposalId == input.proposalId && state.proposals_1.state == PROP_TIMELOCKED) { slot = 1; }
-    else if (state.proposals_2.proposalId == input.proposalId && state.proposals_2.state == PROP_TIMELOCKED) { slot = 2; }
-    else if (state.proposals_3.proposalId == input.proposalId && state.proposals_3.state == PROP_TIMELOCKED) { slot = 3; }
-    else if (state.proposals_4.proposalId == input.proposalId && state.proposals_4.state == PROP_TIMELOCKED) { slot = 4; }
-    else if (state.proposals_5.proposalId == input.proposalId && state.proposals_5.state == PROP_TIMELOCKED) { slot = 5; }
-    else if (state.proposals_6.proposalId == input.proposalId && state.proposals_6.state == PROP_TIMELOCKED) { slot = 6; }
-    else if (state.proposals_7.proposalId == input.proposalId && state.proposals_7.state == PROP_TIMELOCKED) { slot = 7; }
+    if (state.get().proposals_0.proposalId == input.proposalId && state.get().proposals_0.state == PROP_TIMELOCKED) { slot = 0; }
+    else if (state.get().proposals_1.proposalId == input.proposalId && state.get().proposals_1.state == PROP_TIMELOCKED) { slot = 1; }
+    else if (state.get().proposals_2.proposalId == input.proposalId && state.get().proposals_2.state == PROP_TIMELOCKED) { slot = 2; }
+    else if (state.get().proposals_3.proposalId == input.proposalId && state.get().proposals_3.state == PROP_TIMELOCKED) { slot = 3; }
+    else if (state.get().proposals_4.proposalId == input.proposalId && state.get().proposals_4.state == PROP_TIMELOCKED) { slot = 4; }
+    else if (state.get().proposals_5.proposalId == input.proposalId && state.get().proposals_5.state == PROP_TIMELOCKED) { slot = 5; }
+    else if (state.get().proposals_6.proposalId == input.proposalId && state.get().proposals_6.state == PROP_TIMELOCKED) { slot = 6; }
+    else if (state.get().proposals_7.proposalId == input.proposalId && state.get().proposals_7.state == PROP_TIMELOCKED) { slot = 7; }
 
     if (slot < 0) { return; }
 
     if (slot == 0)
     {
         // Enforce timelock delay
-        if (qpi.epoch() < state.proposals_0.executeAfterEpoch)
+        if (qpi.epoch() < state.get().proposals_0.executeAfterEpoch)
         {
             output.executed = 0;
             return;
@@ -633,36 +633,36 @@ PUBLIC_PROCEDURE(ExecuteProposal)
         uint8  cat;
         id     dest;
 
-        amt  = state.proposals_0.amount;
-        cat  = state.proposals_0.category;
-        dest = state.proposals_0.destinationAddress;
+        amt  = state.get().proposals_0.amount;
+        cat  = state.get().proposals_0.category;
+        dest = state.get().proposals_0.destinationAddress;
 
         // Execute spend by category
         if (cat == SPEND_EPOCH_REWARD || cat == SPEND_ACHIEVEMENT_FUND)
         {
             qpi.transfer(dest, amt);
-            state.treasuryBalance  = state.treasuryBalance - amt;
-            state.totalSpent       = state.totalSpent + amt;
-            state.totalEpochFunded = state.totalEpochFunded + amt;
+            state.mut().treasuryBalance = state.get().treasuryBalance - amt;
+            state.mut().totalSpent = state.get().totalSpent + amt;
+            state.mut().totalEpochFunded = state.get().totalEpochFunded + amt;
         }
         else if (cat == SPEND_LIQUIDITY_INJECT || cat == SPEND_ECOSYSTEM_GRANT)
         {
             qpi.transfer(dest, amt);
-            state.treasuryBalance = state.treasuryBalance - amt;
-            state.totalSpent      = state.totalSpent + amt;
+            state.mut().treasuryBalance = state.get().treasuryBalance - amt;
+            state.mut().totalSpent = state.get().totalSpent + amt;
         }
         else if (cat == SPEND_BURN_EVENT)
         {
-            state.treasuryBalance = state.treasuryBalance - amt;
-            state.totalBurned     = state.totalBurned + amt;
-            state.totalSpent      = state.totalSpent + amt;
+            state.mut().treasuryBalance = state.get().treasuryBalance - amt;
+            state.mut().totalBurned = state.get().totalBurned + amt;
+            state.mut().totalSpent = state.get().totalSpent + amt;
         }
 
-        state.proposals_0.state         = PROP_EXECUTED;
-        state.proposals_0.executedEpoch = qpi.epoch();
-        state.lastSpendEpoch            = qpi.epoch();
-        state.lastSpendAmount           = amt;
-        state.lastSpendCategory         = cat;
+        state.get().proposals_0.state         = PROP_EXECUTED;
+        state.get().proposals_0.executedEpoch = qpi.epoch();
+        state.mut().lastSpendEpoch = qpi.epoch();
+        state.mut().lastSpendAmount = amt;
+        state.mut().lastSpendCategory = cat;
 
         output.executed    = 1;
         output.amountSent  = amt;
@@ -680,15 +680,15 @@ PUBLIC_PROCEDURE(CancelProposal)
 {
     bit isSigner;
     isSigner = 0;
-    if (qpi.invocator() == state.signer_0 && state.signer_0_active) { isSigner = 1; }
-    if (qpi.invocator() == state.signer_1 && state.signer_1_active) { isSigner = 1; }
-    if (qpi.invocator() == state.signer_2 && state.signer_2_active) { isSigner = 1; }
+    if (qpi.invocator() == state.get().signer_0 && state.get().signer_0_active) { isSigner = 1; }
+    if (qpi.invocator() == state.get().signer_1 && state.get().signer_1_active) { isSigner = 1; }
+    if (qpi.invocator() == state.get().signer_2 && state.get().signer_2_active) { isSigner = 1; }
 
     if (!isSigner) { return; }
 
-    if (state.proposals_0.proposalId == input.proposalId && state.proposals_0.state == PROP_PENDING)
+    if (state.get().proposals_0.proposalId == input.proposalId && state.get().proposals_0.state == PROP_PENDING)
     {
-        state.proposals_0.state = PROP_CANCELLED;
+        state.get().proposals_0.state = PROP_CANCELLED;
         output.cancelled        = 1;
         return;
     }
@@ -703,27 +703,27 @@ PUBLIC_PROCEDURE(CancelProposal)
 
 PUBLIC_FUNCTION(GetVaultState)
 {
-    output.treasuryBalance        = state.treasuryBalance;
-    output.totalSpent             = state.totalSpent;
-    output.totalBurned            = state.totalBurned;
-    output.epochRewardFundAmount  = state.epochRewardFundAmount;
-    output.autoFundEnabled        = state.autoFundEnabled;
-    output.paused                 = state.paused;
-    output.nextProposalId         = state.nextProposalId;
+    output.treasuryBalance        = state.get().treasuryBalance;
+    output.totalSpent             = state.get().totalSpent;
+    output.totalBurned            = state.get().totalBurned;
+    output.epochRewardFundAmount  = state.get().epochRewardFundAmount;
+    output.autoFundEnabled        = state.get().autoFundEnabled;
+    output.paused                 = state.get().paused;
+    output.nextProposalId         = state.get().nextProposalId;
 }
 
 PUBLIC_FUNCTION(GetProposal)
 {
-    if (state.proposals_0.proposalId == input.proposalId)
+    if (state.get().proposals_0.proposalId == input.proposalId)
     {
-        output.category          = state.proposals_0.category;
-        output.state             = state.proposals_0.state;
-        output.amount            = state.proposals_0.amount;
-        output.destination       = state.proposals_0.destinationAddress;
-        output.sigsCollected     = state.proposals_0.sigCount;
-        output.proposedEpoch     = state.proposals_0.proposedEpoch;
-        output.executeAfterEpoch = state.proposals_0.executeAfterEpoch;
-        output.expired           = (qpi.epoch() > state.proposals_0.proposedEpoch + PROPOSAL_EXPIRY_EPOCHS) ? 1 : 0;
+        output.category          = state.get().proposals_0.category;
+        output.state             = state.get().proposals_0.state;
+        output.amount            = state.get().proposals_0.amount;
+        output.destination       = state.get().proposals_0.destinationAddress;
+        output.sigsCollected     = state.get().proposals_0.sigCount;
+        output.proposedEpoch     = state.get().proposals_0.proposedEpoch;
+        output.executeAfterEpoch = state.get().proposals_0.executeAfterEpoch;
+        output.expired           = (qpi.epoch() > state.get().proposals_0.proposedEpoch + PROPOSAL_EXPIRY_EPOCHS) ? 1 : 0;
     }
     // Slots 1-7 identical
 }
@@ -763,32 +763,32 @@ BEGIN_EPOCH()
  */
 {
     // ---- EXPIRY SWEEP ----
-    if (state.proposals_0.state == PROP_PENDING)
+    if (state.get().proposals_0.state == PROP_PENDING)
     {
-        if (qpi.epoch() > state.proposals_0.proposedEpoch + PROPOSAL_EXPIRY_EPOCHS)
+        if (qpi.epoch() > state.get().proposals_0.proposedEpoch + PROPOSAL_EXPIRY_EPOCHS)
         {
-            state.proposals_0.state = PROP_EXPIRED;
+            state.get().proposals_0.state = PROP_EXPIRED;
         }
     }
-    if (state.proposals_1.state == PROP_PENDING)
+    if (state.get().proposals_1.state == PROP_PENDING)
     {
-        if (qpi.epoch() > state.proposals_1.proposedEpoch + PROPOSAL_EXPIRY_EPOCHS)
+        if (qpi.epoch() > state.get().proposals_1.proposedEpoch + PROPOSAL_EXPIRY_EPOCHS)
         {
-            state.proposals_1.state = PROP_EXPIRED;
+            state.get().proposals_1.state = PROP_EXPIRED;
         }
     }
-    if (state.proposals_2.state == PROP_PENDING)
+    if (state.get().proposals_2.state == PROP_PENDING)
     {
-        if (qpi.epoch() > state.proposals_2.proposedEpoch + PROPOSAL_EXPIRY_EPOCHS)
+        if (qpi.epoch() > state.get().proposals_2.proposedEpoch + PROPOSAL_EXPIRY_EPOCHS)
         {
-            state.proposals_2.state = PROP_EXPIRED;
+            state.get().proposals_2.state = PROP_EXPIRED;
         }
     }
-    if (state.proposals_3.state == PROP_PENDING)
+    if (state.get().proposals_3.state == PROP_PENDING)
     {
-        if (qpi.epoch() > state.proposals_3.proposedEpoch + PROPOSAL_EXPIRY_EPOCHS)
+        if (qpi.epoch() > state.get().proposals_3.proposedEpoch + PROPOSAL_EXPIRY_EPOCHS)
         {
-            state.proposals_3.state = PROP_EXPIRED;
+            state.get().proposals_3.state = PROP_EXPIRED;
         }
     }
     // Slots 4-7 identical pattern
@@ -797,36 +797,36 @@ BEGIN_EPOCH()
     // 6-month runway = 26 epochs * (reward + achievement fund)
     sint64  monthlyBurn;
     sint64  runwayThreshold;
-    monthlyBurn      = state.epochRewardFundAmount + state.epochAchievementAmount;
+    monthlyBurn      = state.get().epochRewardFundAmount + state.get().epochAchievementAmount;
     runwayThreshold  = monthlyBurn * 26LL;
 
-    if (state.treasuryBalance < runwayThreshold)
+    if (state.get().treasuryBalance < runwayThreshold)
     {
         // Below 6-month runway — disable auto-fund, alert via state
-        state.autoFundEnabled = 0;
+        state.mut().autoFundEnabled = 0;
     }
 
     // ---- AUTO-FUND REWARD ROUTER ----
-    if (state.autoFundEnabled && !state.paused)
+    if (state.get().autoFundEnabled && !state.get().paused)
     {
         // Reward fund
-        if (state.epochRewardFundAmount > 0 &&
-            state.treasuryBalance >= state.epochRewardFundAmount)
+        if (state.get().epochRewardFundAmount > 0 &&
+            state.get().treasuryBalance >= state.get().epochRewardFundAmount)
         {
-            qpi.transfer(state.rewardRouterAddress, state.epochRewardFundAmount);
-            state.treasuryBalance  = state.treasuryBalance - state.epochRewardFundAmount;
-            state.totalSpent       = state.totalSpent + state.epochRewardFundAmount;
-            state.totalEpochFunded = state.totalEpochFunded + state.epochRewardFundAmount;
+            qpi.transfer(state.get().rewardRouterAddress, state.get().epochRewardFundAmount);
+            state.mut().treasuryBalance = state.get().treasuryBalance - state.get().epochRewardFundAmount;
+            state.mut().totalSpent = state.get().totalSpent + state.get().epochRewardFundAmount;
+            state.mut().totalEpochFunded = state.get().totalEpochFunded + state.get().epochRewardFundAmount;
         }
 
         // Achievement fund
-        if (state.epochAchievementAmount > 0 &&
-            state.treasuryBalance >= state.epochAchievementAmount)
+        if (state.get().epochAchievementAmount > 0 &&
+            state.get().treasuryBalance >= state.get().epochAchievementAmount)
         {
-            qpi.transfer(state.rewardRouterAddress, state.epochAchievementAmount);
-            state.treasuryBalance  = state.treasuryBalance - state.epochAchievementAmount;
-            state.totalSpent       = state.totalSpent + state.epochAchievementAmount;
-            state.totalEpochFunded = state.totalEpochFunded + state.epochAchievementAmount;
+            qpi.transfer(state.get().rewardRouterAddress, state.get().epochAchievementAmount);
+            state.mut().treasuryBalance = state.get().treasuryBalance - state.get().epochAchievementAmount;
+            state.mut().totalSpent = state.get().totalSpent + state.get().epochAchievementAmount;
+            state.mut().totalEpochFunded = state.get().totalEpochFunded + state.get().epochAchievementAmount;
         }
     }
 }

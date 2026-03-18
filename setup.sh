@@ -26,37 +26,11 @@ echo ">>> Patching contract headers, contract_def.h, and CMakeLists.txt..."
 python3 << 'PYEOF'
 import re
 
-# ── 1. Add STATE2 structs to each contract header ──────────────────────────
-headers = {
-    "/app/src/contracts/QZN_Token_v2.h":             "QZN",
-    "/app/src/contracts/QZN_GameCabinet_PAO.h":      "QZNCABINET",
-    "/app/src/contracts/QZN_RewardRouter_PAO.h":     "QZNREWARDROUTER",
-    "/app/src/contracts/QZN_TreasuryVault_PAO.h":    "QZNTREASVAULT",
-    "/app/src/contracts/QZN_Portal_PAO.h":           "QZNPORTAL",
-    "/app/src/contracts/QZN_TournamentEngine_PAO.h": "QZNTOUR",
-}
+# ── 1. STATE2 structs already present in pre-fixed contract headers ──────────
+print("  STATE2 structs already present — skipping injection")
 
-for path, name in headers.items():
-    with open(path, "r") as f:
-        content = f.read()
-    state2 = f"struct {name}2\n{{\n}};\n\n"
-    if f"struct {name}2" not in content:
-        content = content.replace("using namespace QPI;", "using namespace QPI;\n\n" + state2, 1)
-        with open(path, "w") as f:
-            f.write(content)
-        print(f"  Added {name}2 to {path}")
-
-# ── 2. Fix QZN_TOKEN_CONTRACT_INDEX in GameCabinet ────────────────────────
-path = "/app/src/contracts/QZN_GameCabinet_PAO.h"
-with open(path, "r") as f:
-    content = f.read()
-content = content.replace(
-    "constexpr uint32 QZN_TOKEN_CONTRACT_INDEX  = 0;",
-    "constexpr uint32 QZN_TOKEN_CONTRACT_INDEX  = 26;"
-)
-with open(path, "w") as f:
-    f.write(content)
-print("  Fixed QZN_TOKEN_CONTRACT_INDEX = 26")
+# ── 2. QZN_TOKEN_CONTRACT_INDEX already renamed in pre-fixed header ─────────
+print("  QZN_TOKEN_CONTRACT_INDEX already handled — skipping")
 
 # ── 3. Register QZN contracts in contract_def.h ───────────────────────────
 contract_def = "/app/src/contract_core/contract_def.h"
