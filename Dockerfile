@@ -4,27 +4,28 @@
 # Registers all 6 QZN smart contracts for local testnet
 # ============================================================
 
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install build dependencies
+# Install build dependencies (Ubuntu 24.04 ships clang-18)
 RUN apt-get update && apt-get install -y \
     git \
     cmake \
-    clang-15 \
-    lld-15 \
-    libc++-15-dev \
-    libc++abi-15-dev \
+    clang-18 \
+    lld-18 \
+    libc++-18-dev \
+    libc++abi-18-dev \
     build-essential \
     wget \
     curl \
+    python3 \
     sed \
     && rm -rf /var/lib/apt/lists/*
 
-# Set clang as default compiler
-RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-15 100 && \
-    update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-15 100
+# Set clang-18 as default compiler
+RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-18 100 && \
+    update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-18 100
 
 WORKDIR /app
 
@@ -42,8 +43,8 @@ RUN chmod +x /qzn/setup.sh && /qzn/setup.sh
 # Build the node
 RUN mkdir -p build && cd build && \
     cmake .. \
-      -DCMAKE_C_COMPILER=clang-15 \
-      -DCMAKE_CXX_COMPILER=clang++-15 \
+      -DCMAKE_C_COMPILER=clang-18 \
+      -DCMAKE_CXX_COMPILER=clang++-18 \
       -DCMAKE_BUILD_TYPE=Release && \
     make -j$(nproc) Qubic
 
