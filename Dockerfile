@@ -22,7 +22,7 @@ RUN mkdir -p /app/build && cd /app/build && cmake .. \
 # Pre-build all deps (cached layer)
 RUN cd /app/build && make -j$(nproc) fmt trantor drogon platform_common platform_efi
 
-# Copy contracts after dep build
+# Copy contracts after dep build (v2)
 COPY contracts/ /qzn/contracts/
 COPY test/      /qzn/test/
 COPY setup.sh /qzn/setup.sh
