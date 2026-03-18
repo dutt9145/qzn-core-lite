@@ -24,6 +24,7 @@ RUN cd /app/build && \
     make -j$(nproc) qubic_core_tests && \
     ./test/qubic_core_tests --gtest_filter="*QZN*" \
     || echo "WARNING: Some QZN tests failed"
+RUN ls /app/build/ | grep -i qubic
 EXPOSE 41841
 WORKDIR /app
 CMD ["/app/build/Qubic", "--ticking-delay", "1000"]
