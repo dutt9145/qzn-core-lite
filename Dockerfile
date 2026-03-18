@@ -17,10 +17,10 @@ RUN apt-get update && apt-get install -y \
     libc++-18-dev \
     libc++abi-18-dev \
     build-essential \
+    nasm \
     wget \
     curl \
     python3 \
-    nasm \
     sed \
     && rm -rf /var/lib/apt/lists/*
 
@@ -47,10 +47,10 @@ RUN mkdir -p build && cd build && \
       -DCMAKE_C_COMPILER=clang-18 \
       -DCMAKE_CXX_COMPILER=clang++-18 \
       -DCMAKE_BUILD_TYPE=Release \
-    || (cat /app/build/CMakeFiles/CMakeError.log && exit 1) && \
+      --log-level=VERBOSE 2>&1 && \
     make -j$(nproc) Qubic
 
-# Build and run tests (fails build if tests fail)
+# Build and run tests
 RUN cd build && \
     make -j$(nproc) qubic_core_tests && \
     ./test/qubic_core_tests --gtest_filter="*QZN*" \
