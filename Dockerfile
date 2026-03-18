@@ -22,6 +22,8 @@ RUN apt-get update && apt-get install -y \
     curl \
     python3 \
     sed \
+    libjsoncpp-dev \
+    pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
 # Set clang-18 as default compiler
