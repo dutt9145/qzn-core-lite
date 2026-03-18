@@ -27,4 +27,4 @@ RUN cd /app/build && \
 RUN find /app -type f \( -name "Qubic" -o -name "qubic" \)
 EXPOSE 41841
 WORKDIR /app
-CMD ["/app/build/Qubic", "--ticking-delay", "1000"]
+CMD ["sh", "-c", "find /app -type f \\( -name 'Qubic' -o -name 'qubic' \\) | head -1 | xargs -I{} {} --ticking-delay 1000"]
