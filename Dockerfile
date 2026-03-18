@@ -22,14 +22,19 @@ RUN mkdir -p /app/build && cd /app/build && cmake .. \
 # Pre-build all deps (cached layer)
 RUN cd /app/build && make -j$(nproc) fmt trantor drogon platform_common platform_efi
 
-# Copy contracts after dep build so contract changes don't invalidate dep cache
+# Copy contracts after dep build
 COPY contracts/ /qzn/contracts/
 COPY test/      /qzn/test/
 COPY setup.sh /qzn/setup.sh
 RUN chmod +x /qzn/setup.sh && /qzn/setup.sh
 
-# Build Qubic — only qubic.cpp compiles here, errors clearly visible
-RUN cd /app/build && make -j1 Qubic
+# Build — write errors to file then print them clearly
+RUN cd /app/build && make -j1 Qubic > /tmp/build.log 2>&1; \
+    EXIT=$?; \
+    echo "=== BUILD OUTPUT ==="; \
+    cat /tmp/build.log; \
+    echo "=== END BUILD OUTPUT ==="; \
+    exit $EXIT
 
 # Build and run tests
 RUN cd /app/build && \
