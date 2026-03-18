@@ -55,7 +55,8 @@ RUN mkdir -p /app/build
 RUN cd /app/build && cmake .. \
       -DCMAKE_C_COMPILER=clang-18 \
       -DCMAKE_CXX_COMPILER=clang++-18 \
-      -DCMAKE_BUILD_TYPE=Release
+      -DCMAKE_BUILD_TYPE=Release \
+      -DBUILD_DOCS=OFF
 
 # Build the node
 RUN cd /app/build && make -j$(nproc) Qubic

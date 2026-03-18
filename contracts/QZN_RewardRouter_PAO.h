@@ -628,16 +628,16 @@ PUBLIC_PROCEDURE(InitializeRouter)
     state.mut().epochTotalBurned = 0;
 
     // Clear leaderboard
-    state.get().board_0.score = 0;
-    state.get().board_1.score = 0;
-    state.get().board_2.score = 0;
-    state.get().board_3.score = 0;
-    state.get().board_4.score = 0;
-    state.get().board_5.score = 0;
-    state.get().board_6.score = 0;
-    state.get().board_7.score = 0;
-    state.get().board_8.score = 0;
-    state.get().board_9.score = 0;
+    state.mut().board_0.score = 0;
+    state.mut().board_1.score = 0;
+    state.mut().board_2.score = 0;
+    state.mut().board_3.score = 0;
+    state.mut().board_4.score = 0;
+    state.mut().board_5.score = 0;
+    state.mut().board_6.score = 0;
+    state.mut().board_7.score = 0;
+    state.mut().board_8.score = 0;
+    state.mut().board_9.score = 0;
 
     state.mut().initialized = 1;
     output.success    = 1;
@@ -935,30 +935,30 @@ PUBLIC_PROCEDURE(RegisterPlayer)
     // Write player record
     if (slot == 0)
     {
-        state.get().players_0.walletAddress       = qpi.invocator();
-        state.get().players_0.currentEpoch        = qpi.epoch();
-        state.get().players_0.epochEarned         = 0;
-        state.get().players_0.pendingBalance      = 0;
-        state.get().players_0.lifetimeEarned      = 0;
-        state.get().players_0.stakedAmount        = input.initialStake;
-        state.get().players_0.stakeMultiplierBPS  = multBPS;
-        state.get().players_0.totalMatchesPlayed  = 0;
-        state.get().players_0.totalMatchesWon     = 0;
-        state.get().players_0.currentWinStreak    = 0;
-        state.get().players_0.bestWinStreak       = 0;
-        state.get().players_0.wonSnaqe            = 0;
-        state.get().players_0.wonPaqman           = 0;
-        state.get().players_0.wonTanq             = 0;
-        state.get().players_0.achFirstWin         = 0;
-        state.get().players_0.achStreak5          = 0;
-        state.get().players_0.achStreak10         = 0;
-        state.get().players_0.achMatches100       = 0;
-        state.get().players_0.achMatches1000      = 0;
-        state.get().players_0.achHighStake        = 0;
-        state.get().players_0.achAllGames         = 0;
-        state.get().players_0.achTopLeaderboard   = 0;
-        state.get().players_0.epochScore          = 0;
-        state.get().players_0.active              = 1;
+        state.mut().players_0.walletAddress       = qpi.invocator();
+        state.mut().players_0.currentEpoch        = qpi.epoch();
+        state.mut().players_0.epochEarned         = 0;
+        state.mut().players_0.pendingBalance      = 0;
+        state.mut().players_0.lifetimeEarned      = 0;
+        state.mut().players_0.stakedAmount        = input.initialStake;
+        state.mut().players_0.stakeMultiplierBPS  = multBPS;
+        state.mut().players_0.totalMatchesPlayed  = 0;
+        state.mut().players_0.totalMatchesWon     = 0;
+        state.mut().players_0.currentWinStreak    = 0;
+        state.mut().players_0.bestWinStreak       = 0;
+        state.mut().players_0.wonSnaqe            = 0;
+        state.mut().players_0.wonPaqman           = 0;
+        state.mut().players_0.wonTanq             = 0;
+        state.mut().players_0.achFirstWin         = 0;
+        state.mut().players_0.achStreak5          = 0;
+        state.mut().players_0.achStreak10         = 0;
+        state.mut().players_0.achMatches100       = 0;
+        state.mut().players_0.achMatches1000      = 0;
+        state.mut().players_0.achHighStake        = 0;
+        state.mut().players_0.achAllGames         = 0;
+        state.mut().players_0.achTopLeaderboard   = 0;
+        state.mut().players_0.epochScore          = 0;
+        state.mut().players_0.active              = 1;
     }
     // Slots 1-15 follow identical pattern in full deployment
 
@@ -1254,7 +1254,7 @@ PUBLIC_PROCEDURE(StakeQZN)
     // Update stake and recompute multiplier
     if (slot == 0)
     {
-        state.get().players_0.stakedAmount = state.get().players_0.stakedAmount + input.amount;
+        state.mut().players_0.stakedAmount = state.get().players_0.stakedAmount + input.amount;
 
         sint64 newMult;
         newMult = MULT_TIER_0;
@@ -1263,7 +1263,7 @@ PUBLIC_PROCEDURE(StakeQZN)
         else if (state.get().players_0.stakedAmount >= STAKE_TIER_2) { newMult = MULT_TIER_2; }
         else if (state.get().players_0.stakedAmount >= STAKE_TIER_1) { newMult = MULT_TIER_1; }
 
-        state.get().players_0.stakeMultiplierBPS = newMult;
+        state.mut().players_0.stakeMultiplierBPS = newMult;
 
         output.newStakedTotal   = state.get().players_0.stakedAmount;
         output.newMultiplierBPS = newMult;
@@ -1300,7 +1300,7 @@ PUBLIC_PROCEDURE(UnstakeQZN)
     {
         if (input.amount > state.get().players_0.stakedAmount) { return; }
 
-        state.get().players_0.stakedAmount = state.get().players_0.stakedAmount - input.amount;
+        state.mut().players_0.stakedAmount = state.get().players_0.stakedAmount - input.amount;
 
         sint64 newMult;
         newMult = MULT_TIER_0;
@@ -1309,7 +1309,7 @@ PUBLIC_PROCEDURE(UnstakeQZN)
         else if (state.get().players_0.stakedAmount >= STAKE_TIER_2) { newMult = MULT_TIER_2; }
         else if (state.get().players_0.stakedAmount >= STAKE_TIER_1) { newMult = MULT_TIER_1; }
 
-        state.get().players_0.stakeMultiplierBPS = newMult;
+        state.mut().players_0.stakeMultiplierBPS = newMult;
 
         // Return unstaked QZN to player
         qpi.transfer(qpi.invocator(), input.amount);
@@ -1617,9 +1617,9 @@ PUBLIC_PROCEDURE(ReportMatchResult)
         // Reset epoch tracking if new epoch
         if (state.get().players_0.currentEpoch != qpi.epoch())
         {
-            state.get().players_0.currentEpoch = qpi.epoch();
-            state.get().players_0.epochEarned  = 0;
-            state.get().players_0.epochScore   = 0;
+            state.mut().players_0.currentEpoch = qpi.epoch();
+            state.mut().players_0.epochEarned  = 0;
+            state.mut().players_0.epochScore   = 0;
         }
 
         // ---- COMPUTE BASE REWARD WITH MULTIPLIER ----
@@ -1644,25 +1644,25 @@ PUBLIC_PROCEDURE(ReportMatchResult)
         }
 
         // Credit base reward
-        state.get().players_0.pendingBalance = state.get().players_0.pendingBalance + multipliedReward;
-        state.get().players_0.epochEarned    = state.get().players_0.epochEarned + multipliedReward;
-        state.get().players_0.lifetimeEarned = state.get().players_0.lifetimeEarned + multipliedReward;
+        state.mut().players_0.pendingBalance = state.get().players_0.pendingBalance + multipliedReward;
+        state.mut().players_0.epochEarned    = state.get().players_0.epochEarned + multipliedReward;
+        state.mut().players_0.lifetimeEarned = state.get().players_0.lifetimeEarned + multipliedReward;
 
         // Update match stats
-        state.get().players_0.totalMatchesPlayed = state.get().players_0.totalMatchesPlayed + 1;
-        state.get().players_0.totalMatchesWon    = state.get().players_0.totalMatchesWon + 1;
-        state.get().players_0.currentWinStreak   = state.get().players_0.currentWinStreak + 1;
-        state.get().players_0.epochScore         = state.get().players_0.epochScore + multipliedReward;
+        state.mut().players_0.totalMatchesPlayed = state.get().players_0.totalMatchesPlayed + 1;
+        state.mut().players_0.totalMatchesWon    = state.get().players_0.totalMatchesWon + 1;
+        state.mut().players_0.currentWinStreak   = state.get().players_0.currentWinStreak + 1;
+        state.mut().players_0.epochScore         = state.get().players_0.epochScore + multipliedReward;
 
         if (state.get().players_0.currentWinStreak > state.get().players_0.bestWinStreak)
         {
-            state.get().players_0.bestWinStreak = state.get().players_0.currentWinStreak;
+            state.mut().players_0.bestWinStreak = state.get().players_0.currentWinStreak;
         }
 
         // Track per-game wins for ALL_GAMES achievement
-        if (input.gameId == 1) { state.get().players_0.wonSnaqe  = 1; }
-        if (input.gameId == 2) { state.get().players_0.wonPaqman = 1; }
-        if (input.gameId == 3) { state.get().players_0.wonTanq   = 1; }
+        if (input.gameId == 1) { state.mut().players_0.wonSnaqe  = 1; }
+        if (input.gameId == 2) { state.mut().players_0.wonPaqman = 1; }
+        if (input.gameId == 3) { state.mut().players_0.wonTanq   = 1; }
 
         // ---- ACHIEVEMENT CHECKS ----
         // Achievement bonuses bypass epoch cap — intentional design
@@ -1672,8 +1672,8 @@ PUBLIC_PROCEDURE(ReportMatchResult)
         if (!state.get().players_0.achFirstWin &&
             state.get().players_0.totalMatchesWon >= 1)
         {
-            state.get().players_0.achFirstWin    = 1;
-            state.get().players_0.pendingBalance = state.get().players_0.pendingBalance + ACH_FIRST_WIN;
+            state.mut().players_0.achFirstWin    = 1;
+            state.mut().players_0.pendingBalance = state.get().players_0.pendingBalance + ACH_FIRST_WIN;
             achBonus = achBonus + ACH_FIRST_WIN;
             state.mut().totalAchievementsAwarded = state.get().totalAchievementsAwarded + 1;
         }
@@ -1682,8 +1682,8 @@ PUBLIC_PROCEDURE(ReportMatchResult)
         if (!state.get().players_0.achStreak5 &&
             state.get().players_0.currentWinStreak >= 5)
         {
-            state.get().players_0.achStreak5     = 1;
-            state.get().players_0.pendingBalance = state.get().players_0.pendingBalance + ACH_STREAK_5;
+            state.mut().players_0.achStreak5     = 1;
+            state.mut().players_0.pendingBalance = state.get().players_0.pendingBalance + ACH_STREAK_5;
             achBonus = achBonus + ACH_STREAK_5;
             state.mut().totalAchievementsAwarded = state.get().totalAchievementsAwarded + 1;
         }
@@ -1692,8 +1692,8 @@ PUBLIC_PROCEDURE(ReportMatchResult)
         if (!state.get().players_0.achStreak10 &&
             state.get().players_0.currentWinStreak >= 10)
         {
-            state.get().players_0.achStreak10    = 1;
-            state.get().players_0.pendingBalance = state.get().players_0.pendingBalance + ACH_STREAK_10;
+            state.mut().players_0.achStreak10    = 1;
+            state.mut().players_0.pendingBalance = state.get().players_0.pendingBalance + ACH_STREAK_10;
             achBonus = achBonus + ACH_STREAK_10;
             state.mut().totalAchievementsAwarded = state.get().totalAchievementsAwarded + 1;
         }
@@ -1702,8 +1702,8 @@ PUBLIC_PROCEDURE(ReportMatchResult)
         if (!state.get().players_0.achMatches100 &&
             state.get().players_0.totalMatchesPlayed >= 100)
         {
-            state.get().players_0.achMatches100  = 1;
-            state.get().players_0.pendingBalance = state.get().players_0.pendingBalance + ACH_MATCHES_100;
+            state.mut().players_0.achMatches100  = 1;
+            state.mut().players_0.pendingBalance = state.get().players_0.pendingBalance + ACH_MATCHES_100;
             achBonus = achBonus + ACH_MATCHES_100;
             state.mut().totalAchievementsAwarded = state.get().totalAchievementsAwarded + 1;
         }
@@ -1712,8 +1712,8 @@ PUBLIC_PROCEDURE(ReportMatchResult)
         if (!state.get().players_0.achMatches1000 &&
             state.get().players_0.totalMatchesPlayed >= 1000)
         {
-            state.get().players_0.achMatches1000 = 1;
-            state.get().players_0.pendingBalance = state.get().players_0.pendingBalance + ACH_MATCHES_1000;
+            state.mut().players_0.achMatches1000 = 1;
+            state.mut().players_0.pendingBalance = state.get().players_0.pendingBalance + ACH_MATCHES_1000;
             achBonus = achBonus + ACH_MATCHES_1000;
             state.mut().totalAchievementsAwarded = state.get().totalAchievementsAwarded + 1;
         }
@@ -1722,8 +1722,8 @@ PUBLIC_PROCEDURE(ReportMatchResult)
         if (!state.get().players_0.achHighStake &&
             input.stakeAmount >= ACH_HIGH_STAKE_MIN)
         {
-            state.get().players_0.achHighStake   = 1;
-            state.get().players_0.pendingBalance = state.get().players_0.pendingBalance + ACH_HIGH_STAKE;
+            state.mut().players_0.achHighStake   = 1;
+            state.mut().players_0.pendingBalance = state.get().players_0.pendingBalance + ACH_HIGH_STAKE;
             achBonus = achBonus + ACH_HIGH_STAKE;
             state.mut().totalAchievementsAwarded = state.get().totalAchievementsAwarded + 1;
         }
@@ -1734,8 +1734,8 @@ PUBLIC_PROCEDURE(ReportMatchResult)
             state.get().players_0.wonPaqman &&
             state.get().players_0.wonTanq)
         {
-            state.get().players_0.achAllGames    = 1;
-            state.get().players_0.pendingBalance = state.get().players_0.pendingBalance + ACH_ALL_GAMES;
+            state.mut().players_0.achAllGames    = 1;
+            state.mut().players_0.pendingBalance = state.get().players_0.pendingBalance + ACH_ALL_GAMES;
             achBonus = achBonus + ACH_ALL_GAMES;
             state.mut().totalAchievementsAwarded = state.get().totalAchievementsAwarded + 1;
         }
@@ -1749,8 +1749,8 @@ PUBLIC_PROCEDURE(ReportMatchResult)
         // Full sort on BEGIN_EPOCH() for clean leaderboard each epoch
         if (playerEpochScore > state.get().board_9.score)
         {
-            state.get().board_9.walletAddress = input.winnerAddress;
-            state.get().board_9.score         = playerEpochScore;
+            state.mut().board_9.walletAddress = input.winnerAddress;
+            state.mut().board_9.score         = playerEpochScore;
             // Full sort happens in BEGIN_EPOCH()
         }
 
@@ -1820,7 +1820,7 @@ PUBLIC_PROCEDURE(ClaimRewards)
         }
 
         // Execute transfer
-        state.get().players_0.pendingBalance    = 0;
+        state.mut().players_0.pendingBalance    = 0;
         state.mut().totalQZNDistributed = state.get().totalQZNDistributed + claimAmount;
         state.mut().epochTotalDistributed = state.get().epochTotalDistributed + claimAmount;
 
@@ -1939,67 +1939,67 @@ BEGIN_EPOCH()
     id     tempWallet;
 
     // Pass 1
-    if (state.get().board_0.score < state.get().board_1.score) { tempScore = state.get().board_0.score; tempWallet = state.get().board_0.walletAddress; state.get().board_0.score = state.get().board_1.score; state.get().board_0.walletAddress = state.get().board_1.walletAddress; state.get().board_1.score = tempScore; state.get().board_1.walletAddress = tempWallet; }
-    if (state.get().board_1.score < state.get().board_2.score) { tempScore = state.get().board_1.score; tempWallet = state.get().board_1.walletAddress; state.get().board_1.score = state.get().board_2.score; state.get().board_1.walletAddress = state.get().board_2.walletAddress; state.get().board_2.score = tempScore; state.get().board_2.walletAddress = tempWallet; }
-    if (state.get().board_2.score < state.get().board_3.score) { tempScore = state.get().board_2.score; tempWallet = state.get().board_2.walletAddress; state.get().board_2.score = state.get().board_3.score; state.get().board_2.walletAddress = state.get().board_3.walletAddress; state.get().board_3.score = tempScore; state.get().board_3.walletAddress = tempWallet; }
-    if (state.get().board_3.score < state.get().board_4.score) { tempScore = state.get().board_3.score; tempWallet = state.get().board_3.walletAddress; state.get().board_3.score = state.get().board_4.score; state.get().board_3.walletAddress = state.get().board_4.walletAddress; state.get().board_4.score = tempScore; state.get().board_4.walletAddress = tempWallet; }
-    if (state.get().board_4.score < state.get().board_5.score) { tempScore = state.get().board_4.score; tempWallet = state.get().board_4.walletAddress; state.get().board_4.score = state.get().board_5.score; state.get().board_4.walletAddress = state.get().board_5.walletAddress; state.get().board_5.score = tempScore; state.get().board_5.walletAddress = tempWallet; }
-    if (state.get().board_5.score < state.get().board_6.score) { tempScore = state.get().board_5.score; tempWallet = state.get().board_5.walletAddress; state.get().board_5.score = state.get().board_6.score; state.get().board_5.walletAddress = state.get().board_6.walletAddress; state.get().board_6.score = tempScore; state.get().board_6.walletAddress = tempWallet; }
-    if (state.get().board_6.score < state.get().board_7.score) { tempScore = state.get().board_6.score; tempWallet = state.get().board_6.walletAddress; state.get().board_6.score = state.get().board_7.score; state.get().board_6.walletAddress = state.get().board_7.walletAddress; state.get().board_7.score = tempScore; state.get().board_7.walletAddress = tempWallet; }
-    if (state.get().board_7.score < state.get().board_8.score) { tempScore = state.get().board_7.score; tempWallet = state.get().board_7.walletAddress; state.get().board_7.score = state.get().board_8.score; state.get().board_7.walletAddress = state.get().board_8.walletAddress; state.get().board_8.score = tempScore; state.get().board_8.walletAddress = tempWallet; }
-    if (state.get().board_8.score < state.get().board_9.score) { tempScore = state.get().board_8.score; tempWallet = state.get().board_8.walletAddress; state.get().board_8.score = state.get().board_9.score; state.get().board_8.walletAddress = state.get().board_9.walletAddress; state.get().board_9.score = tempScore; state.get().board_9.walletAddress = tempWallet; }
+    if (state.get().board_0.score < state.get().board_1.score) { tempScore = state.get().board_0.score; tempWallet = state.get().board_0.walletAddress; state.mut().board_0.score = state.get().board_1.score; state.mut().board_0.walletAddress = state.get().board_1.walletAddress; state.mut().board_1.score = tempScore; state.mut().board_1.walletAddress = tempWallet; }
+    if (state.get().board_1.score < state.get().board_2.score) { tempScore = state.get().board_1.score; tempWallet = state.get().board_1.walletAddress; state.mut().board_1.score = state.get().board_2.score; state.mut().board_1.walletAddress = state.get().board_2.walletAddress; state.mut().board_2.score = tempScore; state.mut().board_2.walletAddress = tempWallet; }
+    if (state.get().board_2.score < state.get().board_3.score) { tempScore = state.get().board_2.score; tempWallet = state.get().board_2.walletAddress; state.mut().board_2.score = state.get().board_3.score; state.mut().board_2.walletAddress = state.get().board_3.walletAddress; state.mut().board_3.score = tempScore; state.mut().board_3.walletAddress = tempWallet; }
+    if (state.get().board_3.score < state.get().board_4.score) { tempScore = state.get().board_3.score; tempWallet = state.get().board_3.walletAddress; state.mut().board_3.score = state.get().board_4.score; state.mut().board_3.walletAddress = state.get().board_4.walletAddress; state.mut().board_4.score = tempScore; state.mut().board_4.walletAddress = tempWallet; }
+    if (state.get().board_4.score < state.get().board_5.score) { tempScore = state.get().board_4.score; tempWallet = state.get().board_4.walletAddress; state.mut().board_4.score = state.get().board_5.score; state.mut().board_4.walletAddress = state.get().board_5.walletAddress; state.mut().board_5.score = tempScore; state.mut().board_5.walletAddress = tempWallet; }
+    if (state.get().board_5.score < state.get().board_6.score) { tempScore = state.get().board_5.score; tempWallet = state.get().board_5.walletAddress; state.mut().board_5.score = state.get().board_6.score; state.mut().board_5.walletAddress = state.get().board_6.walletAddress; state.mut().board_6.score = tempScore; state.mut().board_6.walletAddress = tempWallet; }
+    if (state.get().board_6.score < state.get().board_7.score) { tempScore = state.get().board_6.score; tempWallet = state.get().board_6.walletAddress; state.mut().board_6.score = state.get().board_7.score; state.mut().board_6.walletAddress = state.get().board_7.walletAddress; state.mut().board_7.score = tempScore; state.mut().board_7.walletAddress = tempWallet; }
+    if (state.get().board_7.score < state.get().board_8.score) { tempScore = state.get().board_7.score; tempWallet = state.get().board_7.walletAddress; state.mut().board_7.score = state.get().board_8.score; state.mut().board_7.walletAddress = state.get().board_8.walletAddress; state.mut().board_8.score = tempScore; state.mut().board_8.walletAddress = tempWallet; }
+    if (state.get().board_8.score < state.get().board_9.score) { tempScore = state.get().board_8.score; tempWallet = state.get().board_8.walletAddress; state.mut().board_8.score = state.get().board_9.score; state.mut().board_8.walletAddress = state.get().board_9.walletAddress; state.mut().board_9.score = tempScore; state.mut().board_9.walletAddress = tempWallet; }
 
     // Pass 2
-    if (state.get().board_0.score < state.get().board_1.score) { tempScore = state.get().board_0.score; tempWallet = state.get().board_0.walletAddress; state.get().board_0.score = state.get().board_1.score; state.get().board_0.walletAddress = state.get().board_1.walletAddress; state.get().board_1.score = tempScore; state.get().board_1.walletAddress = tempWallet; }
-    if (state.get().board_1.score < state.get().board_2.score) { tempScore = state.get().board_1.score; tempWallet = state.get().board_1.walletAddress; state.get().board_1.score = state.get().board_2.score; state.get().board_1.walletAddress = state.get().board_2.walletAddress; state.get().board_2.score = tempScore; state.get().board_2.walletAddress = tempWallet; }
-    if (state.get().board_2.score < state.get().board_3.score) { tempScore = state.get().board_2.score; tempWallet = state.get().board_2.walletAddress; state.get().board_2.score = state.get().board_3.score; state.get().board_2.walletAddress = state.get().board_3.walletAddress; state.get().board_3.score = tempScore; state.get().board_3.walletAddress = tempWallet; }
-    if (state.get().board_3.score < state.get().board_4.score) { tempScore = state.get().board_3.score; tempWallet = state.get().board_3.walletAddress; state.get().board_3.score = state.get().board_4.score; state.get().board_3.walletAddress = state.get().board_4.walletAddress; state.get().board_4.score = tempScore; state.get().board_4.walletAddress = tempWallet; }
-    if (state.get().board_4.score < state.get().board_5.score) { tempScore = state.get().board_4.score; tempWallet = state.get().board_4.walletAddress; state.get().board_4.score = state.get().board_5.score; state.get().board_4.walletAddress = state.get().board_5.walletAddress; state.get().board_5.score = tempScore; state.get().board_5.walletAddress = tempWallet; }
-    if (state.get().board_5.score < state.get().board_6.score) { tempScore = state.get().board_5.score; tempWallet = state.get().board_5.walletAddress; state.get().board_5.score = state.get().board_6.score; state.get().board_5.walletAddress = state.get().board_6.walletAddress; state.get().board_6.score = tempScore; state.get().board_6.walletAddress = tempWallet; }
-    if (state.get().board_6.score < state.get().board_7.score) { tempScore = state.get().board_6.score; tempWallet = state.get().board_6.walletAddress; state.get().board_6.score = state.get().board_7.score; state.get().board_6.walletAddress = state.get().board_7.walletAddress; state.get().board_7.score = tempScore; state.get().board_7.walletAddress = tempWallet; }
-    if (state.get().board_7.score < state.get().board_8.score) { tempScore = state.get().board_7.score; tempWallet = state.get().board_7.walletAddress; state.get().board_7.score = state.get().board_8.score; state.get().board_7.walletAddress = state.get().board_8.walletAddress; state.get().board_8.score = tempScore; state.get().board_8.walletAddress = tempWallet; }
+    if (state.get().board_0.score < state.get().board_1.score) { tempScore = state.get().board_0.score; tempWallet = state.get().board_0.walletAddress; state.mut().board_0.score = state.get().board_1.score; state.mut().board_0.walletAddress = state.get().board_1.walletAddress; state.mut().board_1.score = tempScore; state.mut().board_1.walletAddress = tempWallet; }
+    if (state.get().board_1.score < state.get().board_2.score) { tempScore = state.get().board_1.score; tempWallet = state.get().board_1.walletAddress; state.mut().board_1.score = state.get().board_2.score; state.mut().board_1.walletAddress = state.get().board_2.walletAddress; state.mut().board_2.score = tempScore; state.mut().board_2.walletAddress = tempWallet; }
+    if (state.get().board_2.score < state.get().board_3.score) { tempScore = state.get().board_2.score; tempWallet = state.get().board_2.walletAddress; state.mut().board_2.score = state.get().board_3.score; state.mut().board_2.walletAddress = state.get().board_3.walletAddress; state.mut().board_3.score = tempScore; state.mut().board_3.walletAddress = tempWallet; }
+    if (state.get().board_3.score < state.get().board_4.score) { tempScore = state.get().board_3.score; tempWallet = state.get().board_3.walletAddress; state.mut().board_3.score = state.get().board_4.score; state.mut().board_3.walletAddress = state.get().board_4.walletAddress; state.mut().board_4.score = tempScore; state.mut().board_4.walletAddress = tempWallet; }
+    if (state.get().board_4.score < state.get().board_5.score) { tempScore = state.get().board_4.score; tempWallet = state.get().board_4.walletAddress; state.mut().board_4.score = state.get().board_5.score; state.mut().board_4.walletAddress = state.get().board_5.walletAddress; state.mut().board_5.score = tempScore; state.mut().board_5.walletAddress = tempWallet; }
+    if (state.get().board_5.score < state.get().board_6.score) { tempScore = state.get().board_5.score; tempWallet = state.get().board_5.walletAddress; state.mut().board_5.score = state.get().board_6.score; state.mut().board_5.walletAddress = state.get().board_6.walletAddress; state.mut().board_6.score = tempScore; state.mut().board_6.walletAddress = tempWallet; }
+    if (state.get().board_6.score < state.get().board_7.score) { tempScore = state.get().board_6.score; tempWallet = state.get().board_6.walletAddress; state.mut().board_6.score = state.get().board_7.score; state.mut().board_6.walletAddress = state.get().board_7.walletAddress; state.mut().board_7.score = tempScore; state.mut().board_7.walletAddress = tempWallet; }
+    if (state.get().board_7.score < state.get().board_8.score) { tempScore = state.get().board_7.score; tempWallet = state.get().board_7.walletAddress; state.mut().board_7.score = state.get().board_8.score; state.mut().board_7.walletAddress = state.get().board_8.walletAddress; state.mut().board_8.score = tempScore; state.mut().board_8.walletAddress = tempWallet; }
 
     // Pass 3
-    if (state.get().board_0.score < state.get().board_1.score) { tempScore = state.get().board_0.score; tempWallet = state.get().board_0.walletAddress; state.get().board_0.score = state.get().board_1.score; state.get().board_0.walletAddress = state.get().board_1.walletAddress; state.get().board_1.score = tempScore; state.get().board_1.walletAddress = tempWallet; }
-    if (state.get().board_1.score < state.get().board_2.score) { tempScore = state.get().board_1.score; tempWallet = state.get().board_1.walletAddress; state.get().board_1.score = state.get().board_2.score; state.get().board_1.walletAddress = state.get().board_2.walletAddress; state.get().board_2.score = tempScore; state.get().board_2.walletAddress = tempWallet; }
-    if (state.get().board_2.score < state.get().board_3.score) { tempScore = state.get().board_2.score; tempWallet = state.get().board_2.walletAddress; state.get().board_2.score = state.get().board_3.score; state.get().board_2.walletAddress = state.get().board_3.walletAddress; state.get().board_3.score = tempScore; state.get().board_3.walletAddress = tempWallet; }
-    if (state.get().board_3.score < state.get().board_4.score) { tempScore = state.get().board_3.score; tempWallet = state.get().board_3.walletAddress; state.get().board_3.score = state.get().board_4.score; state.get().board_3.walletAddress = state.get().board_4.walletAddress; state.get().board_4.score = tempScore; state.get().board_4.walletAddress = tempWallet; }
-    if (state.get().board_4.score < state.get().board_5.score) { tempScore = state.get().board_4.score; tempWallet = state.get().board_4.walletAddress; state.get().board_4.score = state.get().board_5.score; state.get().board_4.walletAddress = state.get().board_5.walletAddress; state.get().board_5.score = tempScore; state.get().board_5.walletAddress = tempWallet; }
-    if (state.get().board_5.score < state.get().board_6.score) { tempScore = state.get().board_5.score; tempWallet = state.get().board_5.walletAddress; state.get().board_5.score = state.get().board_6.score; state.get().board_5.walletAddress = state.get().board_6.walletAddress; state.get().board_6.score = tempScore; state.get().board_6.walletAddress = tempWallet; }
-    if (state.get().board_6.score < state.get().board_7.score) { tempScore = state.get().board_6.score; tempWallet = state.get().board_6.walletAddress; state.get().board_6.score = state.get().board_7.score; state.get().board_6.walletAddress = state.get().board_7.walletAddress; state.get().board_7.score = tempScore; state.get().board_7.walletAddress = tempWallet; }
+    if (state.get().board_0.score < state.get().board_1.score) { tempScore = state.get().board_0.score; tempWallet = state.get().board_0.walletAddress; state.mut().board_0.score = state.get().board_1.score; state.mut().board_0.walletAddress = state.get().board_1.walletAddress; state.mut().board_1.score = tempScore; state.mut().board_1.walletAddress = tempWallet; }
+    if (state.get().board_1.score < state.get().board_2.score) { tempScore = state.get().board_1.score; tempWallet = state.get().board_1.walletAddress; state.mut().board_1.score = state.get().board_2.score; state.mut().board_1.walletAddress = state.get().board_2.walletAddress; state.mut().board_2.score = tempScore; state.mut().board_2.walletAddress = tempWallet; }
+    if (state.get().board_2.score < state.get().board_3.score) { tempScore = state.get().board_2.score; tempWallet = state.get().board_2.walletAddress; state.mut().board_2.score = state.get().board_3.score; state.mut().board_2.walletAddress = state.get().board_3.walletAddress; state.mut().board_3.score = tempScore; state.mut().board_3.walletAddress = tempWallet; }
+    if (state.get().board_3.score < state.get().board_4.score) { tempScore = state.get().board_3.score; tempWallet = state.get().board_3.walletAddress; state.mut().board_3.score = state.get().board_4.score; state.mut().board_3.walletAddress = state.get().board_4.walletAddress; state.mut().board_4.score = tempScore; state.mut().board_4.walletAddress = tempWallet; }
+    if (state.get().board_4.score < state.get().board_5.score) { tempScore = state.get().board_4.score; tempWallet = state.get().board_4.walletAddress; state.mut().board_4.score = state.get().board_5.score; state.mut().board_4.walletAddress = state.get().board_5.walletAddress; state.mut().board_5.score = tempScore; state.mut().board_5.walletAddress = tempWallet; }
+    if (state.get().board_5.score < state.get().board_6.score) { tempScore = state.get().board_5.score; tempWallet = state.get().board_5.walletAddress; state.mut().board_5.score = state.get().board_6.score; state.mut().board_5.walletAddress = state.get().board_6.walletAddress; state.mut().board_6.score = tempScore; state.mut().board_6.walletAddress = tempWallet; }
+    if (state.get().board_6.score < state.get().board_7.score) { tempScore = state.get().board_6.score; tempWallet = state.get().board_6.walletAddress; state.mut().board_6.score = state.get().board_7.score; state.mut().board_6.walletAddress = state.get().board_7.walletAddress; state.mut().board_7.score = tempScore; state.mut().board_7.walletAddress = tempWallet; }
 
     // Pass 4
-    if (state.get().board_0.score < state.get().board_1.score) { tempScore = state.get().board_0.score; tempWallet = state.get().board_0.walletAddress; state.get().board_0.score = state.get().board_1.score; state.get().board_0.walletAddress = state.get().board_1.walletAddress; state.get().board_1.score = tempScore; state.get().board_1.walletAddress = tempWallet; }
-    if (state.get().board_1.score < state.get().board_2.score) { tempScore = state.get().board_1.score; tempWallet = state.get().board_1.walletAddress; state.get().board_1.score = state.get().board_2.score; state.get().board_1.walletAddress = state.get().board_2.walletAddress; state.get().board_2.score = tempScore; state.get().board_2.walletAddress = tempWallet; }
-    if (state.get().board_2.score < state.get().board_3.score) { tempScore = state.get().board_2.score; tempWallet = state.get().board_2.walletAddress; state.get().board_2.score = state.get().board_3.score; state.get().board_2.walletAddress = state.get().board_3.walletAddress; state.get().board_3.score = tempScore; state.get().board_3.walletAddress = tempWallet; }
-    if (state.get().board_3.score < state.get().board_4.score) { tempScore = state.get().board_3.score; tempWallet = state.get().board_3.walletAddress; state.get().board_3.score = state.get().board_4.score; state.get().board_3.walletAddress = state.get().board_4.walletAddress; state.get().board_4.score = tempScore; state.get().board_4.walletAddress = tempWallet; }
-    if (state.get().board_4.score < state.get().board_5.score) { tempScore = state.get().board_4.score; tempWallet = state.get().board_4.walletAddress; state.get().board_4.score = state.get().board_5.score; state.get().board_4.walletAddress = state.get().board_5.walletAddress; state.get().board_5.score = tempScore; state.get().board_5.walletAddress = tempWallet; }
-    if (state.get().board_5.score < state.get().board_6.score) { tempScore = state.get().board_5.score; tempWallet = state.get().board_5.walletAddress; state.get().board_5.score = state.get().board_6.score; state.get().board_5.walletAddress = state.get().board_6.walletAddress; state.get().board_6.score = tempScore; state.get().board_6.walletAddress = tempWallet; }
+    if (state.get().board_0.score < state.get().board_1.score) { tempScore = state.get().board_0.score; tempWallet = state.get().board_0.walletAddress; state.mut().board_0.score = state.get().board_1.score; state.mut().board_0.walletAddress = state.get().board_1.walletAddress; state.mut().board_1.score = tempScore; state.mut().board_1.walletAddress = tempWallet; }
+    if (state.get().board_1.score < state.get().board_2.score) { tempScore = state.get().board_1.score; tempWallet = state.get().board_1.walletAddress; state.mut().board_1.score = state.get().board_2.score; state.mut().board_1.walletAddress = state.get().board_2.walletAddress; state.mut().board_2.score = tempScore; state.mut().board_2.walletAddress = tempWallet; }
+    if (state.get().board_2.score < state.get().board_3.score) { tempScore = state.get().board_2.score; tempWallet = state.get().board_2.walletAddress; state.mut().board_2.score = state.get().board_3.score; state.mut().board_2.walletAddress = state.get().board_3.walletAddress; state.mut().board_3.score = tempScore; state.mut().board_3.walletAddress = tempWallet; }
+    if (state.get().board_3.score < state.get().board_4.score) { tempScore = state.get().board_3.score; tempWallet = state.get().board_3.walletAddress; state.mut().board_3.score = state.get().board_4.score; state.mut().board_3.walletAddress = state.get().board_4.walletAddress; state.mut().board_4.score = tempScore; state.mut().board_4.walletAddress = tempWallet; }
+    if (state.get().board_4.score < state.get().board_5.score) { tempScore = state.get().board_4.score; tempWallet = state.get().board_4.walletAddress; state.mut().board_4.score = state.get().board_5.score; state.mut().board_4.walletAddress = state.get().board_5.walletAddress; state.mut().board_5.score = tempScore; state.mut().board_5.walletAddress = tempWallet; }
+    if (state.get().board_5.score < state.get().board_6.score) { tempScore = state.get().board_5.score; tempWallet = state.get().board_5.walletAddress; state.mut().board_5.score = state.get().board_6.score; state.mut().board_5.walletAddress = state.get().board_6.walletAddress; state.mut().board_6.score = tempScore; state.mut().board_6.walletAddress = tempWallet; }
 
     // Pass 5
-    if (state.get().board_0.score < state.get().board_1.score) { tempScore = state.get().board_0.score; tempWallet = state.get().board_0.walletAddress; state.get().board_0.score = state.get().board_1.score; state.get().board_0.walletAddress = state.get().board_1.walletAddress; state.get().board_1.score = tempScore; state.get().board_1.walletAddress = tempWallet; }
-    if (state.get().board_1.score < state.get().board_2.score) { tempScore = state.get().board_1.score; tempWallet = state.get().board_1.walletAddress; state.get().board_1.score = state.get().board_2.score; state.get().board_1.walletAddress = state.get().board_2.walletAddress; state.get().board_2.score = tempScore; state.get().board_2.walletAddress = tempWallet; }
-    if (state.get().board_2.score < state.get().board_3.score) { tempScore = state.get().board_2.score; tempWallet = state.get().board_2.walletAddress; state.get().board_2.score = state.get().board_3.score; state.get().board_2.walletAddress = state.get().board_3.walletAddress; state.get().board_3.score = tempScore; state.get().board_3.walletAddress = tempWallet; }
-    if (state.get().board_3.score < state.get().board_4.score) { tempScore = state.get().board_3.score; tempWallet = state.get().board_3.walletAddress; state.get().board_3.score = state.get().board_4.score; state.get().board_3.walletAddress = state.get().board_4.walletAddress; state.get().board_4.score = tempScore; state.get().board_4.walletAddress = tempWallet; }
-    if (state.get().board_4.score < state.get().board_5.score) { tempScore = state.get().board_4.score; tempWallet = state.get().board_4.walletAddress; state.get().board_4.score = state.get().board_5.score; state.get().board_4.walletAddress = state.get().board_5.walletAddress; state.get().board_5.score = tempScore; state.get().board_5.walletAddress = tempWallet; }
+    if (state.get().board_0.score < state.get().board_1.score) { tempScore = state.get().board_0.score; tempWallet = state.get().board_0.walletAddress; state.mut().board_0.score = state.get().board_1.score; state.mut().board_0.walletAddress = state.get().board_1.walletAddress; state.mut().board_1.score = tempScore; state.mut().board_1.walletAddress = tempWallet; }
+    if (state.get().board_1.score < state.get().board_2.score) { tempScore = state.get().board_1.score; tempWallet = state.get().board_1.walletAddress; state.mut().board_1.score = state.get().board_2.score; state.mut().board_1.walletAddress = state.get().board_2.walletAddress; state.mut().board_2.score = tempScore; state.mut().board_2.walletAddress = tempWallet; }
+    if (state.get().board_2.score < state.get().board_3.score) { tempScore = state.get().board_2.score; tempWallet = state.get().board_2.walletAddress; state.mut().board_2.score = state.get().board_3.score; state.mut().board_2.walletAddress = state.get().board_3.walletAddress; state.mut().board_3.score = tempScore; state.mut().board_3.walletAddress = tempWallet; }
+    if (state.get().board_3.score < state.get().board_4.score) { tempScore = state.get().board_3.score; tempWallet = state.get().board_3.walletAddress; state.mut().board_3.score = state.get().board_4.score; state.mut().board_3.walletAddress = state.get().board_4.walletAddress; state.mut().board_4.score = tempScore; state.mut().board_4.walletAddress = tempWallet; }
+    if (state.get().board_4.score < state.get().board_5.score) { tempScore = state.get().board_4.score; tempWallet = state.get().board_4.walletAddress; state.mut().board_4.score = state.get().board_5.score; state.mut().board_4.walletAddress = state.get().board_5.walletAddress; state.mut().board_5.score = tempScore; state.mut().board_5.walletAddress = tempWallet; }
 
     // Pass 6
-    if (state.get().board_0.score < state.get().board_1.score) { tempScore = state.get().board_0.score; tempWallet = state.get().board_0.walletAddress; state.get().board_0.score = state.get().board_1.score; state.get().board_0.walletAddress = state.get().board_1.walletAddress; state.get().board_1.score = tempScore; state.get().board_1.walletAddress = tempWallet; }
-    if (state.get().board_1.score < state.get().board_2.score) { tempScore = state.get().board_1.score; tempWallet = state.get().board_1.walletAddress; state.get().board_1.score = state.get().board_2.score; state.get().board_1.walletAddress = state.get().board_2.walletAddress; state.get().board_2.score = tempScore; state.get().board_2.walletAddress = tempWallet; }
-    if (state.get().board_2.score < state.get().board_3.score) { tempScore = state.get().board_2.score; tempWallet = state.get().board_2.walletAddress; state.get().board_2.score = state.get().board_3.score; state.get().board_2.walletAddress = state.get().board_3.walletAddress; state.get().board_3.score = tempScore; state.get().board_3.walletAddress = tempWallet; }
-    if (state.get().board_3.score < state.get().board_4.score) { tempScore = state.get().board_3.score; tempWallet = state.get().board_3.walletAddress; state.get().board_3.score = state.get().board_4.score; state.get().board_3.walletAddress = state.get().board_4.walletAddress; state.get().board_4.score = tempScore; state.get().board_4.walletAddress = tempWallet; }
+    if (state.get().board_0.score < state.get().board_1.score) { tempScore = state.get().board_0.score; tempWallet = state.get().board_0.walletAddress; state.mut().board_0.score = state.get().board_1.score; state.mut().board_0.walletAddress = state.get().board_1.walletAddress; state.mut().board_1.score = tempScore; state.mut().board_1.walletAddress = tempWallet; }
+    if (state.get().board_1.score < state.get().board_2.score) { tempScore = state.get().board_1.score; tempWallet = state.get().board_1.walletAddress; state.mut().board_1.score = state.get().board_2.score; state.mut().board_1.walletAddress = state.get().board_2.walletAddress; state.mut().board_2.score = tempScore; state.mut().board_2.walletAddress = tempWallet; }
+    if (state.get().board_2.score < state.get().board_3.score) { tempScore = state.get().board_2.score; tempWallet = state.get().board_2.walletAddress; state.mut().board_2.score = state.get().board_3.score; state.mut().board_2.walletAddress = state.get().board_3.walletAddress; state.mut().board_3.score = tempScore; state.mut().board_3.walletAddress = tempWallet; }
+    if (state.get().board_3.score < state.get().board_4.score) { tempScore = state.get().board_3.score; tempWallet = state.get().board_3.walletAddress; state.mut().board_3.score = state.get().board_4.score; state.mut().board_3.walletAddress = state.get().board_4.walletAddress; state.mut().board_4.score = tempScore; state.mut().board_4.walletAddress = tempWallet; }
 
     // Pass 7
-    if (state.get().board_0.score < state.get().board_1.score) { tempScore = state.get().board_0.score; tempWallet = state.get().board_0.walletAddress; state.get().board_0.score = state.get().board_1.score; state.get().board_0.walletAddress = state.get().board_1.walletAddress; state.get().board_1.score = tempScore; state.get().board_1.walletAddress = tempWallet; }
-    if (state.get().board_1.score < state.get().board_2.score) { tempScore = state.get().board_1.score; tempWallet = state.get().board_1.walletAddress; state.get().board_1.score = state.get().board_2.score; state.get().board_1.walletAddress = state.get().board_2.walletAddress; state.get().board_2.score = tempScore; state.get().board_2.walletAddress = tempWallet; }
-    if (state.get().board_2.score < state.get().board_3.score) { tempScore = state.get().board_2.score; tempWallet = state.get().board_2.walletAddress; state.get().board_2.score = state.get().board_3.score; state.get().board_2.walletAddress = state.get().board_3.walletAddress; state.get().board_3.score = tempScore; state.get().board_3.walletAddress = tempWallet; }
+    if (state.get().board_0.score < state.get().board_1.score) { tempScore = state.get().board_0.score; tempWallet = state.get().board_0.walletAddress; state.mut().board_0.score = state.get().board_1.score; state.mut().board_0.walletAddress = state.get().board_1.walletAddress; state.mut().board_1.score = tempScore; state.mut().board_1.walletAddress = tempWallet; }
+    if (state.get().board_1.score < state.get().board_2.score) { tempScore = state.get().board_1.score; tempWallet = state.get().board_1.walletAddress; state.mut().board_1.score = state.get().board_2.score; state.mut().board_1.walletAddress = state.get().board_2.walletAddress; state.mut().board_2.score = tempScore; state.mut().board_2.walletAddress = tempWallet; }
+    if (state.get().board_2.score < state.get().board_3.score) { tempScore = state.get().board_2.score; tempWallet = state.get().board_2.walletAddress; state.mut().board_2.score = state.get().board_3.score; state.mut().board_2.walletAddress = state.get().board_3.walletAddress; state.mut().board_3.score = tempScore; state.mut().board_3.walletAddress = tempWallet; }
 
     // Pass 8
-    if (state.get().board_0.score < state.get().board_1.score) { tempScore = state.get().board_0.score; tempWallet = state.get().board_0.walletAddress; state.get().board_0.score = state.get().board_1.score; state.get().board_0.walletAddress = state.get().board_1.walletAddress; state.get().board_1.score = tempScore; state.get().board_1.walletAddress = tempWallet; }
-    if (state.get().board_1.score < state.get().board_2.score) { tempScore = state.get().board_1.score; tempWallet = state.get().board_1.walletAddress; state.get().board_1.score = state.get().board_2.score; state.get().board_1.walletAddress = state.get().board_2.walletAddress; state.get().board_2.score = tempScore; state.get().board_2.walletAddress = tempWallet; }
+    if (state.get().board_0.score < state.get().board_1.score) { tempScore = state.get().board_0.score; tempWallet = state.get().board_0.walletAddress; state.mut().board_0.score = state.get().board_1.score; state.mut().board_0.walletAddress = state.get().board_1.walletAddress; state.mut().board_1.score = tempScore; state.mut().board_1.walletAddress = tempWallet; }
+    if (state.get().board_1.score < state.get().board_2.score) { tempScore = state.get().board_1.score; tempWallet = state.get().board_1.walletAddress; state.mut().board_1.score = state.get().board_2.score; state.mut().board_1.walletAddress = state.get().board_2.walletAddress; state.mut().board_2.score = tempScore; state.mut().board_2.walletAddress = tempWallet; }
 
     // Pass 9
-    if (state.get().board_0.score < state.get().board_1.score) { tempScore = state.get().board_0.score; tempWallet = state.get().board_0.walletAddress; state.get().board_0.score = state.get().board_1.score; state.get().board_0.walletAddress = state.get().board_1.walletAddress; state.get().board_1.score = tempScore; state.get().board_1.walletAddress = tempWallet; }
+    if (state.get().board_0.score < state.get().board_1.score) { tempScore = state.get().board_0.score; tempWallet = state.get().board_0.walletAddress; state.mut().board_0.score = state.get().board_1.score; state.mut().board_0.walletAddress = state.get().board_1.walletAddress; state.mut().board_1.score = tempScore; state.mut().board_1.walletAddress = tempWallet; }
 
     // ---- LEADERBOARD BONUS POOL ----
     sint64 lbPool;
@@ -2015,12 +2015,12 @@ BEGIN_EPOCH()
         // Find rank 1 player slot and credit bonus
         if (state.get().players_0.active && state.get().players_0.walletAddress == state.get().board_0.walletAddress)
         {
-            state.get().players_0.pendingBalance = state.get().players_0.pendingBalance + rank1Bonus;
+            state.mut().players_0.pendingBalance = state.get().players_0.pendingBalance + rank1Bonus;
 
             if (!state.get().players_0.achTopLeaderboard)
             {
-                state.get().players_0.achTopLeaderboard = 1;
-                state.get().players_0.pendingBalance    = state.get().players_0.pendingBalance + ACH_TOP_LEADERBOARD;
+                state.mut().players_0.achTopLeaderboard = 1;
+                state.mut().players_0.pendingBalance    = state.get().players_0.pendingBalance + ACH_TOP_LEADERBOARD;
                 state.mut().totalAchievementsAwarded = state.get().totalAchievementsAwarded + 1;
             }
         }
@@ -2028,269 +2028,269 @@ BEGIN_EPOCH()
     }
 
     // ---- RESET EPOCH SCORES ----
-    state.get().players_0.epochScore = 0;  state.get().players_0.epochEarned = 0;
-    state.get().players_1.epochScore = 0;  state.get().players_1.epochEarned = 0;
-    state.get().players_2.epochScore = 0;  state.get().players_2.epochEarned = 0;
-    state.get().players_3.epochScore = 0;  state.get().players_3.epochEarned = 0;
-    state.get().players_4.epochScore = 0;  state.get().players_4.epochEarned = 0;
-    state.get().players_5.epochScore = 0;  state.get().players_5.epochEarned = 0;
-    state.get().players_6.epochScore = 0;  state.get().players_6.epochEarned = 0;
-    state.get().players_7.epochScore = 0;  state.get().players_7.epochEarned = 0;
-    state.get().players_8.epochScore = 0;  state.get().players_8.epochEarned = 0;
-    state.get().players_9.epochScore = 0;  state.get().players_9.epochEarned = 0;
-    state.get().players_10.epochScore = 0;  state.get().players_10.epochEarned = 0;
-    state.get().players_11.epochScore = 0;  state.get().players_11.epochEarned = 0;
-    state.get().players_12.epochScore = 0;  state.get().players_12.epochEarned = 0;
-    state.get().players_13.epochScore = 0;  state.get().players_13.epochEarned = 0;
-    state.get().players_14.epochScore = 0;  state.get().players_14.epochEarned = 0;
-    state.get().players_15.epochScore = 0;  state.get().players_15.epochEarned = 0;
-    state.get().players_16.epochScore = 0;  state.get().players_16.epochEarned = 0;
-    state.get().players_17.epochScore = 0;  state.get().players_17.epochEarned = 0;
-    state.get().players_18.epochScore = 0;  state.get().players_18.epochEarned = 0;
-    state.get().players_19.epochScore = 0;  state.get().players_19.epochEarned = 0;
-    state.get().players_20.epochScore = 0;  state.get().players_20.epochEarned = 0;
-    state.get().players_21.epochScore = 0;  state.get().players_21.epochEarned = 0;
-    state.get().players_22.epochScore = 0;  state.get().players_22.epochEarned = 0;
-    state.get().players_23.epochScore = 0;  state.get().players_23.epochEarned = 0;
-    state.get().players_24.epochScore = 0;  state.get().players_24.epochEarned = 0;
-    state.get().players_25.epochScore = 0;  state.get().players_25.epochEarned = 0;
-    state.get().players_26.epochScore = 0;  state.get().players_26.epochEarned = 0;
-    state.get().players_27.epochScore = 0;  state.get().players_27.epochEarned = 0;
-    state.get().players_28.epochScore = 0;  state.get().players_28.epochEarned = 0;
-    state.get().players_29.epochScore = 0;  state.get().players_29.epochEarned = 0;
-    state.get().players_30.epochScore = 0;  state.get().players_30.epochEarned = 0;
-    state.get().players_31.epochScore = 0;  state.get().players_31.epochEarned = 0;
-    state.get().players_32.epochScore = 0;  state.get().players_32.epochEarned = 0;
-    state.get().players_33.epochScore = 0;  state.get().players_33.epochEarned = 0;
-    state.get().players_34.epochScore = 0;  state.get().players_34.epochEarned = 0;
-    state.get().players_35.epochScore = 0;  state.get().players_35.epochEarned = 0;
-    state.get().players_36.epochScore = 0;  state.get().players_36.epochEarned = 0;
-    state.get().players_37.epochScore = 0;  state.get().players_37.epochEarned = 0;
-    state.get().players_38.epochScore = 0;  state.get().players_38.epochEarned = 0;
-    state.get().players_39.epochScore = 0;  state.get().players_39.epochEarned = 0;
-    state.get().players_40.epochScore = 0;  state.get().players_40.epochEarned = 0;
-    state.get().players_41.epochScore = 0;  state.get().players_41.epochEarned = 0;
-    state.get().players_42.epochScore = 0;  state.get().players_42.epochEarned = 0;
-    state.get().players_43.epochScore = 0;  state.get().players_43.epochEarned = 0;
-    state.get().players_44.epochScore = 0;  state.get().players_44.epochEarned = 0;
-    state.get().players_45.epochScore = 0;  state.get().players_45.epochEarned = 0;
-    state.get().players_46.epochScore = 0;  state.get().players_46.epochEarned = 0;
-    state.get().players_47.epochScore = 0;  state.get().players_47.epochEarned = 0;
-    state.get().players_48.epochScore = 0;  state.get().players_48.epochEarned = 0;
-    state.get().players_49.epochScore = 0;  state.get().players_49.epochEarned = 0;
-    state.get().players_50.epochScore = 0;  state.get().players_50.epochEarned = 0;
-    state.get().players_51.epochScore = 0;  state.get().players_51.epochEarned = 0;
-    state.get().players_52.epochScore = 0;  state.get().players_52.epochEarned = 0;
-    state.get().players_53.epochScore = 0;  state.get().players_53.epochEarned = 0;
-    state.get().players_54.epochScore = 0;  state.get().players_54.epochEarned = 0;
-    state.get().players_55.epochScore = 0;  state.get().players_55.epochEarned = 0;
-    state.get().players_56.epochScore = 0;  state.get().players_56.epochEarned = 0;
-    state.get().players_57.epochScore = 0;  state.get().players_57.epochEarned = 0;
-    state.get().players_58.epochScore = 0;  state.get().players_58.epochEarned = 0;
-    state.get().players_59.epochScore = 0;  state.get().players_59.epochEarned = 0;
-    state.get().players_60.epochScore = 0;  state.get().players_60.epochEarned = 0;
-    state.get().players_61.epochScore = 0;  state.get().players_61.epochEarned = 0;
-    state.get().players_62.epochScore = 0;  state.get().players_62.epochEarned = 0;
-    state.get().players_63.epochScore = 0;  state.get().players_63.epochEarned = 0;
-    state.get().players_64.epochScore = 0;  state.get().players_64.epochEarned = 0;
-    state.get().players_65.epochScore = 0;  state.get().players_65.epochEarned = 0;
-    state.get().players_66.epochScore = 0;  state.get().players_66.epochEarned = 0;
-    state.get().players_67.epochScore = 0;  state.get().players_67.epochEarned = 0;
-    state.get().players_68.epochScore = 0;  state.get().players_68.epochEarned = 0;
-    state.get().players_69.epochScore = 0;  state.get().players_69.epochEarned = 0;
-    state.get().players_70.epochScore = 0;  state.get().players_70.epochEarned = 0;
-    state.get().players_71.epochScore = 0;  state.get().players_71.epochEarned = 0;
-    state.get().players_72.epochScore = 0;  state.get().players_72.epochEarned = 0;
-    state.get().players_73.epochScore = 0;  state.get().players_73.epochEarned = 0;
-    state.get().players_74.epochScore = 0;  state.get().players_74.epochEarned = 0;
-    state.get().players_75.epochScore = 0;  state.get().players_75.epochEarned = 0;
-    state.get().players_76.epochScore = 0;  state.get().players_76.epochEarned = 0;
-    state.get().players_77.epochScore = 0;  state.get().players_77.epochEarned = 0;
-    state.get().players_78.epochScore = 0;  state.get().players_78.epochEarned = 0;
-    state.get().players_79.epochScore = 0;  state.get().players_79.epochEarned = 0;
-    state.get().players_80.epochScore = 0;  state.get().players_80.epochEarned = 0;
-    state.get().players_81.epochScore = 0;  state.get().players_81.epochEarned = 0;
-    state.get().players_82.epochScore = 0;  state.get().players_82.epochEarned = 0;
-    state.get().players_83.epochScore = 0;  state.get().players_83.epochEarned = 0;
-    state.get().players_84.epochScore = 0;  state.get().players_84.epochEarned = 0;
-    state.get().players_85.epochScore = 0;  state.get().players_85.epochEarned = 0;
-    state.get().players_86.epochScore = 0;  state.get().players_86.epochEarned = 0;
-    state.get().players_87.epochScore = 0;  state.get().players_87.epochEarned = 0;
-    state.get().players_88.epochScore = 0;  state.get().players_88.epochEarned = 0;
-    state.get().players_89.epochScore = 0;  state.get().players_89.epochEarned = 0;
-    state.get().players_90.epochScore = 0;  state.get().players_90.epochEarned = 0;
-    state.get().players_91.epochScore = 0;  state.get().players_91.epochEarned = 0;
-    state.get().players_92.epochScore = 0;  state.get().players_92.epochEarned = 0;
-    state.get().players_93.epochScore = 0;  state.get().players_93.epochEarned = 0;
-    state.get().players_94.epochScore = 0;  state.get().players_94.epochEarned = 0;
-    state.get().players_95.epochScore = 0;  state.get().players_95.epochEarned = 0;
-    state.get().players_96.epochScore = 0;  state.get().players_96.epochEarned = 0;
-    state.get().players_97.epochScore = 0;  state.get().players_97.epochEarned = 0;
-    state.get().players_98.epochScore = 0;  state.get().players_98.epochEarned = 0;
-    state.get().players_99.epochScore = 0;  state.get().players_99.epochEarned = 0;
-    state.get().players_100.epochScore = 0;  state.get().players_100.epochEarned = 0;
-    state.get().players_101.epochScore = 0;  state.get().players_101.epochEarned = 0;
-    state.get().players_102.epochScore = 0;  state.get().players_102.epochEarned = 0;
-    state.get().players_103.epochScore = 0;  state.get().players_103.epochEarned = 0;
-    state.get().players_104.epochScore = 0;  state.get().players_104.epochEarned = 0;
-    state.get().players_105.epochScore = 0;  state.get().players_105.epochEarned = 0;
-    state.get().players_106.epochScore = 0;  state.get().players_106.epochEarned = 0;
-    state.get().players_107.epochScore = 0;  state.get().players_107.epochEarned = 0;
-    state.get().players_108.epochScore = 0;  state.get().players_108.epochEarned = 0;
-    state.get().players_109.epochScore = 0;  state.get().players_109.epochEarned = 0;
-    state.get().players_110.epochScore = 0;  state.get().players_110.epochEarned = 0;
-    state.get().players_111.epochScore = 0;  state.get().players_111.epochEarned = 0;
-    state.get().players_112.epochScore = 0;  state.get().players_112.epochEarned = 0;
-    state.get().players_113.epochScore = 0;  state.get().players_113.epochEarned = 0;
-    state.get().players_114.epochScore = 0;  state.get().players_114.epochEarned = 0;
-    state.get().players_115.epochScore = 0;  state.get().players_115.epochEarned = 0;
-    state.get().players_116.epochScore = 0;  state.get().players_116.epochEarned = 0;
-    state.get().players_117.epochScore = 0;  state.get().players_117.epochEarned = 0;
-    state.get().players_118.epochScore = 0;  state.get().players_118.epochEarned = 0;
-    state.get().players_119.epochScore = 0;  state.get().players_119.epochEarned = 0;
-    state.get().players_120.epochScore = 0;  state.get().players_120.epochEarned = 0;
-    state.get().players_121.epochScore = 0;  state.get().players_121.epochEarned = 0;
-    state.get().players_122.epochScore = 0;  state.get().players_122.epochEarned = 0;
-    state.get().players_123.epochScore = 0;  state.get().players_123.epochEarned = 0;
-    state.get().players_124.epochScore = 0;  state.get().players_124.epochEarned = 0;
-    state.get().players_125.epochScore = 0;  state.get().players_125.epochEarned = 0;
-    state.get().players_126.epochScore = 0;  state.get().players_126.epochEarned = 0;
-    state.get().players_127.epochScore = 0;  state.get().players_127.epochEarned = 0;
-    state.get().players_128.epochScore = 0;  state.get().players_128.epochEarned = 0;
-    state.get().players_129.epochScore = 0;  state.get().players_129.epochEarned = 0;
-    state.get().players_130.epochScore = 0;  state.get().players_130.epochEarned = 0;
-    state.get().players_131.epochScore = 0;  state.get().players_131.epochEarned = 0;
-    state.get().players_132.epochScore = 0;  state.get().players_132.epochEarned = 0;
-    state.get().players_133.epochScore = 0;  state.get().players_133.epochEarned = 0;
-    state.get().players_134.epochScore = 0;  state.get().players_134.epochEarned = 0;
-    state.get().players_135.epochScore = 0;  state.get().players_135.epochEarned = 0;
-    state.get().players_136.epochScore = 0;  state.get().players_136.epochEarned = 0;
-    state.get().players_137.epochScore = 0;  state.get().players_137.epochEarned = 0;
-    state.get().players_138.epochScore = 0;  state.get().players_138.epochEarned = 0;
-    state.get().players_139.epochScore = 0;  state.get().players_139.epochEarned = 0;
-    state.get().players_140.epochScore = 0;  state.get().players_140.epochEarned = 0;
-    state.get().players_141.epochScore = 0;  state.get().players_141.epochEarned = 0;
-    state.get().players_142.epochScore = 0;  state.get().players_142.epochEarned = 0;
-    state.get().players_143.epochScore = 0;  state.get().players_143.epochEarned = 0;
-    state.get().players_144.epochScore = 0;  state.get().players_144.epochEarned = 0;
-    state.get().players_145.epochScore = 0;  state.get().players_145.epochEarned = 0;
-    state.get().players_146.epochScore = 0;  state.get().players_146.epochEarned = 0;
-    state.get().players_147.epochScore = 0;  state.get().players_147.epochEarned = 0;
-    state.get().players_148.epochScore = 0;  state.get().players_148.epochEarned = 0;
-    state.get().players_149.epochScore = 0;  state.get().players_149.epochEarned = 0;
-    state.get().players_150.epochScore = 0;  state.get().players_150.epochEarned = 0;
-    state.get().players_151.epochScore = 0;  state.get().players_151.epochEarned = 0;
-    state.get().players_152.epochScore = 0;  state.get().players_152.epochEarned = 0;
-    state.get().players_153.epochScore = 0;  state.get().players_153.epochEarned = 0;
-    state.get().players_154.epochScore = 0;  state.get().players_154.epochEarned = 0;
-    state.get().players_155.epochScore = 0;  state.get().players_155.epochEarned = 0;
-    state.get().players_156.epochScore = 0;  state.get().players_156.epochEarned = 0;
-    state.get().players_157.epochScore = 0;  state.get().players_157.epochEarned = 0;
-    state.get().players_158.epochScore = 0;  state.get().players_158.epochEarned = 0;
-    state.get().players_159.epochScore = 0;  state.get().players_159.epochEarned = 0;
-    state.get().players_160.epochScore = 0;  state.get().players_160.epochEarned = 0;
-    state.get().players_161.epochScore = 0;  state.get().players_161.epochEarned = 0;
-    state.get().players_162.epochScore = 0;  state.get().players_162.epochEarned = 0;
-    state.get().players_163.epochScore = 0;  state.get().players_163.epochEarned = 0;
-    state.get().players_164.epochScore = 0;  state.get().players_164.epochEarned = 0;
-    state.get().players_165.epochScore = 0;  state.get().players_165.epochEarned = 0;
-    state.get().players_166.epochScore = 0;  state.get().players_166.epochEarned = 0;
-    state.get().players_167.epochScore = 0;  state.get().players_167.epochEarned = 0;
-    state.get().players_168.epochScore = 0;  state.get().players_168.epochEarned = 0;
-    state.get().players_169.epochScore = 0;  state.get().players_169.epochEarned = 0;
-    state.get().players_170.epochScore = 0;  state.get().players_170.epochEarned = 0;
-    state.get().players_171.epochScore = 0;  state.get().players_171.epochEarned = 0;
-    state.get().players_172.epochScore = 0;  state.get().players_172.epochEarned = 0;
-    state.get().players_173.epochScore = 0;  state.get().players_173.epochEarned = 0;
-    state.get().players_174.epochScore = 0;  state.get().players_174.epochEarned = 0;
-    state.get().players_175.epochScore = 0;  state.get().players_175.epochEarned = 0;
-    state.get().players_176.epochScore = 0;  state.get().players_176.epochEarned = 0;
-    state.get().players_177.epochScore = 0;  state.get().players_177.epochEarned = 0;
-    state.get().players_178.epochScore = 0;  state.get().players_178.epochEarned = 0;
-    state.get().players_179.epochScore = 0;  state.get().players_179.epochEarned = 0;
-    state.get().players_180.epochScore = 0;  state.get().players_180.epochEarned = 0;
-    state.get().players_181.epochScore = 0;  state.get().players_181.epochEarned = 0;
-    state.get().players_182.epochScore = 0;  state.get().players_182.epochEarned = 0;
-    state.get().players_183.epochScore = 0;  state.get().players_183.epochEarned = 0;
-    state.get().players_184.epochScore = 0;  state.get().players_184.epochEarned = 0;
-    state.get().players_185.epochScore = 0;  state.get().players_185.epochEarned = 0;
-    state.get().players_186.epochScore = 0;  state.get().players_186.epochEarned = 0;
-    state.get().players_187.epochScore = 0;  state.get().players_187.epochEarned = 0;
-    state.get().players_188.epochScore = 0;  state.get().players_188.epochEarned = 0;
-    state.get().players_189.epochScore = 0;  state.get().players_189.epochEarned = 0;
-    state.get().players_190.epochScore = 0;  state.get().players_190.epochEarned = 0;
-    state.get().players_191.epochScore = 0;  state.get().players_191.epochEarned = 0;
-    state.get().players_192.epochScore = 0;  state.get().players_192.epochEarned = 0;
-    state.get().players_193.epochScore = 0;  state.get().players_193.epochEarned = 0;
-    state.get().players_194.epochScore = 0;  state.get().players_194.epochEarned = 0;
-    state.get().players_195.epochScore = 0;  state.get().players_195.epochEarned = 0;
-    state.get().players_196.epochScore = 0;  state.get().players_196.epochEarned = 0;
-    state.get().players_197.epochScore = 0;  state.get().players_197.epochEarned = 0;
-    state.get().players_198.epochScore = 0;  state.get().players_198.epochEarned = 0;
-    state.get().players_199.epochScore = 0;  state.get().players_199.epochEarned = 0;
-    state.get().players_200.epochScore = 0;  state.get().players_200.epochEarned = 0;
-    state.get().players_201.epochScore = 0;  state.get().players_201.epochEarned = 0;
-    state.get().players_202.epochScore = 0;  state.get().players_202.epochEarned = 0;
-    state.get().players_203.epochScore = 0;  state.get().players_203.epochEarned = 0;
-    state.get().players_204.epochScore = 0;  state.get().players_204.epochEarned = 0;
-    state.get().players_205.epochScore = 0;  state.get().players_205.epochEarned = 0;
-    state.get().players_206.epochScore = 0;  state.get().players_206.epochEarned = 0;
-    state.get().players_207.epochScore = 0;  state.get().players_207.epochEarned = 0;
-    state.get().players_208.epochScore = 0;  state.get().players_208.epochEarned = 0;
-    state.get().players_209.epochScore = 0;  state.get().players_209.epochEarned = 0;
-    state.get().players_210.epochScore = 0;  state.get().players_210.epochEarned = 0;
-    state.get().players_211.epochScore = 0;  state.get().players_211.epochEarned = 0;
-    state.get().players_212.epochScore = 0;  state.get().players_212.epochEarned = 0;
-    state.get().players_213.epochScore = 0;  state.get().players_213.epochEarned = 0;
-    state.get().players_214.epochScore = 0;  state.get().players_214.epochEarned = 0;
-    state.get().players_215.epochScore = 0;  state.get().players_215.epochEarned = 0;
-    state.get().players_216.epochScore = 0;  state.get().players_216.epochEarned = 0;
-    state.get().players_217.epochScore = 0;  state.get().players_217.epochEarned = 0;
-    state.get().players_218.epochScore = 0;  state.get().players_218.epochEarned = 0;
-    state.get().players_219.epochScore = 0;  state.get().players_219.epochEarned = 0;
-    state.get().players_220.epochScore = 0;  state.get().players_220.epochEarned = 0;
-    state.get().players_221.epochScore = 0;  state.get().players_221.epochEarned = 0;
-    state.get().players_222.epochScore = 0;  state.get().players_222.epochEarned = 0;
-    state.get().players_223.epochScore = 0;  state.get().players_223.epochEarned = 0;
-    state.get().players_224.epochScore = 0;  state.get().players_224.epochEarned = 0;
-    state.get().players_225.epochScore = 0;  state.get().players_225.epochEarned = 0;
-    state.get().players_226.epochScore = 0;  state.get().players_226.epochEarned = 0;
-    state.get().players_227.epochScore = 0;  state.get().players_227.epochEarned = 0;
-    state.get().players_228.epochScore = 0;  state.get().players_228.epochEarned = 0;
-    state.get().players_229.epochScore = 0;  state.get().players_229.epochEarned = 0;
-    state.get().players_230.epochScore = 0;  state.get().players_230.epochEarned = 0;
-    state.get().players_231.epochScore = 0;  state.get().players_231.epochEarned = 0;
-    state.get().players_232.epochScore = 0;  state.get().players_232.epochEarned = 0;
-    state.get().players_233.epochScore = 0;  state.get().players_233.epochEarned = 0;
-    state.get().players_234.epochScore = 0;  state.get().players_234.epochEarned = 0;
-    state.get().players_235.epochScore = 0;  state.get().players_235.epochEarned = 0;
-    state.get().players_236.epochScore = 0;  state.get().players_236.epochEarned = 0;
-    state.get().players_237.epochScore = 0;  state.get().players_237.epochEarned = 0;
-    state.get().players_238.epochScore = 0;  state.get().players_238.epochEarned = 0;
-    state.get().players_239.epochScore = 0;  state.get().players_239.epochEarned = 0;
-    state.get().players_240.epochScore = 0;  state.get().players_240.epochEarned = 0;
-    state.get().players_241.epochScore = 0;  state.get().players_241.epochEarned = 0;
-    state.get().players_242.epochScore = 0;  state.get().players_242.epochEarned = 0;
-    state.get().players_243.epochScore = 0;  state.get().players_243.epochEarned = 0;
-    state.get().players_244.epochScore = 0;  state.get().players_244.epochEarned = 0;
-    state.get().players_245.epochScore = 0;  state.get().players_245.epochEarned = 0;
-    state.get().players_246.epochScore = 0;  state.get().players_246.epochEarned = 0;
-    state.get().players_247.epochScore = 0;  state.get().players_247.epochEarned = 0;
-    state.get().players_248.epochScore = 0;  state.get().players_248.epochEarned = 0;
-    state.get().players_249.epochScore = 0;  state.get().players_249.epochEarned = 0;
-    state.get().players_250.epochScore = 0;  state.get().players_250.epochEarned = 0;
-    state.get().players_251.epochScore = 0;  state.get().players_251.epochEarned = 0;
-    state.get().players_252.epochScore = 0;  state.get().players_252.epochEarned = 0;
-    state.get().players_253.epochScore = 0;  state.get().players_253.epochEarned = 0;
-    state.get().players_254.epochScore = 0;  state.get().players_254.epochEarned = 0;
-    state.get().players_255.epochScore = 0;  state.get().players_255.epochEarned = 0;
+    state.mut().players_0.epochScore = 0;  state.mut().players_0.epochEarned = 0;
+    state.mut().players_1.epochScore = 0;  state.mut().players_1.epochEarned = 0;
+    state.mut().players_2.epochScore = 0;  state.mut().players_2.epochEarned = 0;
+    state.mut().players_3.epochScore = 0;  state.mut().players_3.epochEarned = 0;
+    state.mut().players_4.epochScore = 0;  state.mut().players_4.epochEarned = 0;
+    state.mut().players_5.epochScore = 0;  state.mut().players_5.epochEarned = 0;
+    state.mut().players_6.epochScore = 0;  state.mut().players_6.epochEarned = 0;
+    state.mut().players_7.epochScore = 0;  state.mut().players_7.epochEarned = 0;
+    state.mut().players_8.epochScore = 0;  state.mut().players_8.epochEarned = 0;
+    state.mut().players_9.epochScore = 0;  state.mut().players_9.epochEarned = 0;
+    state.mut().players_10.epochScore = 0;  state.mut().players_10.epochEarned = 0;
+    state.mut().players_11.epochScore = 0;  state.mut().players_11.epochEarned = 0;
+    state.mut().players_12.epochScore = 0;  state.mut().players_12.epochEarned = 0;
+    state.mut().players_13.epochScore = 0;  state.mut().players_13.epochEarned = 0;
+    state.mut().players_14.epochScore = 0;  state.mut().players_14.epochEarned = 0;
+    state.mut().players_15.epochScore = 0;  state.mut().players_15.epochEarned = 0;
+    state.mut().players_16.epochScore = 0;  state.mut().players_16.epochEarned = 0;
+    state.mut().players_17.epochScore = 0;  state.mut().players_17.epochEarned = 0;
+    state.mut().players_18.epochScore = 0;  state.mut().players_18.epochEarned = 0;
+    state.mut().players_19.epochScore = 0;  state.mut().players_19.epochEarned = 0;
+    state.mut().players_20.epochScore = 0;  state.mut().players_20.epochEarned = 0;
+    state.mut().players_21.epochScore = 0;  state.mut().players_21.epochEarned = 0;
+    state.mut().players_22.epochScore = 0;  state.mut().players_22.epochEarned = 0;
+    state.mut().players_23.epochScore = 0;  state.mut().players_23.epochEarned = 0;
+    state.mut().players_24.epochScore = 0;  state.mut().players_24.epochEarned = 0;
+    state.mut().players_25.epochScore = 0;  state.mut().players_25.epochEarned = 0;
+    state.mut().players_26.epochScore = 0;  state.mut().players_26.epochEarned = 0;
+    state.mut().players_27.epochScore = 0;  state.mut().players_27.epochEarned = 0;
+    state.mut().players_28.epochScore = 0;  state.mut().players_28.epochEarned = 0;
+    state.mut().players_29.epochScore = 0;  state.mut().players_29.epochEarned = 0;
+    state.mut().players_30.epochScore = 0;  state.mut().players_30.epochEarned = 0;
+    state.mut().players_31.epochScore = 0;  state.mut().players_31.epochEarned = 0;
+    state.mut().players_32.epochScore = 0;  state.mut().players_32.epochEarned = 0;
+    state.mut().players_33.epochScore = 0;  state.mut().players_33.epochEarned = 0;
+    state.mut().players_34.epochScore = 0;  state.mut().players_34.epochEarned = 0;
+    state.mut().players_35.epochScore = 0;  state.mut().players_35.epochEarned = 0;
+    state.mut().players_36.epochScore = 0;  state.mut().players_36.epochEarned = 0;
+    state.mut().players_37.epochScore = 0;  state.mut().players_37.epochEarned = 0;
+    state.mut().players_38.epochScore = 0;  state.mut().players_38.epochEarned = 0;
+    state.mut().players_39.epochScore = 0;  state.mut().players_39.epochEarned = 0;
+    state.mut().players_40.epochScore = 0;  state.mut().players_40.epochEarned = 0;
+    state.mut().players_41.epochScore = 0;  state.mut().players_41.epochEarned = 0;
+    state.mut().players_42.epochScore = 0;  state.mut().players_42.epochEarned = 0;
+    state.mut().players_43.epochScore = 0;  state.mut().players_43.epochEarned = 0;
+    state.mut().players_44.epochScore = 0;  state.mut().players_44.epochEarned = 0;
+    state.mut().players_45.epochScore = 0;  state.mut().players_45.epochEarned = 0;
+    state.mut().players_46.epochScore = 0;  state.mut().players_46.epochEarned = 0;
+    state.mut().players_47.epochScore = 0;  state.mut().players_47.epochEarned = 0;
+    state.mut().players_48.epochScore = 0;  state.mut().players_48.epochEarned = 0;
+    state.mut().players_49.epochScore = 0;  state.mut().players_49.epochEarned = 0;
+    state.mut().players_50.epochScore = 0;  state.mut().players_50.epochEarned = 0;
+    state.mut().players_51.epochScore = 0;  state.mut().players_51.epochEarned = 0;
+    state.mut().players_52.epochScore = 0;  state.mut().players_52.epochEarned = 0;
+    state.mut().players_53.epochScore = 0;  state.mut().players_53.epochEarned = 0;
+    state.mut().players_54.epochScore = 0;  state.mut().players_54.epochEarned = 0;
+    state.mut().players_55.epochScore = 0;  state.mut().players_55.epochEarned = 0;
+    state.mut().players_56.epochScore = 0;  state.mut().players_56.epochEarned = 0;
+    state.mut().players_57.epochScore = 0;  state.mut().players_57.epochEarned = 0;
+    state.mut().players_58.epochScore = 0;  state.mut().players_58.epochEarned = 0;
+    state.mut().players_59.epochScore = 0;  state.mut().players_59.epochEarned = 0;
+    state.mut().players_60.epochScore = 0;  state.mut().players_60.epochEarned = 0;
+    state.mut().players_61.epochScore = 0;  state.mut().players_61.epochEarned = 0;
+    state.mut().players_62.epochScore = 0;  state.mut().players_62.epochEarned = 0;
+    state.mut().players_63.epochScore = 0;  state.mut().players_63.epochEarned = 0;
+    state.mut().players_64.epochScore = 0;  state.mut().players_64.epochEarned = 0;
+    state.mut().players_65.epochScore = 0;  state.mut().players_65.epochEarned = 0;
+    state.mut().players_66.epochScore = 0;  state.mut().players_66.epochEarned = 0;
+    state.mut().players_67.epochScore = 0;  state.mut().players_67.epochEarned = 0;
+    state.mut().players_68.epochScore = 0;  state.mut().players_68.epochEarned = 0;
+    state.mut().players_69.epochScore = 0;  state.mut().players_69.epochEarned = 0;
+    state.mut().players_70.epochScore = 0;  state.mut().players_70.epochEarned = 0;
+    state.mut().players_71.epochScore = 0;  state.mut().players_71.epochEarned = 0;
+    state.mut().players_72.epochScore = 0;  state.mut().players_72.epochEarned = 0;
+    state.mut().players_73.epochScore = 0;  state.mut().players_73.epochEarned = 0;
+    state.mut().players_74.epochScore = 0;  state.mut().players_74.epochEarned = 0;
+    state.mut().players_75.epochScore = 0;  state.mut().players_75.epochEarned = 0;
+    state.mut().players_76.epochScore = 0;  state.mut().players_76.epochEarned = 0;
+    state.mut().players_77.epochScore = 0;  state.mut().players_77.epochEarned = 0;
+    state.mut().players_78.epochScore = 0;  state.mut().players_78.epochEarned = 0;
+    state.mut().players_79.epochScore = 0;  state.mut().players_79.epochEarned = 0;
+    state.mut().players_80.epochScore = 0;  state.mut().players_80.epochEarned = 0;
+    state.mut().players_81.epochScore = 0;  state.mut().players_81.epochEarned = 0;
+    state.mut().players_82.epochScore = 0;  state.mut().players_82.epochEarned = 0;
+    state.mut().players_83.epochScore = 0;  state.mut().players_83.epochEarned = 0;
+    state.mut().players_84.epochScore = 0;  state.mut().players_84.epochEarned = 0;
+    state.mut().players_85.epochScore = 0;  state.mut().players_85.epochEarned = 0;
+    state.mut().players_86.epochScore = 0;  state.mut().players_86.epochEarned = 0;
+    state.mut().players_87.epochScore = 0;  state.mut().players_87.epochEarned = 0;
+    state.mut().players_88.epochScore = 0;  state.mut().players_88.epochEarned = 0;
+    state.mut().players_89.epochScore = 0;  state.mut().players_89.epochEarned = 0;
+    state.mut().players_90.epochScore = 0;  state.mut().players_90.epochEarned = 0;
+    state.mut().players_91.epochScore = 0;  state.mut().players_91.epochEarned = 0;
+    state.mut().players_92.epochScore = 0;  state.mut().players_92.epochEarned = 0;
+    state.mut().players_93.epochScore = 0;  state.mut().players_93.epochEarned = 0;
+    state.mut().players_94.epochScore = 0;  state.mut().players_94.epochEarned = 0;
+    state.mut().players_95.epochScore = 0;  state.mut().players_95.epochEarned = 0;
+    state.mut().players_96.epochScore = 0;  state.mut().players_96.epochEarned = 0;
+    state.mut().players_97.epochScore = 0;  state.mut().players_97.epochEarned = 0;
+    state.mut().players_98.epochScore = 0;  state.mut().players_98.epochEarned = 0;
+    state.mut().players_99.epochScore = 0;  state.mut().players_99.epochEarned = 0;
+    state.mut().players_100.epochScore = 0;  state.mut().players_100.epochEarned = 0;
+    state.mut().players_101.epochScore = 0;  state.mut().players_101.epochEarned = 0;
+    state.mut().players_102.epochScore = 0;  state.mut().players_102.epochEarned = 0;
+    state.mut().players_103.epochScore = 0;  state.mut().players_103.epochEarned = 0;
+    state.mut().players_104.epochScore = 0;  state.mut().players_104.epochEarned = 0;
+    state.mut().players_105.epochScore = 0;  state.mut().players_105.epochEarned = 0;
+    state.mut().players_106.epochScore = 0;  state.mut().players_106.epochEarned = 0;
+    state.mut().players_107.epochScore = 0;  state.mut().players_107.epochEarned = 0;
+    state.mut().players_108.epochScore = 0;  state.mut().players_108.epochEarned = 0;
+    state.mut().players_109.epochScore = 0;  state.mut().players_109.epochEarned = 0;
+    state.mut().players_110.epochScore = 0;  state.mut().players_110.epochEarned = 0;
+    state.mut().players_111.epochScore = 0;  state.mut().players_111.epochEarned = 0;
+    state.mut().players_112.epochScore = 0;  state.mut().players_112.epochEarned = 0;
+    state.mut().players_113.epochScore = 0;  state.mut().players_113.epochEarned = 0;
+    state.mut().players_114.epochScore = 0;  state.mut().players_114.epochEarned = 0;
+    state.mut().players_115.epochScore = 0;  state.mut().players_115.epochEarned = 0;
+    state.mut().players_116.epochScore = 0;  state.mut().players_116.epochEarned = 0;
+    state.mut().players_117.epochScore = 0;  state.mut().players_117.epochEarned = 0;
+    state.mut().players_118.epochScore = 0;  state.mut().players_118.epochEarned = 0;
+    state.mut().players_119.epochScore = 0;  state.mut().players_119.epochEarned = 0;
+    state.mut().players_120.epochScore = 0;  state.mut().players_120.epochEarned = 0;
+    state.mut().players_121.epochScore = 0;  state.mut().players_121.epochEarned = 0;
+    state.mut().players_122.epochScore = 0;  state.mut().players_122.epochEarned = 0;
+    state.mut().players_123.epochScore = 0;  state.mut().players_123.epochEarned = 0;
+    state.mut().players_124.epochScore = 0;  state.mut().players_124.epochEarned = 0;
+    state.mut().players_125.epochScore = 0;  state.mut().players_125.epochEarned = 0;
+    state.mut().players_126.epochScore = 0;  state.mut().players_126.epochEarned = 0;
+    state.mut().players_127.epochScore = 0;  state.mut().players_127.epochEarned = 0;
+    state.mut().players_128.epochScore = 0;  state.mut().players_128.epochEarned = 0;
+    state.mut().players_129.epochScore = 0;  state.mut().players_129.epochEarned = 0;
+    state.mut().players_130.epochScore = 0;  state.mut().players_130.epochEarned = 0;
+    state.mut().players_131.epochScore = 0;  state.mut().players_131.epochEarned = 0;
+    state.mut().players_132.epochScore = 0;  state.mut().players_132.epochEarned = 0;
+    state.mut().players_133.epochScore = 0;  state.mut().players_133.epochEarned = 0;
+    state.mut().players_134.epochScore = 0;  state.mut().players_134.epochEarned = 0;
+    state.mut().players_135.epochScore = 0;  state.mut().players_135.epochEarned = 0;
+    state.mut().players_136.epochScore = 0;  state.mut().players_136.epochEarned = 0;
+    state.mut().players_137.epochScore = 0;  state.mut().players_137.epochEarned = 0;
+    state.mut().players_138.epochScore = 0;  state.mut().players_138.epochEarned = 0;
+    state.mut().players_139.epochScore = 0;  state.mut().players_139.epochEarned = 0;
+    state.mut().players_140.epochScore = 0;  state.mut().players_140.epochEarned = 0;
+    state.mut().players_141.epochScore = 0;  state.mut().players_141.epochEarned = 0;
+    state.mut().players_142.epochScore = 0;  state.mut().players_142.epochEarned = 0;
+    state.mut().players_143.epochScore = 0;  state.mut().players_143.epochEarned = 0;
+    state.mut().players_144.epochScore = 0;  state.mut().players_144.epochEarned = 0;
+    state.mut().players_145.epochScore = 0;  state.mut().players_145.epochEarned = 0;
+    state.mut().players_146.epochScore = 0;  state.mut().players_146.epochEarned = 0;
+    state.mut().players_147.epochScore = 0;  state.mut().players_147.epochEarned = 0;
+    state.mut().players_148.epochScore = 0;  state.mut().players_148.epochEarned = 0;
+    state.mut().players_149.epochScore = 0;  state.mut().players_149.epochEarned = 0;
+    state.mut().players_150.epochScore = 0;  state.mut().players_150.epochEarned = 0;
+    state.mut().players_151.epochScore = 0;  state.mut().players_151.epochEarned = 0;
+    state.mut().players_152.epochScore = 0;  state.mut().players_152.epochEarned = 0;
+    state.mut().players_153.epochScore = 0;  state.mut().players_153.epochEarned = 0;
+    state.mut().players_154.epochScore = 0;  state.mut().players_154.epochEarned = 0;
+    state.mut().players_155.epochScore = 0;  state.mut().players_155.epochEarned = 0;
+    state.mut().players_156.epochScore = 0;  state.mut().players_156.epochEarned = 0;
+    state.mut().players_157.epochScore = 0;  state.mut().players_157.epochEarned = 0;
+    state.mut().players_158.epochScore = 0;  state.mut().players_158.epochEarned = 0;
+    state.mut().players_159.epochScore = 0;  state.mut().players_159.epochEarned = 0;
+    state.mut().players_160.epochScore = 0;  state.mut().players_160.epochEarned = 0;
+    state.mut().players_161.epochScore = 0;  state.mut().players_161.epochEarned = 0;
+    state.mut().players_162.epochScore = 0;  state.mut().players_162.epochEarned = 0;
+    state.mut().players_163.epochScore = 0;  state.mut().players_163.epochEarned = 0;
+    state.mut().players_164.epochScore = 0;  state.mut().players_164.epochEarned = 0;
+    state.mut().players_165.epochScore = 0;  state.mut().players_165.epochEarned = 0;
+    state.mut().players_166.epochScore = 0;  state.mut().players_166.epochEarned = 0;
+    state.mut().players_167.epochScore = 0;  state.mut().players_167.epochEarned = 0;
+    state.mut().players_168.epochScore = 0;  state.mut().players_168.epochEarned = 0;
+    state.mut().players_169.epochScore = 0;  state.mut().players_169.epochEarned = 0;
+    state.mut().players_170.epochScore = 0;  state.mut().players_170.epochEarned = 0;
+    state.mut().players_171.epochScore = 0;  state.mut().players_171.epochEarned = 0;
+    state.mut().players_172.epochScore = 0;  state.mut().players_172.epochEarned = 0;
+    state.mut().players_173.epochScore = 0;  state.mut().players_173.epochEarned = 0;
+    state.mut().players_174.epochScore = 0;  state.mut().players_174.epochEarned = 0;
+    state.mut().players_175.epochScore = 0;  state.mut().players_175.epochEarned = 0;
+    state.mut().players_176.epochScore = 0;  state.mut().players_176.epochEarned = 0;
+    state.mut().players_177.epochScore = 0;  state.mut().players_177.epochEarned = 0;
+    state.mut().players_178.epochScore = 0;  state.mut().players_178.epochEarned = 0;
+    state.mut().players_179.epochScore = 0;  state.mut().players_179.epochEarned = 0;
+    state.mut().players_180.epochScore = 0;  state.mut().players_180.epochEarned = 0;
+    state.mut().players_181.epochScore = 0;  state.mut().players_181.epochEarned = 0;
+    state.mut().players_182.epochScore = 0;  state.mut().players_182.epochEarned = 0;
+    state.mut().players_183.epochScore = 0;  state.mut().players_183.epochEarned = 0;
+    state.mut().players_184.epochScore = 0;  state.mut().players_184.epochEarned = 0;
+    state.mut().players_185.epochScore = 0;  state.mut().players_185.epochEarned = 0;
+    state.mut().players_186.epochScore = 0;  state.mut().players_186.epochEarned = 0;
+    state.mut().players_187.epochScore = 0;  state.mut().players_187.epochEarned = 0;
+    state.mut().players_188.epochScore = 0;  state.mut().players_188.epochEarned = 0;
+    state.mut().players_189.epochScore = 0;  state.mut().players_189.epochEarned = 0;
+    state.mut().players_190.epochScore = 0;  state.mut().players_190.epochEarned = 0;
+    state.mut().players_191.epochScore = 0;  state.mut().players_191.epochEarned = 0;
+    state.mut().players_192.epochScore = 0;  state.mut().players_192.epochEarned = 0;
+    state.mut().players_193.epochScore = 0;  state.mut().players_193.epochEarned = 0;
+    state.mut().players_194.epochScore = 0;  state.mut().players_194.epochEarned = 0;
+    state.mut().players_195.epochScore = 0;  state.mut().players_195.epochEarned = 0;
+    state.mut().players_196.epochScore = 0;  state.mut().players_196.epochEarned = 0;
+    state.mut().players_197.epochScore = 0;  state.mut().players_197.epochEarned = 0;
+    state.mut().players_198.epochScore = 0;  state.mut().players_198.epochEarned = 0;
+    state.mut().players_199.epochScore = 0;  state.mut().players_199.epochEarned = 0;
+    state.mut().players_200.epochScore = 0;  state.mut().players_200.epochEarned = 0;
+    state.mut().players_201.epochScore = 0;  state.mut().players_201.epochEarned = 0;
+    state.mut().players_202.epochScore = 0;  state.mut().players_202.epochEarned = 0;
+    state.mut().players_203.epochScore = 0;  state.mut().players_203.epochEarned = 0;
+    state.mut().players_204.epochScore = 0;  state.mut().players_204.epochEarned = 0;
+    state.mut().players_205.epochScore = 0;  state.mut().players_205.epochEarned = 0;
+    state.mut().players_206.epochScore = 0;  state.mut().players_206.epochEarned = 0;
+    state.mut().players_207.epochScore = 0;  state.mut().players_207.epochEarned = 0;
+    state.mut().players_208.epochScore = 0;  state.mut().players_208.epochEarned = 0;
+    state.mut().players_209.epochScore = 0;  state.mut().players_209.epochEarned = 0;
+    state.mut().players_210.epochScore = 0;  state.mut().players_210.epochEarned = 0;
+    state.mut().players_211.epochScore = 0;  state.mut().players_211.epochEarned = 0;
+    state.mut().players_212.epochScore = 0;  state.mut().players_212.epochEarned = 0;
+    state.mut().players_213.epochScore = 0;  state.mut().players_213.epochEarned = 0;
+    state.mut().players_214.epochScore = 0;  state.mut().players_214.epochEarned = 0;
+    state.mut().players_215.epochScore = 0;  state.mut().players_215.epochEarned = 0;
+    state.mut().players_216.epochScore = 0;  state.mut().players_216.epochEarned = 0;
+    state.mut().players_217.epochScore = 0;  state.mut().players_217.epochEarned = 0;
+    state.mut().players_218.epochScore = 0;  state.mut().players_218.epochEarned = 0;
+    state.mut().players_219.epochScore = 0;  state.mut().players_219.epochEarned = 0;
+    state.mut().players_220.epochScore = 0;  state.mut().players_220.epochEarned = 0;
+    state.mut().players_221.epochScore = 0;  state.mut().players_221.epochEarned = 0;
+    state.mut().players_222.epochScore = 0;  state.mut().players_222.epochEarned = 0;
+    state.mut().players_223.epochScore = 0;  state.mut().players_223.epochEarned = 0;
+    state.mut().players_224.epochScore = 0;  state.mut().players_224.epochEarned = 0;
+    state.mut().players_225.epochScore = 0;  state.mut().players_225.epochEarned = 0;
+    state.mut().players_226.epochScore = 0;  state.mut().players_226.epochEarned = 0;
+    state.mut().players_227.epochScore = 0;  state.mut().players_227.epochEarned = 0;
+    state.mut().players_228.epochScore = 0;  state.mut().players_228.epochEarned = 0;
+    state.mut().players_229.epochScore = 0;  state.mut().players_229.epochEarned = 0;
+    state.mut().players_230.epochScore = 0;  state.mut().players_230.epochEarned = 0;
+    state.mut().players_231.epochScore = 0;  state.mut().players_231.epochEarned = 0;
+    state.mut().players_232.epochScore = 0;  state.mut().players_232.epochEarned = 0;
+    state.mut().players_233.epochScore = 0;  state.mut().players_233.epochEarned = 0;
+    state.mut().players_234.epochScore = 0;  state.mut().players_234.epochEarned = 0;
+    state.mut().players_235.epochScore = 0;  state.mut().players_235.epochEarned = 0;
+    state.mut().players_236.epochScore = 0;  state.mut().players_236.epochEarned = 0;
+    state.mut().players_237.epochScore = 0;  state.mut().players_237.epochEarned = 0;
+    state.mut().players_238.epochScore = 0;  state.mut().players_238.epochEarned = 0;
+    state.mut().players_239.epochScore = 0;  state.mut().players_239.epochEarned = 0;
+    state.mut().players_240.epochScore = 0;  state.mut().players_240.epochEarned = 0;
+    state.mut().players_241.epochScore = 0;  state.mut().players_241.epochEarned = 0;
+    state.mut().players_242.epochScore = 0;  state.mut().players_242.epochEarned = 0;
+    state.mut().players_243.epochScore = 0;  state.mut().players_243.epochEarned = 0;
+    state.mut().players_244.epochScore = 0;  state.mut().players_244.epochEarned = 0;
+    state.mut().players_245.epochScore = 0;  state.mut().players_245.epochEarned = 0;
+    state.mut().players_246.epochScore = 0;  state.mut().players_246.epochEarned = 0;
+    state.mut().players_247.epochScore = 0;  state.mut().players_247.epochEarned = 0;
+    state.mut().players_248.epochScore = 0;  state.mut().players_248.epochEarned = 0;
+    state.mut().players_249.epochScore = 0;  state.mut().players_249.epochEarned = 0;
+    state.mut().players_250.epochScore = 0;  state.mut().players_250.epochEarned = 0;
+    state.mut().players_251.epochScore = 0;  state.mut().players_251.epochEarned = 0;
+    state.mut().players_252.epochScore = 0;  state.mut().players_252.epochEarned = 0;
+    state.mut().players_253.epochScore = 0;  state.mut().players_253.epochEarned = 0;
+    state.mut().players_254.epochScore = 0;  state.mut().players_254.epochEarned = 0;
+    state.mut().players_255.epochScore = 0;  state.mut().players_255.epochEarned = 0;
 
 
     // Reset leaderboard for next epoch
-    state.get().board_0.score = 0;  state.get().board_1.score = 0;  state.get().board_2.score = 0;
-    state.get().board_3.score = 0;  state.get().board_4.score = 0;  state.get().board_5.score = 0;
-    state.get().board_6.score = 0;  state.get().board_7.score = 0;  state.get().board_8.score = 0;
-    state.get().board_9.score = 0;
+    state.mut().board_0.score = 0;  state.mut().board_1.score = 0;  state.mut().board_2.score = 0;
+    state.mut().board_3.score = 0;  state.mut().board_4.score = 0;  state.mut().board_5.score = 0;
+    state.mut().board_6.score = 0;  state.mut().board_7.score = 0;  state.mut().board_8.score = 0;
+    state.mut().board_9.score = 0;
 }
 
 END_TICK() {}
