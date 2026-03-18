@@ -24,6 +24,7 @@ RUN apt-get update && apt-get install -y \
     sed \
     libjsoncpp-dev \
     pkg-config \
+    uuid-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Set clang-18 as default compiler
