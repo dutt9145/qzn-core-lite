@@ -288,6 +288,9 @@ struct GetProposal_output
 //  INTERNAL HELPERS
 // ============================================================
 
+struct _isSigner_input {};
+struct _isSigner_output {};
+
 PRIVATE_FUNCTION(_isSigner)
 /*
  * Returns 1 if given address is an active keyholder.
@@ -295,6 +298,9 @@ PRIVATE_FUNCTION(_isSigner)
 {
     // Embedded inline at call sites
 }
+
+struct _executeSpend_input {};
+struct _executeSpend_output {};
 
 PRIVATE_PROCEDURE(_executeSpend)
 /*

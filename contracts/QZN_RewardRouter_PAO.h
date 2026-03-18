@@ -572,6 +572,9 @@ struct FundReserve_output
 //  INTERNAL HELPERS
 // ============================================================
 
+struct _getMultiplierBPS_input {};
+struct _getMultiplierBPS_output {};
+
 PRIVATE_FUNCTION(_getMultiplierBPS)
 /*
  * Returns multiplier in BPS for a given stake amount.
@@ -580,6 +583,9 @@ PRIVATE_FUNCTION(_getMultiplierBPS)
 {
     // Called inline — result used directly at call site
 }
+
+struct _updateLeaderboard_input {};
+struct _updateLeaderboard_output {};
 
 PRIVATE_PROCEDURE(_updateLeaderboard)
 /*
@@ -590,6 +596,9 @@ PRIVATE_PROCEDURE(_updateLeaderboard)
 {
     // Embedded inline in ReportMatchResult for QPI single-file compliance
 }
+
+struct _checkAchievements_input {};
+struct _checkAchievements_output {};
 
 PRIVATE_PROCEDURE(_checkAchievements)
 /*
