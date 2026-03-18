@@ -8,7 +8,7 @@ FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install build dependencies (Ubuntu 24.04 ships clang-18)
+# Install all dependencies
 RUN apt-get update && apt-get install -y \
     git \
     cmake \
@@ -49,17 +49,19 @@ COPY test/      /qzn/test/
 COPY setup.sh /qzn/setup.sh
 RUN chmod +x /qzn/setup.sh && /qzn/setup.sh
 
-# Build the node
-RUN mkdir -p build && cd build && \
-    cmake .. \
+# Configure
+RUN mkdir -p /app/build
+
+RUN cd /app/build && cmake .. \
       -DCMAKE_C_COMPILER=clang-18 \
       -DCMAKE_CXX_COMPILER=clang++-18 \
-      -DCMAKE_BUILD_TYPE=Release \
-      --log-level=VERBOSE 2>&1 && \
-    make -j$(nproc) Qubic
+      -DCMAKE_BUILD_TYPE=Release
+
+# Build the node
+RUN cd /app/build && make -j$(nproc) Qubic
 
 # Build and run tests
-RUN cd build && \
+RUN cd /app/build && \
     make -j$(nproc) qubic_core_tests && \
     ./test/qubic_core_tests --gtest_filter="*QZN*" \
     || echo "WARNING: Some QZN tests failed — check output above"
