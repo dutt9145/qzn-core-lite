@@ -1,9 +1,4 @@
-# ============================================================
-# QZN Core-Lite Node — Railway Deployment
-# ============================================================
-
 FROM ubuntu:24.04
-
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y \
@@ -19,30 +14,28 @@ RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-18 100 && 
 WORKDIR /app
 RUN git clone --depth=1 https://github.com/qubic/core-lite.git .
 
-# Configure (cached layer — only reruns if CMakeLists changes)
 RUN mkdir -p /app/build && cd /app/build && cmake .. \
       -DCMAKE_C_COMPILER=clang-18 \
       -DCMAKE_CXX_COMPILER=clang++-18 \
       -DCMAKE_BUILD_TYPE=Release
 
-# Pre-build all deps except qubic.cpp (cached — only reruns if deps change)
+# Pre-build all deps (cached layer)
 RUN cd /app/build && make -j$(nproc) fmt trantor drogon platform_common platform_efi
 
-# NOW copy QZN contracts and patch (after dep build so contract changes don't rebuild deps)
+# Copy contracts after dep build so contract changes don't invalidate dep cache
 COPY contracts/ /qzn/contracts/
 COPY test/      /qzn/test/
 COPY setup.sh /qzn/setup.sh
 RUN chmod +x /qzn/setup.sh && /qzn/setup.sh
 
-# Build only the Qubic target (qubic.cpp + our contracts) — errors visible here
-RUN cd /app/build && make -j1 Qubic 2>&1 | grep -E "error:|warning: |^\[|^make" | tail -50; \
-    cd /app/build && make -j1 Qubic
+# Build Qubic — only qubic.cpp compiles here, errors clearly visible
+RUN cd /app/build && make -j1 Qubic
 
 # Build and run tests
 RUN cd /app/build && \
     make -j$(nproc) qubic_core_tests && \
     ./test/qubic_core_tests --gtest_filter="*QZN*" \
-    || echo "WARNING: Some QZN tests failed — check output above"
+    || echo "WARNING: Some QZN tests failed"
 
 EXPOSE 41841
 WORKDIR /app
