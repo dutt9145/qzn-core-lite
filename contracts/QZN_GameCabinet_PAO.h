@@ -1090,11 +1090,12 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.winnerAddress = state.get().matches_0.winnerAddress;
         settlementCall.totalStake    = state.get().matches_0.totalStake;
 
+        QZN::SettleMatch_output settlementResult;
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
             SettleMatch,
             settlementCall,
-            sizeof(settlementCall),
+            settlementResult,
             0
         );
 
@@ -1182,11 +1183,12 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.winnerAddress = state.get().matches_1.winnerAddress;
         settlementCall.totalStake    = state.get().matches_1.totalStake;
 
+        QZN::SettleMatch_output settlementResult;
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
             SettleMatch,
             settlementCall,
-            sizeof(settlementCall),
+            settlementResult,
             0
         );
 
@@ -1274,11 +1276,12 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.winnerAddress = state.get().matches_2.winnerAddress;
         settlementCall.totalStake    = state.get().matches_2.totalStake;
 
+        QZN::SettleMatch_output settlementResult;
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
             SettleMatch,
             settlementCall,
-            sizeof(settlementCall),
+            settlementResult,
             0
         );
 
@@ -1366,11 +1369,12 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.winnerAddress = state.get().matches_3.winnerAddress;
         settlementCall.totalStake    = state.get().matches_3.totalStake;
 
+        QZN::SettleMatch_output settlementResult;
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
             SettleMatch,
             settlementCall,
-            sizeof(settlementCall),
+            settlementResult,
             0
         );
 
@@ -1458,11 +1462,12 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.winnerAddress = state.get().matches_4.winnerAddress;
         settlementCall.totalStake    = state.get().matches_4.totalStake;
 
+        QZN::SettleMatch_output settlementResult;
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
             SettleMatch,
             settlementCall,
-            sizeof(settlementCall),
+            settlementResult,
             0
         );
 
@@ -1550,11 +1555,12 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.winnerAddress = state.get().matches_5.winnerAddress;
         settlementCall.totalStake    = state.get().matches_5.totalStake;
 
+        QZN::SettleMatch_output settlementResult;
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
             SettleMatch,
             settlementCall,
-            sizeof(settlementCall),
+            settlementResult,
             0
         );
 
@@ -1642,11 +1648,12 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.winnerAddress = state.get().matches_6.winnerAddress;
         settlementCall.totalStake    = state.get().matches_6.totalStake;
 
+        QZN::SettleMatch_output settlementResult;
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
             SettleMatch,
             settlementCall,
-            sizeof(settlementCall),
+            settlementResult,
             0
         );
 
@@ -1734,11 +1741,12 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.winnerAddress = state.get().matches_7.winnerAddress;
         settlementCall.totalStake    = state.get().matches_7.totalStake;
 
+        QZN::SettleMatch_output settlementResult;
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
             SettleMatch,
             settlementCall,
-            sizeof(settlementCall),
+            settlementResult,
             0
         );
 
@@ -1826,11 +1834,12 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.winnerAddress = state.get().matches_8.winnerAddress;
         settlementCall.totalStake    = state.get().matches_8.totalStake;
 
+        QZN::SettleMatch_output settlementResult;
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
             SettleMatch,
             settlementCall,
-            sizeof(settlementCall),
+            settlementResult,
             0
         );
 
@@ -1918,11 +1927,12 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.winnerAddress = state.get().matches_9.winnerAddress;
         settlementCall.totalStake    = state.get().matches_9.totalStake;
 
+        QZN::SettleMatch_output settlementResult;
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
             SettleMatch,
             settlementCall,
-            sizeof(settlementCall),
+            settlementResult,
             0
         );
 
@@ -2010,11 +2020,12 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.winnerAddress = state.get().matches_10.winnerAddress;
         settlementCall.totalStake    = state.get().matches_10.totalStake;
 
+        QZN::SettleMatch_output settlementResult;
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
             SettleMatch,
             settlementCall,
-            sizeof(settlementCall),
+            settlementResult,
             0
         );
 
@@ -2102,11 +2113,12 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.winnerAddress = state.get().matches_11.winnerAddress;
         settlementCall.totalStake    = state.get().matches_11.totalStake;
 
+        QZN::SettleMatch_output settlementResult;
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
             SettleMatch,
             settlementCall,
-            sizeof(settlementCall),
+            settlementResult,
             0
         );
 
@@ -2194,11 +2206,12 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.winnerAddress = state.get().matches_12.winnerAddress;
         settlementCall.totalStake    = state.get().matches_12.totalStake;
 
+        QZN::SettleMatch_output settlementResult;
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
             SettleMatch,
             settlementCall,
-            sizeof(settlementCall),
+            settlementResult,
             0
         );
 
@@ -2286,11 +2299,12 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.winnerAddress = state.get().matches_13.winnerAddress;
         settlementCall.totalStake    = state.get().matches_13.totalStake;
 
+        QZN::SettleMatch_output settlementResult;
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
             SettleMatch,
             settlementCall,
-            sizeof(settlementCall),
+            settlementResult,
             0
         );
 
@@ -2378,11 +2392,12 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.winnerAddress = state.get().matches_14.winnerAddress;
         settlementCall.totalStake    = state.get().matches_14.totalStake;
 
+        QZN::SettleMatch_output settlementResult;
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
             SettleMatch,
             settlementCall,
-            sizeof(settlementCall),
+            settlementResult,
             0
         );
 
@@ -2470,11 +2485,12 @@ PUBLIC_PROCEDURE(ConfirmResult)
         settlementCall.winnerAddress = state.get().matches_15.winnerAddress;
         settlementCall.totalStake    = state.get().matches_15.totalStake;
 
+        QZN::SettleMatch_output settlementResult;
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
             SettleMatch,
             settlementCall,
-            sizeof(settlementCall),
+            settlementResult,
             0
         );
 
