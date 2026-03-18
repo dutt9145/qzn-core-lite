@@ -1,80 +1,75 @@
 #!/bin/bash
 set -e
 
-# ============================================================
-# QZN Core-Lite Setup Script
-# Patches cloned core-lite repo with QZN contracts
-# Run AFTER cloning core-lite but BEFORE cmake build
-# ============================================================
-
 CONTRACTS_SRC="/qzn/contracts"
 TESTS_SRC="/qzn/test"
 CORE="/app"
 
 echo ">>> Copying QZN contract headers..."
-cp $CONTRACTS_SRC/QZN_Token_v2.h            $CORE/src/contracts/
-cp $CONTRACTS_SRC/QZN_GameCabinet_PAO.h     $CORE/src/contracts/
-cp $CONTRACTS_SRC/QZN_RewardRouter_PAO.h    $CORE/src/contracts/
-cp $CONTRACTS_SRC/QZN_TreasuryVault_PAO.h   $CORE/src/contracts/
-cp $CONTRACTS_SRC/QZN_Portal_PAO.h          $CORE/src/contracts/
+cp $CONTRACTS_SRC/QZN_Token_v2.h             $CORE/src/contracts/
+cp $CONTRACTS_SRC/QZN_GameCabinet_PAO.h      $CORE/src/contracts/
+cp $CONTRACTS_SRC/QZN_RewardRouter_PAO.h     $CORE/src/contracts/
+cp $CONTRACTS_SRC/QZN_TreasuryVault_PAO.h    $CORE/src/contracts/
+cp $CONTRACTS_SRC/QZN_Portal_PAO.h           $CORE/src/contracts/
 cp $CONTRACTS_SRC/QZN_TournamentEngine_PAO.h $CORE/src/contracts/
 
 echo ">>> Copying QZN test files..."
-cp $TESTS_SRC/contract_qzn_token.cpp           $CORE/test/
-cp $TESTS_SRC/contract_qzn_gamecabinet.cpp     $CORE/test/
-cp $TESTS_SRC/contract_qzn_rewardrouter.cpp    $CORE/test/
-cp $TESTS_SRC/contract_qzn_treasuryvault.cpp   $CORE/test/
-cp $TESTS_SRC/contract_qzn_portal.cpp          $CORE/test/
+cp $TESTS_SRC/contract_qzn_token.cpp            $CORE/test/
+cp $TESTS_SRC/contract_qzn_gamecabinet.cpp      $CORE/test/
+cp $TESTS_SRC/contract_qzn_rewardrouter.cpp     $CORE/test/
+cp $TESTS_SRC/contract_qzn_treasuryvault.cpp    $CORE/test/
+cp $TESTS_SRC/contract_qzn_portal.cpp           $CORE/test/
 cp $TESTS_SRC/contract_qzn_tournamentengine.cpp $CORE/test/
 
-# ============================================================
-# Prepend STATE2 structs to each QZN contract header
-# (Required by Qubic's contract_def.h registration pattern)
-# ============================================================
+echo ">>> Patching contract headers, contract_def.h, and CMakeLists.txt..."
 
-echo ">>> Adding STATE2 structs to contract headers..."
+python3 << 'PYEOF'
+import re
 
-prepend_state2() {
-  local file=$1
-  local struct_name=$2
-  # Only prepend if not already there
-  if ! grep -q "struct ${struct_name}2" "$file"; then
-    sed -i "s/^using namespace QPI;/using namespace QPI;\n\nstruct ${struct_name}2\n{\n};/" "$file"
-  fi
+# ── 1. Add STATE2 structs to each contract header ──────────────────────────
+headers = {
+    "/app/src/contracts/QZN_Token_v2.h":             "QZN",
+    "/app/src/contracts/QZN_GameCabinet_PAO.h":      "QZNCABINET",
+    "/app/src/contracts/QZN_RewardRouter_PAO.h":     "QZNREWARDROUTER",
+    "/app/src/contracts/QZN_TreasuryVault_PAO.h":    "QZNTREASVAULT",
+    "/app/src/contracts/QZN_Portal_PAO.h":           "QZNPORTAL",
+    "/app/src/contracts/QZN_TournamentEngine_PAO.h": "QZNTOUR",
 }
 
-prepend_state2 $CORE/src/contracts/QZN_Token_v2.h            QZN
-prepend_state2 $CORE/src/contracts/QZN_GameCabinet_PAO.h     QZNCABINET
-prepend_state2 $CORE/src/contracts/QZN_RewardRouter_PAO.h    QZNREWARDROUTER
-prepend_state2 $CORE/src/contracts/QZN_TreasuryVault_PAO.h   QZNTREASVAULT
-prepend_state2 $CORE/src/contracts/QZN_Portal_PAO.h          QZNPORTAL
-prepend_state2 $CORE/src/contracts/QZN_TournamentEngine_PAO.h QZNTOUR
+for path, name in headers.items():
+    with open(path, "r") as f:
+        content = f.read()
+    state2 = f"struct {name}2\n{{\n}};\n\n"
+    if f"struct {name}2" not in content:
+        content = content.replace("using namespace QPI;", "using namespace QPI;\n\n" + state2, 1)
+        with open(path, "w") as f:
+            f.write(content)
+        print(f"  Added {name}2 to {path}")
 
-# ============================================================
-# Fix QZN_TOKEN_CONTRACT_INDEX in GameCabinet
-# (Was 0/placeholder — set to actual index 26 for local testnet)
-# ============================================================
+# ── 2. Fix QZN_TOKEN_CONTRACT_INDEX in GameCabinet ────────────────────────
+path = "/app/src/contracts/QZN_GameCabinet_PAO.h"
+with open(path, "r") as f:
+    content = f.read()
+content = content.replace(
+    "constexpr uint32 QZN_TOKEN_CONTRACT_INDEX  = 0;",
+    "constexpr uint32 QZN_TOKEN_CONTRACT_INDEX  = 26;"
+)
+with open(path, "w") as f:
+    f.write(content)
+print("  Fixed QZN_TOKEN_CONTRACT_INDEX = 26")
 
-echo ">>> Setting QZN_TOKEN_CONTRACT_INDEX to 26 in GameCabinet..."
-sed -i 's/constexpr uint32 QZN_TOKEN_CONTRACT_INDEX  = 0;/constexpr uint32 QZN_TOKEN_CONTRACT_INDEX  = 26;/' \
-    $CORE/src/contracts/QZN_GameCabinet_PAO.h
+# ── 3. Register QZN contracts in contract_def.h ───────────────────────────
+contract_def = "/app/src/contract_core/contract_def.h"
+with open(contract_def, "r") as f:
+    content = f.read()
 
-# ============================================================
-# Register QZN contracts in contract_def.h
-# Insert before the "new contracts should be added above" comment
-# Indices: Token=26, Cabinet=27, Router=28, Vault=29, Portal=30, Tour=31
-# CRITICAL: Token MUST have lowest index (cross-contract calls go to lower indices only)
-# ============================================================
-
-echo ">>> Registering QZN contracts in contract_def.h..."
-
-QZN_BLOCK='
-\/\/ QZN ARCADE PROTOCOL CONTRACTS
+qzn_block = """
+// QZN ARCADE PROTOCOL CONTRACTS
 #define QZN_TOKEN_CONTRACT_INDEX 26
 #define CONTRACT_INDEX QZN_TOKEN_CONTRACT_INDEX
 #define CONTRACT_STATE_TYPE QZN
 #define CONTRACT_STATE2_TYPE QZN2
-#include "contracts\/QZN_Token_v2.h"
+#include "contracts/QZN_Token_v2.h"
 
 #undef CONTRACT_INDEX
 #undef CONTRACT_STATE_TYPE
@@ -84,7 +79,7 @@ QZN_BLOCK='
 #define CONTRACT_INDEX QZN_GAMECABINET_CONTRACT_INDEX
 #define CONTRACT_STATE_TYPE QZNCABINET
 #define CONTRACT_STATE2_TYPE QZNCABINET2
-#include "contracts\/QZN_GameCabinet_PAO.h"
+#include "contracts/QZN_GameCabinet_PAO.h"
 
 #undef CONTRACT_INDEX
 #undef CONTRACT_STATE_TYPE
@@ -94,7 +89,7 @@ QZN_BLOCK='
 #define CONTRACT_INDEX QZN_REWARDROUTER_CONTRACT_INDEX
 #define CONTRACT_STATE_TYPE QZNREWARDROUTER
 #define CONTRACT_STATE2_TYPE QZNREWARDROUTER2
-#include "contracts\/QZN_RewardRouter_PAO.h"
+#include "contracts/QZN_RewardRouter_PAO.h"
 
 #undef CONTRACT_INDEX
 #undef CONTRACT_STATE_TYPE
@@ -104,7 +99,7 @@ QZN_BLOCK='
 #define CONTRACT_INDEX QZN_TREASURYVAULT_CONTRACT_INDEX
 #define CONTRACT_STATE_TYPE QZNTREASVAULT
 #define CONTRACT_STATE2_TYPE QZNTREASVAULT2
-#include "contracts\/QZN_TreasuryVault_PAO.h"
+#include "contracts/QZN_TreasuryVault_PAO.h"
 
 #undef CONTRACT_INDEX
 #undef CONTRACT_STATE_TYPE
@@ -114,7 +109,7 @@ QZN_BLOCK='
 #define CONTRACT_INDEX QZN_PORTAL_CONTRACT_INDEX
 #define CONTRACT_STATE_TYPE QZNPORTAL
 #define CONTRACT_STATE2_TYPE QZNPORTAL2
-#include "contracts\/QZN_Portal_PAO.h"
+#include "contracts/QZN_Portal_PAO.h"
 
 #undef CONTRACT_INDEX
 #undef CONTRACT_STATE_TYPE
@@ -124,24 +119,46 @@ QZN_BLOCK='
 #define CONTRACT_INDEX QZN_TOURNAMENT_CONTRACT_INDEX
 #define CONTRACT_STATE_TYPE QZNTOUR
 #define CONTRACT_STATE2_TYPE QZNTOUR2
-#include "contracts\/QZN_TournamentEngine_PAO.h"
+#include "contracts/QZN_TournamentEngine_PAO.h"
 
 #undef CONTRACT_INDEX
 #undef CONTRACT_STATE_TYPE
 #undef CONTRACT_STATE2_TYPE
-'
 
-# Insert before the "new contracts should be added above this line" comment
-sed -i "s/\/\/ new contracts should be added above this line/${QZN_BLOCK}\n\/\/ new contracts should be added above this line/" \
-    $CORE/src/contract_core/contract_def.h
+"""
 
-# ============================================================
-# Add QZN test files to test/CMakeLists.txt
-# ============================================================
+marker = "// new contracts should be added above this line"
+if "QZN_TOKEN_CONTRACT_INDEX" not in content:
+    content = content.replace(marker, qzn_block + marker)
+    with open(contract_def, "w") as f:
+        f.write(content)
+    print("  Registered all 6 QZN contracts in contract_def.h")
+else:
+    print("  QZN contracts already registered — skipping")
 
-echo ">>> Adding QZN tests to CMakeLists.txt..."
+# ── 4. Add QZN tests to test/CMakeLists.txt ───────────────────────────────
+cmake = "/app/test/CMakeLists.txt"
+with open(cmake, "r") as f:
+    content = f.read()
 
-sed -i 's/contract_vottunbridge.cpp/contract_vottunbridge.cpp\n  contract_qzn_token.cpp\n  contract_qzn_gamecabinet.cpp\n  contract_qzn_rewardrouter.cpp\n  contract_qzn_treasuryvault.cpp\n  contract_qzn_portal.cpp\n  contract_qzn_tournamentengine.cpp/' \
-    $CORE/test/CMakeLists.txt
+qzn_tests = """  contract_qzn_token.cpp
+  contract_qzn_gamecabinet.cpp
+  contract_qzn_rewardrouter.cpp
+  contract_qzn_treasuryvault.cpp
+  contract_qzn_portal.cpp
+  contract_qzn_tournamentengine.cpp
+"""
 
-echo ">>> QZN setup complete."
+if "contract_qzn_token.cpp" not in content:
+    content = content.replace(
+        "  contract_vottunbridge.cpp",
+        "  contract_vottunbridge.cpp\n" + qzn_tests
+    )
+    with open(cmake, "w") as f:
+        f.write(content)
+    print("  Added QZN tests to CMakeLists.txt")
+else:
+    print("  QZN tests already in CMakeLists.txt — skipping")
+
+print(">>> All patches applied successfully.")
+PYEOF
