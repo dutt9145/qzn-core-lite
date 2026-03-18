@@ -8,7 +8,7 @@
 using namespace QPI;
 
 // ============================================================
-//  CONSTANTS — SUPPLY
+//  CONSTANTS
 // ============================================================
 
 constexpr sint64 QZN_TOTAL_SUPPLY        = 250000000LL;
@@ -20,16 +20,8 @@ constexpr sint64 QZN_TEAM_ALLOC          = 50000000LL;
 constexpr sint64 QZN_LIQUIDITY_ALLOC     = 37500000LL;
 constexpr sint64 QZN_ECOSYSTEM_ALLOC     = 25000000LL;
 
-// ============================================================
-//  CONSTANTS — VESTING
-// ============================================================
-
 constexpr sint64 QZN_VEST_CLIFF_EPOCHS   = 52LL;
 constexpr sint64 QZN_VEST_TOTAL_EPOCHS   = 260LL;
-
-// ============================================================
-//  CONSTANTS — MATCH BPS ROUTING
-// ============================================================
 
 constexpr sint64 QZN_ROUTE_PRIZE_BPS         = 4500LL;
 constexpr sint64 QZN_ROUTE_TREASURY_BPS      = 2000LL;
@@ -44,7 +36,7 @@ constexpr sint64 QZN_BPS_DENOMINATOR         = 10000LL;
 constexpr uint32 QZN_CABINET_CONTRACT_INDEX  = 0;
 
 // ============================================================
-//  STATE2 (shadow state — empty)
+//  STATE2
 // ============================================================
 
 struct QZN2
@@ -57,7 +49,6 @@ struct QZN2
 
 struct QZN : public ContractBase
 {
-    // ---- State Data ----
     struct StateData
     {
         sint64 totalSupply;
@@ -96,8 +87,6 @@ struct QZN : public ContractBase
     };
 
 public:
-
-    // ---- Input / Output Structs ----
 
     struct InitializeQZN_input
     {
@@ -146,10 +135,7 @@ public:
         sint64 epochsUntilFullVest;
     };
 
-    struct BurnFromTreasury_input
-    {
-        sint64 amount;
-    };
+    struct BurnFromTreasury_input { sint64 amount; };
     struct BurnFromTreasury_output
     {
         sint64 amountBurned;
@@ -196,45 +182,43 @@ public:
         sint64 totalRouteQswapProto;
     };
 
-    // ---- Procedures ----
-
     PUBLIC_PROCEDURE(InitializeQZN)
     {
         if (state.get().initialized) { return; }
 
-        state.mut().treasuryAddress    = input.treasuryAddr;
-        state.mut().founderAddress     = input.founderAddr;
-        state.mut().liquidityAddress   = input.liquidityAddr;
-        state.mut().portalNodeAddress  = input.portalNodeAddr;
-        state.mut().portalProtoAddress = input.portalProtoAddr;
-        state.mut().qswapProtoAddress  = input.qswapProtoAddr;
-        state.mut().adminAddress       = qpi.invocator();
+        state.mut().treasuryAddress     = input.treasuryAddr;
+        state.mut().founderAddress      = input.founderAddr;
+        state.mut().liquidityAddress    = input.liquidityAddr;
+        state.mut().portalNodeAddress   = input.portalNodeAddr;
+        state.mut().portalProtoAddress  = input.portalProtoAddr;
+        state.mut().qswapProtoAddress   = input.qswapProtoAddr;
+        state.mut().adminAddress        = qpi.invocator();
 
-        state.mut().totalSupply        = QZN_TOTAL_SUPPLY;
-        state.mut().treasuryBalance    = QZN_TREASURY_ALLOC;
-        state.mut().teamAllocationTotal= QZN_TEAM_ALLOC;
-        state.mut().teamTokensClaimed  = 0;
-        state.mut().liquidityBalance   = QZN_LIQUIDITY_ALLOC;
-        state.mut().ecosystemBalance   = QZN_ECOSYSTEM_ALLOC;
-        state.mut().circulatingSupply  = QZN_LIQUIDITY_ALLOC;
+        state.mut().totalSupply         = QZN_TOTAL_SUPPLY;
+        state.mut().treasuryBalance     = QZN_TREASURY_ALLOC;
+        state.mut().teamAllocationTotal = QZN_TEAM_ALLOC;
+        state.mut().teamTokensClaimed   = 0;
+        state.mut().liquidityBalance    = QZN_LIQUIDITY_ALLOC;
+        state.mut().ecosystemBalance    = QZN_ECOSYSTEM_ALLOC;
+        state.mut().circulatingSupply   = QZN_LIQUIDITY_ALLOC;
 
         if (input.vestingStartEpochOverride > 0)
             state.mut().vestingStartEpoch = input.vestingStartEpochOverride;
         else
             state.mut().vestingStartEpoch = qpi.epoch();
 
-        state.mut().vestingInitialized = 1;
-        state.mut().totalBurned        = 0;
-        state.mut().protocolFeeBalance = 0;
-        state.mut().totalMatchStake    = 0;
+        state.mut().vestingInitialized    = 1;
+        state.mut().totalBurned           = 0;
+        state.mut().protocolFeeBalance    = 0;
+        state.mut().totalMatchStake       = 0;
         state.mut().totalPrizeDistributed = 0;
-        state.mut().totalRouteBurned   = 0;
-        state.mut().totalRouteLiquidity= 0;
-        state.mut().totalRouteTreasury = 0;
-        state.mut().totalRoutePortalNode = 0;
+        state.mut().totalRouteBurned      = 0;
+        state.mut().totalRouteLiquidity   = 0;
+        state.mut().totalRouteTreasury    = 0;
+        state.mut().totalRoutePortalNode  = 0;
         state.mut().totalRoutePortalProto = 0;
-        state.mut().totalRouteQswapProto = 0;
-        state.mut().initialized        = 1;
+        state.mut().totalRouteQswapProto  = 0;
+        state.mut().initialized           = 1;
 
         output.totalSupply       = state.get().totalSupply;
         output.treasuryLocked    = state.get().treasuryBalance;
@@ -260,28 +244,28 @@ public:
 
         qpi.transferShareOwnershipAndPossession(QZN_ASSET_NAME, SELF, SELF, SELF, prizeShare, input.winnerAddress);
 
-        state.mut().treasuryBalance      = state.get().treasuryBalance + treasuryShare;
-        state.mut().totalRouteTreasury   = state.get().totalRouteTreasury + treasuryShare;
-        state.mut().liquidityBalance     = state.get().liquidityBalance + liquidityShare;
-        state.mut().totalRouteLiquidity  = state.get().totalRouteLiquidity + liquidityShare;
+        state.mut().treasuryBalance       = state.get().treasuryBalance + treasuryShare;
+        state.mut().totalRouteTreasury    = state.get().totalRouteTreasury + treasuryShare;
+        state.mut().liquidityBalance      = state.get().liquidityBalance + liquidityShare;
+        state.mut().totalRouteLiquidity   = state.get().totalRouteLiquidity + liquidityShare;
 
         qpi.transferShareOwnershipAndPossession(QZN_ASSET_NAME, SELF, SELF, SELF, burnShare, NULL_ID);
-        state.mut().totalBurned          = state.get().totalBurned + burnShare;
-        state.mut().circulatingSupply    = state.get().circulatingSupply - burnShare;
-        state.mut().totalRouteBurned     = state.get().totalRouteBurned + burnShare;
+        state.mut().totalBurned           = state.get().totalBurned + burnShare;
+        state.mut().circulatingSupply     = state.get().circulatingSupply - burnShare;
+        state.mut().totalRouteBurned      = state.get().totalRouteBurned + burnShare;
 
         qpi.transferShareOwnershipAndPossession(QZN_ASSET_NAME, SELF, SELF, SELF, nodeShare, state.get().portalNodeAddress);
-        state.mut().totalRoutePortalNode = state.get().totalRoutePortalNode + nodeShare;
+        state.mut().totalRoutePortalNode  = state.get().totalRoutePortalNode + nodeShare;
 
         qpi.transferShareOwnershipAndPossession(QZN_ASSET_NAME, SELF, SELF, SELF, portalProtoShare, state.get().portalProtoAddress);
         state.mut().totalRoutePortalProto = state.get().totalRoutePortalProto + portalProtoShare;
 
         qpi.transferShareOwnershipAndPossession(QZN_ASSET_NAME, SELF, SELF, SELF, qswapProtoShare, state.get().qswapProtoAddress);
-        state.mut().totalRouteQswapProto = state.get().totalRouteQswapProto + qswapProtoShare;
+        state.mut().totalRouteQswapProto  = state.get().totalRouteQswapProto + qswapProtoShare;
 
-        state.mut().protocolFeeBalance   = state.get().protocolFeeBalance + protocolShare;
-        state.mut().totalMatchStake      = state.get().totalMatchStake + input.totalStake;
-        state.mut().totalPrizeDistributed= state.get().totalPrizeDistributed + prizeShare;
+        state.mut().protocolFeeBalance    = state.get().protocolFeeBalance + protocolShare;
+        state.mut().totalMatchStake       = state.get().totalMatchStake + input.totalStake;
+        state.mut().totalPrizeDistributed = state.get().totalPrizeDistributed + prizeShare;
 
         output.prizeAwarded     = prizeShare;
         output.treasuryShare    = treasuryShare;
@@ -298,8 +282,8 @@ public:
         if (qpi.invocator() != state.get().founderAddress) { return; }
         if (!state.get().vestingInitialized) { return; }
 
-        sint64 currentEpoch     = qpi.epoch();
-        sint64 epochsElapsed    = currentEpoch - state.get().vestingStartEpoch;
+        sint64 currentEpoch      = qpi.epoch();
+        sint64 epochsElapsed     = currentEpoch - state.get().vestingStartEpoch;
 
         if (epochsElapsed < QZN_VEST_CLIFF_EPOCHS)
         {
@@ -354,8 +338,6 @@ public:
         output.lifetimeBurned       = state.get().totalBurned;
     }
 
-    // ---- Functions ----
-
     PUBLIC_FUNCTION(GetSupplyInfo)
     {
         output.totalSupply        = state.get().totalSupply;
@@ -405,19 +387,17 @@ public:
 
     PUBLIC_FUNCTION(GetMatchStats)
     {
-        output.totalMatchStake       = state.get().totalMatchStake;
-        output.totalPrizeDistributed = state.get().totalPrizeDistributed;
-        output.totalRouteBurned      = state.get().totalRouteBurned;
-        output.totalRouteLiquidity   = state.get().totalRouteLiquidity;
-        output.totalRouteTreasury    = state.get().totalRouteTreasury;
-        output.totalRoutePortalNode  = state.get().totalRoutePortalNode;
-        output.totalRoutePortalProto = state.get().totalRoutePortalProto;
-        output.totalRouteQswapProto  = state.get().totalRouteQswapProto;
+        output.totalMatchStake        = state.get().totalMatchStake;
+        output.totalPrizeDistributed  = state.get().totalPrizeDistributed;
+        output.totalRouteBurned       = state.get().totalRouteBurned;
+        output.totalRouteLiquidity    = state.get().totalRouteLiquidity;
+        output.totalRouteTreasury     = state.get().totalRouteTreasury;
+        output.totalRoutePortalNode   = state.get().totalRoutePortalNode;
+        output.totalRoutePortalProto  = state.get().totalRoutePortalProto;
+        output.totalRouteQswapProto   = state.get().totalRouteQswapProto;
     }
 
-    // ---- Registration ----
-
-    REGISTER_USER_FUNCTIONS_AND_PROCEDURES
+    REGISTER_USER_FUNCTIONS_AND_PROCEDURES()
     {
         REGISTER_USER_PROCEDURE(InitializeQZN,     1);
         REGISTER_USER_PROCEDURE(SettleMatch,       2);
@@ -428,17 +408,15 @@ public:
         REGISTER_USER_FUNCTION(GetMatchStats,      7);
     }
 
-    // ---- System Hooks ----
-
-    INITIALIZE
+    INITIALIZE()
     {
     }
 
-    BEGIN_EPOCH
+    BEGIN_EPOCH()
     {
     }
 
-    END_TICK
+    END_TICK()
     {
     }
 };
