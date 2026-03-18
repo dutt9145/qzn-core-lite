@@ -765,8 +765,8 @@ PUBLIC_PROCEDURE(SubmitMatchResult)
                 state.mut().tournaments[tIdx].tstate = TSTATE_FINALIZING;
 
                 uint64 total  = state.get().tournaments[tIdx].prizePool;
-                uint64 first  = div(total * QZN_TOURNAMENT_PRIZE_FIRST,  100);
-                uint64 second = div(total * QZN_TOURNAMENT_PRIZE_SECOND, 100);
+                uint64 first  = (uint64)div((sint64)(total * QZN_TOURNAMENT_PRIZE_FIRST), (sint64)100).quot;
+                uint64 second = (uint64)div((sint64)(total * QZN_TOURNAMENT_PRIZE_SECOND), (sint64)100).quot;
                 uint64 third  = total - first - second; // remainder prevents rounding dust
 
                 if (state.get().tournaments[tIdx].first  != NULL_ID) qpi.transfer(state.get().tournaments[tIdx].first,  first);
@@ -878,8 +878,8 @@ PUBLIC_PROCEDURE(SubmitMatchResult)
                 state.mut().tournaments[tIdx].tstate = TSTATE_FINALIZING;
 
                 uint64 total  = state.get().tournaments[tIdx].prizePool;
-                uint64 first  = div(total * QZN_TOURNAMENT_PRIZE_FIRST,  100);
-                uint64 second = div(total * QZN_TOURNAMENT_PRIZE_SECOND, 100);
+                uint64 first  = (uint64)div((sint64)(total * QZN_TOURNAMENT_PRIZE_FIRST), (sint64)100).quot;
+                uint64 second = (uint64)div((sint64)(total * QZN_TOURNAMENT_PRIZE_SECOND), (sint64)100).quot;
                 uint64 third  = total - first - second;
 
                 if (state.get().tournaments[tIdx].first  != NULL_ID) qpi.transfer(state.get().tournaments[tIdx].first,  first);
@@ -956,8 +956,8 @@ PUBLIC_PROCEDURE(SubmitMatchResult)
                 state.mut().tournaments[tIdx].tstate = TSTATE_FINALIZING;
 
                 uint64 total  = state.get().tournaments[tIdx].prizePool;
-                uint64 first  = div(total * QZN_TOURNAMENT_PRIZE_FIRST,  100);
-                uint64 second = div(total * QZN_TOURNAMENT_PRIZE_SECOND, 100);
+                uint64 first  = (uint64)div((sint64)(total * QZN_TOURNAMENT_PRIZE_FIRST), (sint64)100).quot;
+                uint64 second = (uint64)div((sint64)(total * QZN_TOURNAMENT_PRIZE_SECOND), (sint64)100).quot;
                 uint64 third  = total - first - second;
 
                 if (state.get().tournaments[tIdx].first  != NULL_ID) qpi.transfer(state.get().tournaments[tIdx].first,  first);
