@@ -39,4 +39,4 @@ RUN cd /app/build && \
 
 EXPOSE 41841
 WORKDIR /app
-CMD ["./build/Qubic", "--ticking-delay", "1000"]
+CMD ["/app/build/Qubic", "--ticking-delay", "1000"]
