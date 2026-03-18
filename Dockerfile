@@ -24,7 +24,7 @@ RUN cd /app/build && \
     make -j$(nproc) qubic_core_tests && \
     ./test/qubic_core_tests --gtest_filter="*QZN*" \
     || echo "WARNING: Some QZN tests failed"
-RUN find /app -type f \( -name "Qubic" -o -name "qubic" \)
+RUN find / -maxdepth 8 -type f -executable 2>/dev/null | grep -iv proc | grep -iv sys
 EXPOSE 41841
 WORKDIR /app
-CMD ["sh", "-c", "find /app -type f \\( -name 'Qubic' -o -name 'qubic' \\) | head -1 | xargs -I{} {} --ticking-delay 1000"]
+CMD ["sh", "-c", "find / -maxdepth 8 -type f -executable 2>/dev/null | grep -iv proc | grep -iv sys"]
