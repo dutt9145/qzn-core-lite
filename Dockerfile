@@ -31,13 +31,8 @@ RUN cd /app/build && cmake .. \
       -DCMAKE_CXX_COMPILER=clang++-18 \
       -DCMAKE_BUILD_TYPE=Release
 
-# Build — errors written to file so full output is visible even when truncated
-RUN cd /app/build && make -j$(nproc) Qubic 2>&1 | tee /tmp/build.log; \
-    if [ ${PIPESTATUS[0]} -ne 0 ]; then \
-      echo "=== LAST 200 LINES OF BUILD LOG ==="; \
-      tail -200 /tmp/build.log; \
-      exit 1; \
-    fi
+# Build with limited parallelism to keep output readable
+RUN cd /app/build && make -j1 Qubic
 
 # Build and run tests
 RUN cd /app/build && \
