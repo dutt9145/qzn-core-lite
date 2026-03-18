@@ -22,9 +22,14 @@ RUN apt-get update && apt-get install -y \
     curl \
     python3 \
     sed \
-    libjsoncpp-dev \
     pkg-config \
     uuid-dev \
+    libjsoncpp-dev \
+    libssl-dev \
+    zlib1g-dev \
+    libc-ares-dev \
+    libbotan-2-dev \
+    libyaml-cpp-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Set clang-18 as default compiler
