@@ -1092,7 +1092,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
-            QZN_SETTLE_MATCH_PROC_ID,
+            SettleMatch,
             settlementCall,
             sizeof(settlementCall),
             0
@@ -1184,7 +1184,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
-            QZN_SETTLE_MATCH_PROC_ID,
+            SettleMatch,
             settlementCall,
             sizeof(settlementCall),
             0
@@ -1276,7 +1276,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
-            QZN_SETTLE_MATCH_PROC_ID,
+            SettleMatch,
             settlementCall,
             sizeof(settlementCall),
             0
@@ -1368,7 +1368,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
-            QZN_SETTLE_MATCH_PROC_ID,
+            SettleMatch,
             settlementCall,
             sizeof(settlementCall),
             0
@@ -1460,7 +1460,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
-            QZN_SETTLE_MATCH_PROC_ID,
+            SettleMatch,
             settlementCall,
             sizeof(settlementCall),
             0
@@ -1552,7 +1552,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
-            QZN_SETTLE_MATCH_PROC_ID,
+            SettleMatch,
             settlementCall,
             sizeof(settlementCall),
             0
@@ -1644,7 +1644,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
-            QZN_SETTLE_MATCH_PROC_ID,
+            SettleMatch,
             settlementCall,
             sizeof(settlementCall),
             0
@@ -1736,7 +1736,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
-            QZN_SETTLE_MATCH_PROC_ID,
+            SettleMatch,
             settlementCall,
             sizeof(settlementCall),
             0
@@ -1828,7 +1828,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
-            QZN_SETTLE_MATCH_PROC_ID,
+            SettleMatch,
             settlementCall,
             sizeof(settlementCall),
             0
@@ -1920,7 +1920,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
-            QZN_SETTLE_MATCH_PROC_ID,
+            SettleMatch,
             settlementCall,
             sizeof(settlementCall),
             0
@@ -2012,7 +2012,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
-            QZN_SETTLE_MATCH_PROC_ID,
+            SettleMatch,
             settlementCall,
             sizeof(settlementCall),
             0
@@ -2104,7 +2104,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
-            QZN_SETTLE_MATCH_PROC_ID,
+            SettleMatch,
             settlementCall,
             sizeof(settlementCall),
             0
@@ -2196,7 +2196,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
-            QZN_SETTLE_MATCH_PROC_ID,
+            SettleMatch,
             settlementCall,
             sizeof(settlementCall),
             0
@@ -2288,7 +2288,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
-            QZN_SETTLE_MATCH_PROC_ID,
+            SettleMatch,
             settlementCall,
             sizeof(settlementCall),
             0
@@ -2380,7 +2380,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
-            QZN_SETTLE_MATCH_PROC_ID,
+            SettleMatch,
             settlementCall,
             sizeof(settlementCall),
             0
@@ -2472,7 +2472,7 @@ PUBLIC_PROCEDURE(ConfirmResult)
 
         INVOKE_OTHER_CONTRACT_PROCEDURE(
             QZN,
-            QZN_SETTLE_MATCH_PROC_ID,
+            SettleMatch,
             settlementCall,
             sizeof(settlementCall),
             0
