@@ -10,6 +10,9 @@ RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-18 100 && 
     update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-18 100
 WORKDIR /app
 RUN git clone --depth=1 https://github.com/qubic/core-lite.git .
+RUN sed -i 's/-mavx512f//g' /app/src/kangaroo_twelve.h || true
+RUN sed -i 's/__AVX512F__/__AVX2__/g' /app/src/kangaroo_twelve.h || true
+RUN sed -i 's/avx512/avx2/g' /app/src/kangaroo_twelve.h || true
 RUN mkdir -p /app/build && cd /app/build && cmake .. \
       -DCMAKE_C_COMPILER=clang-18 \
       -DCMAKE_CXX_COMPILER=clang++-18 \
