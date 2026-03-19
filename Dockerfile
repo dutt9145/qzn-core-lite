@@ -13,7 +13,9 @@ RUN git clone --depth=1 https://github.com/qubic/core-lite.git .
 RUN mkdir -p /app/build && cd /app/build && cmake .. \
       -DCMAKE_C_COMPILER=clang-18 \
       -DCMAKE_CXX_COMPILER=clang++-18 \
-      -DCMAKE_BUILD_TYPE=Release
+      -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_CXX_FLAGS="-mavx2 -mno-avx512f" \
+      -DCMAKE_C_FLAGS="-mavx2 -mno-avx512f"
 RUN cd /app/build && make -j$(nproc) fmt trantor drogon platform_common platform_efi
 COPY contracts/ /qzn/contracts/
 COPY test/      /qzn/test/
