@@ -49,6 +49,8 @@ struct QZN : public ContractBase
         id     qswapProtoAddress;
         id     rewardRouterAddress;
         id     cabinetAddress;
+        id     treasuryVaultAddress;
+        sint64 protocolFeeThreshold;
         sint64 protocolFeeBalance;
         sint64 stakerDividendAccumulator;
         sint64 builderDividendAccumulator;
@@ -455,7 +457,6 @@ REGISTER_USER_FUNCTIONS_AND_PROCEDURES()
             state.mut().builderDividendAccumulator    = 0LL;
         }
         state.mut().lastDividendEpoch = qpi.epoch();
-    }
 
     // ── Protocol Fee Distribution ────────────────────────────────────
     // Each epoch the protocol fee pool is split:
@@ -534,6 +535,7 @@ REGISTER_USER_FUNCTIONS_AND_PROCEDURES()
         // ─────────────────────────────────────────────────────────────
     }
     state.mut().epochEfficiencyRating = 1000LL;
+}
 
     END_TICK() {}
 };

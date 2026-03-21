@@ -224,6 +224,9 @@ struct QZNPORTAL : public ContractBase
     id      adminAddress;
     bit     initialized;
     bit     portalActive;
+    id      tokenContractAddress;
+    sint64  nodeDividendPool;
+    sint64  epochEfficiencyRating;
     };
 
 public:

@@ -435,6 +435,8 @@ struct QZNREWARDROUTER : public ContractBase
 
     // ── Dividend pool (receives from QZN Token BEGIN_EPOCH flush) ──
     sint64  stakerDividendPool;         // Accumulated from Token contract
+    sint64  totalStaked;
+    bit     initialized;
     sint64  totalDividendsPaidToStakers; // Lifetime stat
     uint32  lastDividendEpoch;          // Prevent double-pay
     sint64  totalAchievementsAwarded;
@@ -447,7 +449,7 @@ struct QZNREWARDROUTER : public ContractBase
     // ---- Authority ----
     id      adminAddress;
     id      gameCabinetAddress;     // Only cabinet can report match results
-    bit     initialized;
+    id     tokenContractAddress;
     };
 
 public:
@@ -2049,7 +2051,6 @@ REGISTER_USER_FUNCTIONS_AND_PROCEDURES()
     REGISTER_USER_PROCEDURE(FundReserve,          7);
     REGISTER_USER_FUNCTION(GetPlayerStats,        8);
     REGISTER_USER_FUNCTION(GetLeaderboard,        9);
-    REGISTER_USER_PROCEDURE(ReceiveDividend,      10);
 }
 
 // ============================================================

@@ -144,7 +144,34 @@ struct QZNTOUR : public ContractBase
     // Indices 0-31: winners bracket scratch
     // Indices 32-63: losers bracket scratch (double elim only)
     id               scratchIds[QZN_TOURNAMENT_MAX_PLAYERS];
-    };
+    
+    // ── Dividend fields ──────────────────────────────────────────────
+    sint64 organizerDividendPool;
+    sint64 totalOrganizerDividendsPaid;
+    uint32 lastOrganizerDividendEpoch;
+    id     tokenContractAddress;
+    id     organizer_0;  bit organizer_0_active;
+    id     organizer_1;  bit organizer_1_active;
+    id     organizer_2;  bit organizer_2_active;
+    id     organizer_3;  bit organizer_3_active;
+    id     organizer_4;  bit organizer_4_active;
+    id     organizer_5;  bit organizer_5_active;
+    id     organizer_6;  bit organizer_6_active;
+    id     organizer_7;  bit organizer_7_active;
+    id     organizer_8;  bit organizer_8_active;
+    id     organizer_9;  bit organizer_9_active;
+    id     organizer_10; bit organizer_10_active;
+    id     organizer_11; bit organizer_11_active;
+    id     organizer_12; bit organizer_12_active;
+    id     organizer_13; bit organizer_13_active;
+    id     organizer_14; bit organizer_14_active;
+    id     organizer_15; bit organizer_15_active;
+    uint32 activeOrganizerCount;
+    sint64 epochScDividendPool;
+    sint64 totalScDividendsPaid;
+    sint64 epochEfficiencyRating;
+    sint64 epochTournamentRevenue;
+};
 
 public:
 
@@ -1109,7 +1136,7 @@ PUBLIC_FUNCTION(GetPlayerRecord)
 
     PUBLIC_PROCEDURE(SetEfficiencyRating)
     {
-        if (qpi.invocator() != state.get().adminAddress) { return; }
+        if (qpi.invocator() != state.get().protocolAdmin) { return; }
         if (input.rating < 1000LL || input.rating > 5000LL) { return; }
         state.mut().epochEfficiencyRating = input.rating;
         output.applied = input.rating;

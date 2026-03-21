@@ -164,7 +164,12 @@ struct QZNTREASVAULT : public ContractBase
     id      adminAddress;
     bit     initialized;
     bit     paused;                   // Emergency pause flag
-    };
+    
+    sint64 epochScDividendPool;
+    sint64 totalScDividendsPaid;
+    sint64 epochEfficiencyRating;
+    sint64 epochVaultRevenue;
+};
 
 public:
 
@@ -851,4 +856,5 @@ BEGIN_EPOCH()
 
 END_TICK() {}
 
-};
+}
+    sint64 epochVaultRevenue;
