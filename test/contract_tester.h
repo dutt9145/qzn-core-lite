@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CONTRACT_TESTER_H
+#define CONTRACT_TESTER_H
 
 using InitializeQZN_input        = QZN::InitializeQZN_input;
 using InitializeQZN_output       = QZN::InitializeQZN_output;
@@ -98,13 +99,12 @@ using CancelTournament_input     = QZNTOUR::CancelTournament_input;
 using CancelTournament_output    = QZNTOUR::CancelTournament_output;
 using GetTournament_input        = QZNTOUR::GetTournament_input;
 using GetTournament_output       = QZNTOUR::GetTournament_output;
-using GetTourMatch_input         = QZNTOUR::GetMatch_input;
-using GetTourMatch_output        = QZNTOUR::GetMatch_output;
+using GetTourMatch_input  = QZNTOUR::GetMatch_input;
+using GetTourMatch_output = QZNTOUR::GetMatch_output;
 using GetPlayerRecord_input      = QZNTOUR::GetPlayerRecord_input;
 using GetPlayerRecord_output     = QZNTOUR::GetPlayerRecord_output;
 
 template<typename T> struct ProcOutput { struct type {}; };
-template<typename T> struct FuncOutput { struct type {}; };
 
 template<> struct ProcOutput<InitializeQZN_input>     { using type = InitializeQZN_output; };
 template<> struct ProcOutput<SettleMatch_input>        { using type = SettleMatch_output; };
@@ -116,6 +116,7 @@ template<> struct ProcOutput<SubmitResult_input>       { using type = SubmitResu
 template<> struct ProcOutput<ConfirmResult_input>      { using type = ConfirmResult_output; };
 template<> struct ProcOutput<DisputeResult_input>      { using type = DisputeResult_output; };
 template<> struct ProcOutput<InitializeRouter_input>   { using type = InitializeRouter_output; };
+template<> struct ProcOutput<QZNTOUR::RegisterPlayer_input>  { using type = QZNTOUR::RegisterPlayer_output; };
 template<> struct ProcOutput<RegisterPlayer_input>     { using type = RegisterPlayer_output; };
 template<> struct ProcOutput<StakeQZN_input>           { using type = StakeQZN_output; };
 template<> struct ProcOutput<UnstakeQZN_input>         { using type = UnstakeQZN_output; };
@@ -131,13 +132,13 @@ template<> struct ProcOutput<ApproveGame_input>        { using type = ApproveGam
 template<> struct ProcOutput<UpdateGameState_input>    { using type = UpdateGameState_output; };
 template<> struct ProcOutput<StakeForAccess_input>     { using type = StakeForAccess_output; };
 template<> struct ProcOutput<ReceiveProtocolFees_input>{ using type = ReceiveProtocolFees_output; };
+template<typename T> struct FuncOutput { struct type {}; };
 template<> struct FuncOutput<GetSupplyInfo_input>      { using type = GetSupplyInfo_output; };
 template<> struct FuncOutput<GetVestingStatus_input>   { using type = GetVestingStatus_output; };
 template<> struct FuncOutput<GetMatchStats_input>      { using type = GetMatchStats_output; };
 template<> struct FuncOutput<GetPlayerAccess_input>    { using type = GetPlayerAccess_output; };
 template<> struct FuncOutput<GetNode_input>            { using type = GetNode_output; };
 template<> struct FuncOutput<GetGame_input>            { using type = GetGame_output; };
-template<> struct FuncOutput<GetMatch_input>           { using type = GetMatch_output; };
 template<> struct FuncOutput<GetCabinetStats_input>    { using type = GetCabinetStats_output; };
 template<> struct FuncOutput<GetPlayerStats_input>     { using type = GetPlayerStats_output; };
 template<> struct FuncOutput<GetLeaderboard_input>     { using type = GetLeaderboard_output; };
@@ -154,6 +155,7 @@ template<> struct ProcOutput<StartTournament_input>     { using type = StartTour
 template<> struct ProcOutput<SubmitMatchResult_input>   { using type = SubmitMatchResult_output; };
 template<> struct ProcOutput<CancelTournament_input>    { using type = CancelTournament_output; };
 template<> struct FuncOutput<GetTournament_input>       { using type = GetTournament_output; };
+template<> struct FuncOutput<QZNCABINET::GetMatch_input>    { using type = QZNCABINET::GetMatch_output; };
 template<> struct FuncOutput<GetTourMatch_input>        { using type = GetTourMatch_output; };
 template<> struct FuncOutput<GetPlayerRecord_input>     { using type = GetPlayerRecord_output; };
 template<> struct FuncOutput<QZNPORTAL::GetPortalStats_input> { using type = QZNPORTAL::GetPortalStats_output; };
@@ -216,6 +218,7 @@ class ContractTester : public ContractTesting {
 public:
     unsigned int contractIdx = 0;
     id currentInvocator = {};
+    long long currentInvocationReward = 0;
 
     ContractTester() : ContractTesting() {
         for (unsigned int i = 0; i < contractCount; i++) {
@@ -234,6 +237,7 @@ public:
         currentInvocator = addr;
         increaseEnergy(addr, 1000000000LL);
     }
+    void setInvocationReward(long long amount) { currentInvocationReward = amount; }
     void setCurrentEpoch(unsigned short epoch) { system.epoch = epoch; }
     void setCurrentTick(unsigned int tick) { system.tick = tick; }
     void advanceBeginEpoch() {
@@ -252,7 +256,8 @@ public:
     typename ProcOutput<InputType>::type callProcedure(unsigned short procId, const InputType& input) {
         using OutputType = typename ProcOutput<InputType>::type;
         OutputType output{};
-        QpiContextUserProcedureCall qpiContext(contractIdx, currentInvocator, 0);
+        QpiContextUserProcedureCall qpiContext(contractIdx, currentInvocator, currentInvocationReward);
+        currentInvocationReward = 0;
         qpiContext.call(procId, &input, sizeof(input));
         if (qpiContext.outputSize >= sizeof(output))
             copyMem(&output, qpiContext.outputBuffer, sizeof(output));
@@ -268,3 +273,5 @@ public:
     }
 };
 
+
+#endif // CONTRACT_TESTER_H

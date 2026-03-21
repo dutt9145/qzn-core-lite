@@ -80,6 +80,7 @@
 
 #include "gtest/gtest.h"
 #include "../src/contracts/QZN_TournamentEngine_PAO.h"
+
 #include "contract_testing.h"
 
 // ============================================================
@@ -133,7 +134,7 @@ protected:
     // Register a player into a tournament, paying exact fee
     bool registerPlayer(uint32 tId, id player)
     {
-        RegisterPlayer_input in{};
+        QZNTOUR::QZNTOUR::RegisterPlayer_input in{};
         in.tournamentId = tId;
 
         tester.setInvocator(player);
@@ -417,7 +418,7 @@ TEST_F(QZNTournamentEngineTest, Register_WrongState_Rejected)
     startTournament(tId);
 
     // Now IN_PROGRESS — registration should be closed
-    RegisterPlayer_input in{};
+    QZNTOUR::QZNTOUR::RegisterPlayer_input in{};
     in.tournamentId = tId;
     tester.setInvocator(id(99, 0, 0, 0));
     tester.setInvocationReward(ENTRY_FEE);
@@ -433,7 +434,7 @@ TEST_F(QZNTournamentEngineTest, Register_DuplicatePlayer_Rejected)
     registerPlayer(tId, PLAYER_A);
 
     // Try to register PLAYER_A again
-    RegisterPlayer_input in{};
+    QZNTOUR::QZNTOUR::RegisterPlayer_input in{};
     in.tournamentId = tId;
     tester.setInvocator(PLAYER_A);
     tester.setInvocationReward(ENTRY_FEE);
@@ -449,7 +450,7 @@ TEST_F(QZNTournamentEngineTest, Register_AtCapacity_Rejected)
     uint32 tId = createTournament(FORMAT_SINGLE_ELIMINATION, 4, ENTRY_FEE);
     fillToMin(tId);  // Fill all 4 slots
 
-    RegisterPlayer_input in{};
+    QZNTOUR::QZNTOUR::RegisterPlayer_input in{};
     in.tournamentId = tId;
     tester.setInvocator(id(50, 0, 0, 0));
     tester.setInvocationReward(ENTRY_FEE);
@@ -464,7 +465,7 @@ TEST_F(QZNTournamentEngineTest, Register_UnderpaymentRefundedAndRejected)
     initialize();
     uint32 tId = createTournament(FORMAT_SINGLE_ELIMINATION, 4, ENTRY_FEE);
 
-    RegisterPlayer_input in{};
+    QZNTOUR::QZNTOUR::RegisterPlayer_input in{};
     in.tournamentId = tId;
     tester.setInvocator(PLAYER_A);
     tester.setInvocationReward(ENTRY_FEE - 1ULL);  // 1 under fee
@@ -477,7 +478,7 @@ TEST_F(QZNTournamentEngineTest, Register_UnderpaymentRefundedAndRejected)
 TEST_F(QZNTournamentEngineTest, Register_OutOfRangeTournamentId_Rejected)
 {
     initialize();
-    RegisterPlayer_input in{};
+    QZNTOUR::QZNTOUR::RegisterPlayer_input in{};
     in.tournamentId = 9999;
     tester.setInvocator(PLAYER_A);
     tester.setInvocationReward(ENTRY_FEE);
@@ -978,7 +979,7 @@ TEST_F(QZNTournamentEngineTest, GetMatch_AfterStart_CorrectFields)
     fillToMin(tId);
     startTournament(tId);
 
-    GetMatch_input in{};
+    GetTourMatch_input in{};
     in.tournamentId = tId;
     in.matchIndex   = 0;
     auto out = tester.callFunction(GetMatch_id, in);
@@ -998,7 +999,7 @@ TEST_F(QZNTournamentEngineTest, GetMatch_AfterSubmit_SettledAndWinnerSet)
     startTournament(tId);
     submitResult(tId, 0, PLAYER_A);
 
-    GetMatch_input in{};
+    GetTourMatch_input in{};
     in.tournamentId = tId;
     in.matchIndex   = 0;
     auto out = tester.callFunction(GetMatch_id, in);
@@ -1017,7 +1018,7 @@ TEST_F(QZNTournamentEngineTest, GetMatch_OutOfRangeMatchIndex_NotFound)
     fillToMin(tId);
     startTournament(tId);
 
-    GetMatch_input in{};
+    GetTourMatch_input in{};
     in.tournamentId = tId;
     in.matchIndex   = 999;
     auto out = tester.callFunction(GetMatch_id, in);

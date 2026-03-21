@@ -856,5 +856,4 @@ BEGIN_EPOCH()
 
 END_TICK() {}
 
-}
-    sint64 epochVaultRevenue;
+};
