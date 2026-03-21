@@ -738,6 +738,18 @@ PUBLIC_FUNCTION(GetProposal)
 //  REGISTRATION
 // ============================================================
 
+
+    struct SetEfficiencyRating_input  { sint64 rating; };
+    struct SetEfficiencyRating_output { sint64 applied; };
+
+    PUBLIC_PROCEDURE(SetEfficiencyRating)
+    {
+        if (qpi.invocator() != state.get().adminAddress) { return; }
+        if (input.rating < 1000LL || input.rating > 5000LL) { return; }
+        state.mut().epochEfficiencyRating = input.rating;
+        output.applied = input.rating;
+    }
+
 REGISTER_USER_FUNCTIONS_AND_PROCEDURES()
 {
     REGISTER_USER_PROCEDURE(InitializeVault,   1);

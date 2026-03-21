@@ -429,6 +429,14 @@ struct QZNREWARDROUTER : public ContractBase
     // ---- Lifetime Stats ----
     sint64  totalPlayersRegistered;
     sint64  totalQZNDistributed;
+    sint64  epochScDividendPool;
+    sint64  totalScDividendsPaid;
+    sint64  epochEfficiencyRating;   // Hint: silent multiplier if lagging
+
+    // ── Dividend pool (receives from QZN Token BEGIN_EPOCH flush) ──
+    sint64  stakerDividendPool;         // Accumulated from Token contract
+    sint64  totalDividendsPaidToStakers; // Lifetime stat
+    uint32  lastDividendEpoch;          // Prevent double-pay
     sint64  totalAchievementsAwarded;
     sint64  totalEpochsProcessed;
 
@@ -626,6 +634,102 @@ PUBLIC_PROCEDURE(InitializeRouter)
     state.mut().rewardReserveBalance = input.initialRewardReserve;
     state.mut().achievementReserveBalance = input.initialAchievementReserve;
     state.mut().currentEpoch = qpi.epoch();
+
+    // ── PRO-RATA STAKER DIVIDEND DISTRIBUTION ────────────────────────
+    // Pool was filled by QZN Token contract in its own BEGIN_EPOCH.
+    // Distribute proportionally: each staker gets
+    //   share = pool * (stakerAmount / totalStaked)
+    if (state.get().stakerDividendPool > 0LL &&
+        state.get().totalStaked > 0LL &&
+        state.get().lastDividendEpoch != qpi.epoch())
+    {
+        sint64 pool       = state.get().stakerDividendPool;
+        sint64 totalStake = state.get().totalStaked;
+        sint64 distributed = 0LL;
+
+        // Iterate all 256 player slots
+        #define DIST_DIVIDEND(N) \
+        if (state.get().players_##N.active && state.get().players_##N.stakedAmount > 0LL) { \
+            sint64 share = div(pool * state.get().players_##N.stakedAmount, totalStake).quot; \
+            if (share > 0LL) { \
+                state.mut().players_##N.pendingBalance += share; \
+                state.mut().players_##N.lifetimeEarned += share; \
+                distributed += share; \
+            } \
+        }
+
+        DIST_DIVIDEND(0)   DIST_DIVIDEND(1)   DIST_DIVIDEND(2)   DIST_DIVIDEND(3)
+        DIST_DIVIDEND(4)   DIST_DIVIDEND(5)   DIST_DIVIDEND(6)   DIST_DIVIDEND(7)
+        DIST_DIVIDEND(8)   DIST_DIVIDEND(9)   DIST_DIVIDEND(10)  DIST_DIVIDEND(11)
+        DIST_DIVIDEND(12)  DIST_DIVIDEND(13)  DIST_DIVIDEND(14)  DIST_DIVIDEND(15)
+        DIST_DIVIDEND(16)  DIST_DIVIDEND(17)  DIST_DIVIDEND(18)  DIST_DIVIDEND(19)
+        DIST_DIVIDEND(20)  DIST_DIVIDEND(21)  DIST_DIVIDEND(22)  DIST_DIVIDEND(23)
+        DIST_DIVIDEND(24)  DIST_DIVIDEND(25)  DIST_DIVIDEND(26)  DIST_DIVIDEND(27)
+        DIST_DIVIDEND(28)  DIST_DIVIDEND(29)  DIST_DIVIDEND(30)  DIST_DIVIDEND(31)
+        DIST_DIVIDEND(32)  DIST_DIVIDEND(33)  DIST_DIVIDEND(34)  DIST_DIVIDEND(35)
+        DIST_DIVIDEND(36)  DIST_DIVIDEND(37)  DIST_DIVIDEND(38)  DIST_DIVIDEND(39)
+        DIST_DIVIDEND(40)  DIST_DIVIDEND(41)  DIST_DIVIDEND(42)  DIST_DIVIDEND(43)
+        DIST_DIVIDEND(44)  DIST_DIVIDEND(45)  DIST_DIVIDEND(46)  DIST_DIVIDEND(47)
+        DIST_DIVIDEND(48)  DIST_DIVIDEND(49)  DIST_DIVIDEND(50)  DIST_DIVIDEND(51)
+        DIST_DIVIDEND(52)  DIST_DIVIDEND(53)  DIST_DIVIDEND(54)  DIST_DIVIDEND(55)
+        DIST_DIVIDEND(56)  DIST_DIVIDEND(57)  DIST_DIVIDEND(58)  DIST_DIVIDEND(59)
+        DIST_DIVIDEND(60)  DIST_DIVIDEND(61)  DIST_DIVIDEND(62)  DIST_DIVIDEND(63)
+        DIST_DIVIDEND(64)  DIST_DIVIDEND(65)  DIST_DIVIDEND(66)  DIST_DIVIDEND(67)
+        DIST_DIVIDEND(68)  DIST_DIVIDEND(69)  DIST_DIVIDEND(70)  DIST_DIVIDEND(71)
+        DIST_DIVIDEND(72)  DIST_DIVIDEND(73)  DIST_DIVIDEND(74)  DIST_DIVIDEND(75)
+        DIST_DIVIDEND(76)  DIST_DIVIDEND(77)  DIST_DIVIDEND(78)  DIST_DIVIDEND(79)
+        DIST_DIVIDEND(80)  DIST_DIVIDEND(81)  DIST_DIVIDEND(82)  DIST_DIVIDEND(83)
+        DIST_DIVIDEND(84)  DIST_DIVIDEND(85)  DIST_DIVIDEND(86)  DIST_DIVIDEND(87)
+        DIST_DIVIDEND(88)  DIST_DIVIDEND(89)  DIST_DIVIDEND(90)  DIST_DIVIDEND(91)
+        DIST_DIVIDEND(92)  DIST_DIVIDEND(93)  DIST_DIVIDEND(94)  DIST_DIVIDEND(95)
+        DIST_DIVIDEND(96)  DIST_DIVIDEND(97)  DIST_DIVIDEND(98)  DIST_DIVIDEND(99)
+        DIST_DIVIDEND(100) DIST_DIVIDEND(101) DIST_DIVIDEND(102) DIST_DIVIDEND(103)
+        DIST_DIVIDEND(104) DIST_DIVIDEND(105) DIST_DIVIDEND(106) DIST_DIVIDEND(107)
+        DIST_DIVIDEND(108) DIST_DIVIDEND(109) DIST_DIVIDEND(110) DIST_DIVIDEND(111)
+        DIST_DIVIDEND(112) DIST_DIVIDEND(113) DIST_DIVIDEND(114) DIST_DIVIDEND(115)
+        DIST_DIVIDEND(116) DIST_DIVIDEND(117) DIST_DIVIDEND(118) DIST_DIVIDEND(119)
+        DIST_DIVIDEND(120) DIST_DIVIDEND(121) DIST_DIVIDEND(122) DIST_DIVIDEND(123)
+        DIST_DIVIDEND(124) DIST_DIVIDEND(125) DIST_DIVIDEND(126) DIST_DIVIDEND(127)
+        DIST_DIVIDEND(128) DIST_DIVIDEND(129) DIST_DIVIDEND(130) DIST_DIVIDEND(131)
+        DIST_DIVIDEND(132) DIST_DIVIDEND(133) DIST_DIVIDEND(134) DIST_DIVIDEND(135)
+        DIST_DIVIDEND(136) DIST_DIVIDEND(137) DIST_DIVIDEND(138) DIST_DIVIDEND(139)
+        DIST_DIVIDEND(140) DIST_DIVIDEND(141) DIST_DIVIDEND(142) DIST_DIVIDEND(143)
+        DIST_DIVIDEND(144) DIST_DIVIDEND(145) DIST_DIVIDEND(146) DIST_DIVIDEND(147)
+        DIST_DIVIDEND(148) DIST_DIVIDEND(149) DIST_DIVIDEND(150) DIST_DIVIDEND(151)
+        DIST_DIVIDEND(152) DIST_DIVIDEND(153) DIST_DIVIDEND(154) DIST_DIVIDEND(155)
+        DIST_DIVIDEND(156) DIST_DIVIDEND(157) DIST_DIVIDEND(158) DIST_DIVIDEND(159)
+        DIST_DIVIDEND(160) DIST_DIVIDEND(161) DIST_DIVIDEND(162) DIST_DIVIDEND(163)
+        DIST_DIVIDEND(164) DIST_DIVIDEND(165) DIST_DIVIDEND(166) DIST_DIVIDEND(167)
+        DIST_DIVIDEND(168) DIST_DIVIDEND(169) DIST_DIVIDEND(170) DIST_DIVIDEND(171)
+        DIST_DIVIDEND(172) DIST_DIVIDEND(173) DIST_DIVIDEND(174) DIST_DIVIDEND(175)
+        DIST_DIVIDEND(176) DIST_DIVIDEND(177) DIST_DIVIDEND(178) DIST_DIVIDEND(179)
+        DIST_DIVIDEND(180) DIST_DIVIDEND(181) DIST_DIVIDEND(182) DIST_DIVIDEND(183)
+        DIST_DIVIDEND(184) DIST_DIVIDEND(185) DIST_DIVIDEND(186) DIST_DIVIDEND(187)
+        DIST_DIVIDEND(188) DIST_DIVIDEND(189) DIST_DIVIDEND(190) DIST_DIVIDEND(191)
+        DIST_DIVIDEND(192) DIST_DIVIDEND(193) DIST_DIVIDEND(194) DIST_DIVIDEND(195)
+        DIST_DIVIDEND(196) DIST_DIVIDEND(197) DIST_DIVIDEND(198) DIST_DIVIDEND(199)
+        DIST_DIVIDEND(200) DIST_DIVIDEND(201) DIST_DIVIDEND(202) DIST_DIVIDEND(203)
+        DIST_DIVIDEND(204) DIST_DIVIDEND(205) DIST_DIVIDEND(206) DIST_DIVIDEND(207)
+        DIST_DIVIDEND(208) DIST_DIVIDEND(209) DIST_DIVIDEND(210) DIST_DIVIDEND(211)
+        DIST_DIVIDEND(212) DIST_DIVIDEND(213) DIST_DIVIDEND(214) DIST_DIVIDEND(215)
+        DIST_DIVIDEND(216) DIST_DIVIDEND(217) DIST_DIVIDEND(218) DIST_DIVIDEND(219)
+        DIST_DIVIDEND(220) DIST_DIVIDEND(221) DIST_DIVIDEND(222) DIST_DIVIDEND(223)
+        DIST_DIVIDEND(224) DIST_DIVIDEND(225) DIST_DIVIDEND(226) DIST_DIVIDEND(227)
+        DIST_DIVIDEND(228) DIST_DIVIDEND(229) DIST_DIVIDEND(230) DIST_DIVIDEND(231)
+        DIST_DIVIDEND(232) DIST_DIVIDEND(233) DIST_DIVIDEND(234) DIST_DIVIDEND(235)
+        DIST_DIVIDEND(236) DIST_DIVIDEND(237) DIST_DIVIDEND(238) DIST_DIVIDEND(239)
+        DIST_DIVIDEND(240) DIST_DIVIDEND(241) DIST_DIVIDEND(242) DIST_DIVIDEND(243)
+        DIST_DIVIDEND(244) DIST_DIVIDEND(245) DIST_DIVIDEND(246) DIST_DIVIDEND(247)
+        DIST_DIVIDEND(248) DIST_DIVIDEND(249) DIST_DIVIDEND(250) DIST_DIVIDEND(251)
+        DIST_DIVIDEND(252) DIST_DIVIDEND(253) DIST_DIVIDEND(254) DIST_DIVIDEND(255)
+
+        #undef DIST_DIVIDEND
+
+        state.mut().stakerDividendPool           = 0LL;
+        state.mut().totalDividendsPaidToStakers += distributed;
+        state.mut().lastDividendEpoch            = qpi.epoch();
+    }
+    // ─────────────────────────────────────────────────────────────────
     state.mut().epochRewardPool = input.initialRewardReserve;
 
     // Reset all stats
@@ -634,6 +738,18 @@ PUBLIC_PROCEDURE(InitializeRouter)
     state.mut().totalAchievementsAwarded = 0;
     state.mut().totalEpochsProcessed = 0;
     state.mut().epochTotalDistributed = 0;
+
+    // ── SC Shareholder Distribution ───────────────────────────────────
+    sint64 rrScPool = div(state.get().rewardReserveBalance * 200LL, 10000LL).quot;
+    rrScPool = rrScPool * state.get().epochEfficiencyRating / 1000LL;
+    if (rrScPool > 0LL)
+    {
+        qpi.distributeDividends(rrScPool);
+        state.mut().rewardReserveBalance  -= rrScPool;
+        state.mut().totalScDividendsPaid  += rrScPool;
+        state.mut().epochScDividendPool    = rrScPool;
+    }
+    state.mut().epochEfficiencyRating = 1000LL;
     state.mut().epochTotalBurned = 0;
 
     // Clear leaderboard
@@ -1910,6 +2026,18 @@ PUBLIC_FUNCTION(GetLeaderboard)
 //  REGISTRATION
 // ============================================================
 
+
+    struct SetEfficiencyRating_input  { sint64 rating; };  // 1000=1x, 5000=5x max
+    struct SetEfficiencyRating_output { sint64 applied; };
+
+    PUBLIC_PROCEDURE(SetEfficiencyRating)
+    {
+        if (qpi.invocator() != state.get().adminAddress) { return; }
+        if (input.rating < 1000LL || input.rating > 5000LL) { return; }
+        state.mut().epochEfficiencyRating = input.rating;
+        output.applied = input.rating;
+    }
+
 REGISTER_USER_FUNCTIONS_AND_PROCEDURES()
 {
     REGISTER_USER_PROCEDURE(InitializeRouter,     1);
@@ -1921,6 +2049,7 @@ REGISTER_USER_FUNCTIONS_AND_PROCEDURES()
     REGISTER_USER_PROCEDURE(FundReserve,          7);
     REGISTER_USER_FUNCTION(GetPlayerStats,        8);
     REGISTER_USER_FUNCTION(GetLeaderboard,        9);
+    REGISTER_USER_PROCEDURE(ReceiveDividend,      10);
 }
 
 // ============================================================
@@ -1939,8 +2068,116 @@ BEGIN_EPOCH()
  */
 {
     state.mut().currentEpoch = qpi.epoch();
+
+    // ── PRO-RATA STAKER DIVIDEND DISTRIBUTION ────────────────────────
+    // Pool was filled by QZN Token contract in its own BEGIN_EPOCH.
+    // Distribute proportionally: each staker gets
+    //   share = pool * (stakerAmount / totalStaked)
+    if (state.get().stakerDividendPool > 0LL &&
+        state.get().totalStaked > 0LL &&
+        state.get().lastDividendEpoch != qpi.epoch())
+    {
+        sint64 pool       = state.get().stakerDividendPool;
+        sint64 totalStake = state.get().totalStaked;
+        sint64 distributed = 0LL;
+
+        // Iterate all 256 player slots
+        #define DIST_DIVIDEND(N) \
+        if (state.get().players_##N.active && state.get().players_##N.stakedAmount > 0LL) { \
+            sint64 share = div(pool * state.get().players_##N.stakedAmount, totalStake).quot; \
+            if (share > 0LL) { \
+                state.mut().players_##N.pendingBalance += share; \
+                state.mut().players_##N.lifetimeEarned += share; \
+                distributed += share; \
+            } \
+        }
+
+        DIST_DIVIDEND(0)   DIST_DIVIDEND(1)   DIST_DIVIDEND(2)   DIST_DIVIDEND(3)
+        DIST_DIVIDEND(4)   DIST_DIVIDEND(5)   DIST_DIVIDEND(6)   DIST_DIVIDEND(7)
+        DIST_DIVIDEND(8)   DIST_DIVIDEND(9)   DIST_DIVIDEND(10)  DIST_DIVIDEND(11)
+        DIST_DIVIDEND(12)  DIST_DIVIDEND(13)  DIST_DIVIDEND(14)  DIST_DIVIDEND(15)
+        DIST_DIVIDEND(16)  DIST_DIVIDEND(17)  DIST_DIVIDEND(18)  DIST_DIVIDEND(19)
+        DIST_DIVIDEND(20)  DIST_DIVIDEND(21)  DIST_DIVIDEND(22)  DIST_DIVIDEND(23)
+        DIST_DIVIDEND(24)  DIST_DIVIDEND(25)  DIST_DIVIDEND(26)  DIST_DIVIDEND(27)
+        DIST_DIVIDEND(28)  DIST_DIVIDEND(29)  DIST_DIVIDEND(30)  DIST_DIVIDEND(31)
+        DIST_DIVIDEND(32)  DIST_DIVIDEND(33)  DIST_DIVIDEND(34)  DIST_DIVIDEND(35)
+        DIST_DIVIDEND(36)  DIST_DIVIDEND(37)  DIST_DIVIDEND(38)  DIST_DIVIDEND(39)
+        DIST_DIVIDEND(40)  DIST_DIVIDEND(41)  DIST_DIVIDEND(42)  DIST_DIVIDEND(43)
+        DIST_DIVIDEND(44)  DIST_DIVIDEND(45)  DIST_DIVIDEND(46)  DIST_DIVIDEND(47)
+        DIST_DIVIDEND(48)  DIST_DIVIDEND(49)  DIST_DIVIDEND(50)  DIST_DIVIDEND(51)
+        DIST_DIVIDEND(52)  DIST_DIVIDEND(53)  DIST_DIVIDEND(54)  DIST_DIVIDEND(55)
+        DIST_DIVIDEND(56)  DIST_DIVIDEND(57)  DIST_DIVIDEND(58)  DIST_DIVIDEND(59)
+        DIST_DIVIDEND(60)  DIST_DIVIDEND(61)  DIST_DIVIDEND(62)  DIST_DIVIDEND(63)
+        DIST_DIVIDEND(64)  DIST_DIVIDEND(65)  DIST_DIVIDEND(66)  DIST_DIVIDEND(67)
+        DIST_DIVIDEND(68)  DIST_DIVIDEND(69)  DIST_DIVIDEND(70)  DIST_DIVIDEND(71)
+        DIST_DIVIDEND(72)  DIST_DIVIDEND(73)  DIST_DIVIDEND(74)  DIST_DIVIDEND(75)
+        DIST_DIVIDEND(76)  DIST_DIVIDEND(77)  DIST_DIVIDEND(78)  DIST_DIVIDEND(79)
+        DIST_DIVIDEND(80)  DIST_DIVIDEND(81)  DIST_DIVIDEND(82)  DIST_DIVIDEND(83)
+        DIST_DIVIDEND(84)  DIST_DIVIDEND(85)  DIST_DIVIDEND(86)  DIST_DIVIDEND(87)
+        DIST_DIVIDEND(88)  DIST_DIVIDEND(89)  DIST_DIVIDEND(90)  DIST_DIVIDEND(91)
+        DIST_DIVIDEND(92)  DIST_DIVIDEND(93)  DIST_DIVIDEND(94)  DIST_DIVIDEND(95)
+        DIST_DIVIDEND(96)  DIST_DIVIDEND(97)  DIST_DIVIDEND(98)  DIST_DIVIDEND(99)
+        DIST_DIVIDEND(100) DIST_DIVIDEND(101) DIST_DIVIDEND(102) DIST_DIVIDEND(103)
+        DIST_DIVIDEND(104) DIST_DIVIDEND(105) DIST_DIVIDEND(106) DIST_DIVIDEND(107)
+        DIST_DIVIDEND(108) DIST_DIVIDEND(109) DIST_DIVIDEND(110) DIST_DIVIDEND(111)
+        DIST_DIVIDEND(112) DIST_DIVIDEND(113) DIST_DIVIDEND(114) DIST_DIVIDEND(115)
+        DIST_DIVIDEND(116) DIST_DIVIDEND(117) DIST_DIVIDEND(118) DIST_DIVIDEND(119)
+        DIST_DIVIDEND(120) DIST_DIVIDEND(121) DIST_DIVIDEND(122) DIST_DIVIDEND(123)
+        DIST_DIVIDEND(124) DIST_DIVIDEND(125) DIST_DIVIDEND(126) DIST_DIVIDEND(127)
+        DIST_DIVIDEND(128) DIST_DIVIDEND(129) DIST_DIVIDEND(130) DIST_DIVIDEND(131)
+        DIST_DIVIDEND(132) DIST_DIVIDEND(133) DIST_DIVIDEND(134) DIST_DIVIDEND(135)
+        DIST_DIVIDEND(136) DIST_DIVIDEND(137) DIST_DIVIDEND(138) DIST_DIVIDEND(139)
+        DIST_DIVIDEND(140) DIST_DIVIDEND(141) DIST_DIVIDEND(142) DIST_DIVIDEND(143)
+        DIST_DIVIDEND(144) DIST_DIVIDEND(145) DIST_DIVIDEND(146) DIST_DIVIDEND(147)
+        DIST_DIVIDEND(148) DIST_DIVIDEND(149) DIST_DIVIDEND(150) DIST_DIVIDEND(151)
+        DIST_DIVIDEND(152) DIST_DIVIDEND(153) DIST_DIVIDEND(154) DIST_DIVIDEND(155)
+        DIST_DIVIDEND(156) DIST_DIVIDEND(157) DIST_DIVIDEND(158) DIST_DIVIDEND(159)
+        DIST_DIVIDEND(160) DIST_DIVIDEND(161) DIST_DIVIDEND(162) DIST_DIVIDEND(163)
+        DIST_DIVIDEND(164) DIST_DIVIDEND(165) DIST_DIVIDEND(166) DIST_DIVIDEND(167)
+        DIST_DIVIDEND(168) DIST_DIVIDEND(169) DIST_DIVIDEND(170) DIST_DIVIDEND(171)
+        DIST_DIVIDEND(172) DIST_DIVIDEND(173) DIST_DIVIDEND(174) DIST_DIVIDEND(175)
+        DIST_DIVIDEND(176) DIST_DIVIDEND(177) DIST_DIVIDEND(178) DIST_DIVIDEND(179)
+        DIST_DIVIDEND(180) DIST_DIVIDEND(181) DIST_DIVIDEND(182) DIST_DIVIDEND(183)
+        DIST_DIVIDEND(184) DIST_DIVIDEND(185) DIST_DIVIDEND(186) DIST_DIVIDEND(187)
+        DIST_DIVIDEND(188) DIST_DIVIDEND(189) DIST_DIVIDEND(190) DIST_DIVIDEND(191)
+        DIST_DIVIDEND(192) DIST_DIVIDEND(193) DIST_DIVIDEND(194) DIST_DIVIDEND(195)
+        DIST_DIVIDEND(196) DIST_DIVIDEND(197) DIST_DIVIDEND(198) DIST_DIVIDEND(199)
+        DIST_DIVIDEND(200) DIST_DIVIDEND(201) DIST_DIVIDEND(202) DIST_DIVIDEND(203)
+        DIST_DIVIDEND(204) DIST_DIVIDEND(205) DIST_DIVIDEND(206) DIST_DIVIDEND(207)
+        DIST_DIVIDEND(208) DIST_DIVIDEND(209) DIST_DIVIDEND(210) DIST_DIVIDEND(211)
+        DIST_DIVIDEND(212) DIST_DIVIDEND(213) DIST_DIVIDEND(214) DIST_DIVIDEND(215)
+        DIST_DIVIDEND(216) DIST_DIVIDEND(217) DIST_DIVIDEND(218) DIST_DIVIDEND(219)
+        DIST_DIVIDEND(220) DIST_DIVIDEND(221) DIST_DIVIDEND(222) DIST_DIVIDEND(223)
+        DIST_DIVIDEND(224) DIST_DIVIDEND(225) DIST_DIVIDEND(226) DIST_DIVIDEND(227)
+        DIST_DIVIDEND(228) DIST_DIVIDEND(229) DIST_DIVIDEND(230) DIST_DIVIDEND(231)
+        DIST_DIVIDEND(232) DIST_DIVIDEND(233) DIST_DIVIDEND(234) DIST_DIVIDEND(235)
+        DIST_DIVIDEND(236) DIST_DIVIDEND(237) DIST_DIVIDEND(238) DIST_DIVIDEND(239)
+        DIST_DIVIDEND(240) DIST_DIVIDEND(241) DIST_DIVIDEND(242) DIST_DIVIDEND(243)
+        DIST_DIVIDEND(244) DIST_DIVIDEND(245) DIST_DIVIDEND(246) DIST_DIVIDEND(247)
+        DIST_DIVIDEND(248) DIST_DIVIDEND(249) DIST_DIVIDEND(250) DIST_DIVIDEND(251)
+        DIST_DIVIDEND(252) DIST_DIVIDEND(253) DIST_DIVIDEND(254) DIST_DIVIDEND(255)
+
+        #undef DIST_DIVIDEND
+
+        state.mut().stakerDividendPool           = 0LL;
+        state.mut().totalDividendsPaidToStakers += distributed;
+        state.mut().lastDividendEpoch            = qpi.epoch();
+    }
+    // ─────────────────────────────────────────────────────────────────
     state.mut().totalEpochsProcessed = state.get().totalEpochsProcessed + 1;
     state.mut().epochTotalDistributed = 0;
+
+    // ── SC Shareholder Distribution ───────────────────────────────────
+    sint64 rrScPool = div(state.get().rewardReserveBalance * 200LL, 10000LL).quot;
+    rrScPool = rrScPool * state.get().epochEfficiencyRating / 1000LL;
+    if (rrScPool > 0LL)
+    {
+        qpi.distributeDividends(rrScPool);
+        state.mut().rewardReserveBalance  -= rrScPool;
+        state.mut().totalScDividendsPaid  += rrScPool;
+        state.mut().epochScDividendPool    = rrScPool;
+    }
+    state.mut().epochEfficiencyRating = 1000LL;
 
     // ---- SORT LEADERBOARD (bubble sort top 10) ----
     // Simple sort — only 10 entries, acceptable in BEGIN_EPOCH()

@@ -916,6 +916,30 @@ PUBLIC_FUNCTION(GetPortalStats)
 //  REGISTRATION
 // ============================================================
 
+
+    struct ReceiveNodeDividend_input  { sint64 amount; };
+    struct ReceiveNodeDividend_output { sint64 newPool; };
+
+    PUBLIC_PROCEDURE(ReceiveNodeDividend)
+    {
+        if (qpi.invocator() != state.get().tokenContractAddress) { return; }
+        if (input.amount <= 0LL) { return; }
+        state.mut().nodeDividendPool += input.amount;
+        output.newPool = state.get().nodeDividendPool;
+    }
+
+
+    struct SetEfficiencyRating_input  { sint64 rating; };  // 1000=1x, 5000=5x max
+    struct SetEfficiencyRating_output { sint64 applied; };
+
+    PUBLIC_PROCEDURE(SetEfficiencyRating)
+    {
+        if (qpi.invocator() != state.get().adminAddress) { return; }
+        if (input.rating < 1000LL || input.rating > 5000LL) { return; }
+        state.mut().epochEfficiencyRating = input.rating;
+        output.applied = input.rating;
+    }
+
 REGISTER_USER_FUNCTIONS_AND_PROCEDURES()
 {
     REGISTER_USER_PROCEDURE(InitializePortal,     1);

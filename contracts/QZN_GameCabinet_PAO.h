@@ -167,6 +167,28 @@ struct QZNCABINET : public ContractBase
 
     // ---- Authority ----
     id     adminAddress;
+    sint64 epochScDividendPool;
+    sint64 totalScDividendsPaid;
+    sint64 epochEfficiencyRating;    // Hint: silent multiplier if lagging
+
+    // ── Builder Dividend Pool ────────────────────────────────────────
+    // Receives builder pool from QZN Token BEGIN_EPOCH flush.
+    // Admin distributes to registered game builders each epoch.
+    sint64 builderDividendPool;
+    sint64 totalBuilderDividendsPaid;
+    uint32 lastBuilderDividendEpoch;
+    id     tokenContractAddress;  // QZN Token — only source of dividends
+
+    // Registered game builders (up to 8 builders, equal split)
+    id     builder_0;  bit builder_0_active;
+    id     builder_1;  bit builder_1_active;
+    id     builder_2;  bit builder_2_active;
+    id     builder_3;  bit builder_3_active;
+    id     builder_4;  bit builder_4_active;
+    id     builder_5;  bit builder_5_active;
+    id     builder_6;  bit builder_6_active;
+    id     builder_7;  bit builder_7_active;
+    uint32 activeBuilderCount;
     id     gameServerAddress;
     bit    initialized;
     bit    cabinetActive;
@@ -2997,6 +3019,48 @@ PUBLIC_FUNCTION(GetCabinetStats)
 //  REGISTRATION
 // ============================================================
 
+
+    struct ReceiveBuilderDividend_input  { sint64 amount; };
+    struct ReceiveBuilderDividend_output { sint64 newPool; };
+
+    PUBLIC_PROCEDURE(ReceiveBuilderDividend)
+    {
+        if (qpi.invocator() != state.get().tokenContractAddress) { return; }
+        if (input.amount <= 0LL) { return; }
+        state.mut().builderDividendPool += input.amount;
+        output.newPool = state.get().builderDividendPool;
+    }
+
+    struct RegisterBuilder_input  { id builderAddr; };
+    struct RegisterBuilder_output { uint32 slot; bit success; };
+
+    PUBLIC_PROCEDURE(RegisterBuilder)
+    {
+        if (qpi.invocator() != state.get().adminAddress) { return; }
+        // Find empty slot
+        if (!state.get().builder_0_active) { state.mut().builder_0 = input.builderAddr; state.mut().builder_0_active = 1; state.mut().activeBuilderCount++; output.slot = 0; output.success = 1; return; }
+        if (!state.get().builder_1_active) { state.mut().builder_1 = input.builderAddr; state.mut().builder_1_active = 1; state.mut().activeBuilderCount++; output.slot = 1; output.success = 1; return; }
+        if (!state.get().builder_2_active) { state.mut().builder_2 = input.builderAddr; state.mut().builder_2_active = 1; state.mut().activeBuilderCount++; output.slot = 2; output.success = 1; return; }
+        if (!state.get().builder_3_active) { state.mut().builder_3 = input.builderAddr; state.mut().builder_3_active = 1; state.mut().activeBuilderCount++; output.slot = 3; output.success = 1; return; }
+        if (!state.get().builder_4_active) { state.mut().builder_4 = input.builderAddr; state.mut().builder_4_active = 1; state.mut().activeBuilderCount++; output.slot = 4; output.success = 1; return; }
+        if (!state.get().builder_5_active) { state.mut().builder_5 = input.builderAddr; state.mut().builder_5_active = 1; state.mut().activeBuilderCount++; output.slot = 5; output.success = 1; return; }
+        if (!state.get().builder_6_active) { state.mut().builder_6 = input.builderAddr; state.mut().builder_6_active = 1; state.mut().activeBuilderCount++; output.slot = 6; output.success = 1; return; }
+        if (!state.get().builder_7_active) { state.mut().builder_7 = input.builderAddr; state.mut().builder_7_active = 1; state.mut().activeBuilderCount++; output.slot = 7; output.success = 1; return; }
+        output.success = 0;
+    }
+
+
+    struct SetEfficiencyRating_input  { sint64 rating; };  // 1000=1x, 5000=5x max
+    struct SetEfficiencyRating_output { sint64 applied; };
+
+    PUBLIC_PROCEDURE(SetEfficiencyRating)
+    {
+        if (qpi.invocator() != state.get().adminAddress) { return; }
+        if (input.rating < 1000LL || input.rating > 5000LL) { return; }
+        state.mut().epochEfficiencyRating = input.rating;
+        output.applied = input.rating;
+    }
+
 REGISTER_USER_FUNCTIONS_AND_PROCEDURES()
 {
     REGISTER_USER_PROCEDURE(InitializeCabinet,  1);
@@ -3014,6 +3078,42 @@ REGISTER_USER_FUNCTIONS_AND_PROCEDURES()
 
 BEGIN_EPOCH()
 {
+    // ── Builder Dividend Distribution ─────────────────────────────────
+    // Equal split among all registered active builders
+    if (state.get().builderDividendPool > 0LL &&
+        state.get().activeBuilderCount > 0 &&
+        state.get().lastBuilderDividendEpoch != qpi.epoch())
+    {
+        sint64 perBuilder = div(state.get().builderDividendPool,
+                                state.get().activeBuilderCount).quot;
+        if (perBuilder > 0LL)
+        {
+            if (state.get().builder_0_active) { qpi.transfer(state.get().builder_0, perBuilder); }
+            if (state.get().builder_1_active) { qpi.transfer(state.get().builder_1, perBuilder); }
+            if (state.get().builder_2_active) { qpi.transfer(state.get().builder_2, perBuilder); }
+            if (state.get().builder_3_active) { qpi.transfer(state.get().builder_3, perBuilder); }
+            if (state.get().builder_4_active) { qpi.transfer(state.get().builder_4, perBuilder); }
+            if (state.get().builder_5_active) { qpi.transfer(state.get().builder_5, perBuilder); }
+            if (state.get().builder_6_active) { qpi.transfer(state.get().builder_6, perBuilder); }
+            if (state.get().builder_7_active) { qpi.transfer(state.get().builder_7, perBuilder); }
+        }
+        state.mut().totalBuilderDividendsPaid += state.get().builderDividendPool;
+        state.mut().builderDividendPool        = 0LL;
+        state.mut().lastBuilderDividendEpoch   = qpi.epoch();
+    }
+    // ─────────────────────────────────────────────────────────────────
+
+    // ── SC Shareholder Distribution ───────────────────────────────────
+    sint64 cabScPool = div((sint64)state.get().totalMatchesPlayed * 10LL, 1LL).quot;
+    cabScPool = cabScPool * state.get().epochEfficiencyRating / 1000LL;
+    if (cabScPool > 0LL)
+    {
+        qpi.distributeDividends(cabScPool);
+        state.mut().totalScDividendsPaid += cabScPool;
+        state.mut().epochScDividendPool   = cabScPool;
+    }
+    state.mut().epochEfficiencyRating = 1000LL;
+    // ─────────────────────────────────────────────────────────────────
 }
 
 END_TICK()
