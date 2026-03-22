@@ -231,6 +231,20 @@ public:
             contractStates[contractIdx] = (unsigned char*)malloc(contractDescriptions[contractIdx].stateSize);
             setMem(contractStates[contractIdx], contractDescriptions[contractIdx].stateSize, 0);
         }
+        // Register functions and procedures for this contract
+        contractSystemProcedures[contractIdx][INITIALIZE] = (SYSTEM_PROCEDURE)ContractType::__initialize;
+        contractSystemProcedureLocalsSizes[contractIdx][INITIALIZE] = ContractType::__initializeLocalsSize;
+        contractSystemProcedures[contractIdx][BEGIN_EPOCH] = (SYSTEM_PROCEDURE)ContractType::__beginEpoch;
+        contractSystemProcedureLocalsSizes[contractIdx][BEGIN_EPOCH] = ContractType::__beginEpochLocalsSize;
+        contractSystemProcedures[contractIdx][END_EPOCH] = (SYSTEM_PROCEDURE)ContractType::__endEpoch;
+        contractSystemProcedureLocalsSizes[contractIdx][END_EPOCH] = ContractType::__endEpochLocalsSize;
+        contractSystemProcedures[contractIdx][BEGIN_TICK] = (SYSTEM_PROCEDURE)ContractType::__beginTick;
+        contractSystemProcedureLocalsSizes[contractIdx][BEGIN_TICK] = ContractType::__beginTickLocalsSize;
+        contractSystemProcedures[contractIdx][END_TICK] = (SYSTEM_PROCEDURE)ContractType::__endTick;
+        contractSystemProcedureLocalsSizes[contractIdx][END_TICK] = ContractType::__endTickLocalsSize;
+        QpiContextForInit qpi(contractIdx);
+        ContractType::__registerUserFunctionsAndProcedures(qpi);
+        setContractFeeReserve(contractIdx, 10000000);
     }
 
     void setInvocator(id addr) {
@@ -275,3 +289,4 @@ public:
 
 
 #endif // CONTRACT_TESTER_H
+// This file was intentionally left blank - patch applied below
