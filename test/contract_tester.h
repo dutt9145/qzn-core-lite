@@ -160,58 +160,67 @@ template<> struct FuncOutput<GetTourMatch_input>        { using type = GetTourMa
 template<> struct FuncOutput<GetPlayerRecord_input>     { using type = GetPlayerRecord_output; };
 template<> struct FuncOutput<QZNPORTAL::GetPortalStats_input> { using type = QZNPORTAL::GetPortalStats_output; };
 
-static constexpr unsigned short InitializeQZN_id      = 0;
-static constexpr unsigned short SettleMatch_id         = 1;
-static constexpr unsigned short ClaimVestedTokens_id   = 2;
-static constexpr unsigned short BurnFromTreasury_id    = 3;
-static constexpr unsigned short GetSupplyInfo_id       = 0;
-static constexpr unsigned short GetVestingStatus_id    = 1;
-static constexpr unsigned short GetMatchStats_id       = 2;
-static constexpr unsigned short InitializeCabinet_id   = 0;
-static constexpr unsigned short RegisterMatch_id       = 1;
-static constexpr unsigned short SubmitResult_id        = 2;
-static constexpr unsigned short ConfirmResult_id       = 3;
-static constexpr unsigned short DisputeResult_id       = 4;
-static constexpr unsigned short InitializeRouter_id    = 0;
-static constexpr unsigned short RegisterPlayer_id      = 1;
-static constexpr unsigned short StakeQZN_id            = 2;
-static constexpr unsigned short UnstakeQZN_id          = 3;
-static constexpr unsigned short ReportMatchResult_id   = 4;
-static constexpr unsigned short ClaimRewards_id        = 5;
-static constexpr unsigned short FundReserve_id         = 6;
-static constexpr unsigned short InitializePortal_id    = 0;
-static constexpr unsigned short IssueNode_id           = 1;
-static constexpr unsigned short TransferNode_id        = 2;
-static constexpr unsigned short ClaimNodeRevenue_id    = 3;
-static constexpr unsigned short RegisterGame_id        = 4;
-static constexpr unsigned short ApproveGame_id         = 5;
-static constexpr unsigned short UpdateGameState_id     = 6;
-static constexpr unsigned short StakeForAccess_id      = 7;
-static constexpr unsigned short ReceiveProtocolFees_id = 8;
-static constexpr unsigned short GetPlayerAccess_id     = 0;
-static constexpr unsigned short GetNode_id             = 1;
-static constexpr unsigned short GetGame_id             = 2;
-static constexpr unsigned short GetMatch_id            = 0;
-static constexpr unsigned short GetCabinetStats_id     = 1;
-static constexpr unsigned short GetPlayerStats_id      = 0;
-static constexpr unsigned short GetLeaderboard_id      = 1;
-static constexpr unsigned short InitializeVault_id      = 0;
-static constexpr unsigned short ProposeSpend_id         = 1;
-static constexpr unsigned short SignProposal_id         = 2;
-static constexpr unsigned short ExecuteProposal_id      = 3;
-static constexpr unsigned short CancelProposal_id       = 4;
-static constexpr unsigned short GetVaultState_id        = 0;
-static constexpr unsigned short GetProposal_id          = 1;
-static constexpr unsigned short InitializeTournamentEngine_id = 0;
-static constexpr unsigned short CreateTournament_id     = 1;
-static constexpr unsigned short StartTournament_id      = 2;
-static constexpr unsigned short SubmitMatchResult_id    = 3;
-static constexpr unsigned short CancelTournament_id     = 4;
-static constexpr unsigned short GetTournament_id        = 0;
-static constexpr unsigned short GetTourMatch_id         = 1;
-static constexpr unsigned short GetPlayerRecord_id      = 2;
-static constexpr unsigned short GetPortalStats_id      = 3;
+static constexpr unsigned short InitializeQZN_id      = 1;
+static constexpr unsigned short SettleMatch_id         = 2;
+static constexpr unsigned short ClaimVestedTokens_id   = 3;
+static constexpr unsigned short BurnFromTreasury_id    = 4;
+static constexpr unsigned short GetSupplyInfo_id       = 5;
+static constexpr unsigned short GetVestingStatus_id    = 6;
+static constexpr unsigned short GetMatchStats_id       = 7;
+static constexpr unsigned short InitializeCabinet_id   = 1;
+static constexpr unsigned short RegisterMatch_id       = 2;
+static constexpr unsigned short SubmitResult_id        = 3;
+static constexpr unsigned short ConfirmResult_id       = 4;
+static constexpr unsigned short DisputeResult_id       = 5;
+static constexpr unsigned short InitializeRouter_id    = 1;
+static constexpr unsigned short RegisterPlayer_id      = 2;
+static constexpr unsigned short StakeQZN_id            = 3;
+static constexpr unsigned short UnstakeQZN_id          = 4;
+static constexpr unsigned short ReportMatchResult_id   = 5;
+static constexpr unsigned short ClaimRewards_id        = 6;
+static constexpr unsigned short FundReserve_id         = 7;
+static constexpr unsigned short InitializePortal_id    = 1;
+static constexpr unsigned short IssueNode_id           = 2;
+static constexpr unsigned short TransferNode_id        = 3;
+static constexpr unsigned short ClaimNodeRevenue_id    = 4;
+static constexpr unsigned short RegisterGame_id        = 5;
+static constexpr unsigned short ApproveGame_id         = 6;
+static constexpr unsigned short UpdateGameState_id     = 7;
+static constexpr unsigned short StakeForAccess_id      = 8;
+static constexpr unsigned short ReceiveProtocolFees_id = 9;
+static constexpr unsigned short GetPlayerAccess_id     = 10;
+static constexpr unsigned short GetNode_id             = 11;
+static constexpr unsigned short GetGame_id             = 12;
+static constexpr unsigned short GetMatch_id            = 6;
+static constexpr unsigned short GetCabinetStats_id     = 7;
+static constexpr unsigned short GetPlayerStats_id      = 8;
+static constexpr unsigned short GetLeaderboard_id      = 9;
+static constexpr unsigned short InitializeVault_id      = 1;
+static constexpr unsigned short ProposeSpend_id         = 2;
+static constexpr unsigned short SignProposal_id         = 3;
+static constexpr unsigned short ExecuteProposal_id      = 4;
+static constexpr unsigned short CancelProposal_id       = 5;
+static constexpr unsigned short GetVaultState_id        = 6;
+static constexpr unsigned short GetProposal_id          = 7;
+static constexpr unsigned short InitializeTournamentEngine_id = 1;
+static constexpr unsigned short CreateTournament_id     = 2;
+static constexpr unsigned short StartTournament_id      = 4;
+static constexpr unsigned short SubmitMatchResult_id    = 5;
+static constexpr unsigned short CancelTournament_id     = 6;
+static constexpr unsigned short GetTournament_id        = 7;
+static constexpr unsigned short GetTourMatch_id         = 8;
+static constexpr unsigned short GetPlayerRecord_id      = 9;
+static constexpr unsigned short GetPortalStats_id      = 13;
 static constexpr sint64 STAKE_TIER_0 = 0LL;
+
+// Map contract types to their indices
+template<typename T> struct ContractIndexOf { static constexpr unsigned int value = 0; };
+template<> struct ContractIndexOf<QZN> { static constexpr unsigned int value = 25; };
+template<> struct ContractIndexOf<QZNCABINET> { static constexpr unsigned int value = 26; };
+template<> struct ContractIndexOf<QZNREWARDROUTER> { static constexpr unsigned int value = 27; };
+template<> struct ContractIndexOf<QZNTREASVAULT> { static constexpr unsigned int value = 28; };
+template<> struct ContractIndexOf<QZNPORTAL> { static constexpr unsigned int value = 29; };
+template<> struct ContractIndexOf<QZNTOUR> { static constexpr unsigned int value = 30; };
 
 template<typename ContractType>
 class ContractTester : public ContractTesting {
@@ -221,12 +230,7 @@ public:
     long long currentInvocationReward = 0;
 
     ContractTester() : ContractTesting() {
-        for (unsigned int i = 0; i < contractCount; i++) {
-            if (contractDescriptions[i].stateSize == sizeof(typename ContractType::StateData)) {
-                contractIdx = i;
-                break;
-            }
-        }
+        contractIdx = ContractIndexOf<ContractType>::value;
         if (!contractStates[contractIdx]) {
             contractStates[contractIdx] = (unsigned char*)malloc(contractDescriptions[contractIdx].stateSize);
             setMem(contractStates[contractIdx], contractDescriptions[contractIdx].stateSize, 0);
@@ -245,6 +249,15 @@ public:
         QpiContextForInit qpi(contractIdx);
         ContractType::__registerUserFunctionsAndProcedures(qpi);
         setContractFeeReserve(contractIdx, 10000000);
+        initEmptySpectrum();
+        initEmptyUniverse();
+    }
+
+    void reset() {
+        unsigned int idx = contractIdx;
+        this->~ContractTester<ContractType>();
+        contractStates[idx] = nullptr;
+        new (this) ContractTester<ContractType>();
     }
 
     void setInvocator(id addr) {

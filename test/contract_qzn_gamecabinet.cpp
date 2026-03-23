@@ -68,6 +68,10 @@ class QZNCabinetTest : public ::testing::Test
 protected:
     ContractTester<QZNCABINET> tester;
 
+    void SetUp() override {
+        tester.reset();
+    }
+
     void initialize()
     {
         InitializeCabinet_input in{};
