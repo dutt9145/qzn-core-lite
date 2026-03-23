@@ -254,10 +254,9 @@ public:
     }
 
     void reset() {
-        unsigned int idx = contractIdx;
-        this->~ContractTester<ContractType>();
-        contractStates[idx] = nullptr;
-        new (this) ContractTester<ContractType>();
+        setMem(contractStates[contractIdx], contractDescriptions[contractIdx].stateSize, 0);
+        initEmptySpectrum();
+        initEmptyUniverse();
     }
 
     void setInvocator(id addr) {
