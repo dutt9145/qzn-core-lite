@@ -879,7 +879,7 @@ PUBLIC_PROCEDURE(SubmitResult)
 
     if (input.matchSlot == 0)
     {
-        if (state.get().matches_0.state != STATE_PENDING) { output.success = 0; return; }
+        if (state.get().matches_0.state != STATE_PENDING || state.get().matches_0.serverSigned) { output.success = 0; return; }
         state.mut().matches_0.winnerAddress = input.winner;
         state.mut().matches_0.winnerScore = input.winnerScore;
         state.mut().matches_0.resultHash = input.resultHash;
@@ -888,7 +888,7 @@ PUBLIC_PROCEDURE(SubmitResult)
     }
     else if (input.matchSlot == 1)
     {
-        if (state.get().matches_1.state != STATE_PENDING) { output.success = 0; return; }
+        if (state.get().matches_1.state != STATE_PENDING || state.get().matches_1.serverSigned) { output.success = 0; return; }
         state.mut().matches_1.winnerAddress = input.winner;
         state.mut().matches_1.winnerScore = input.winnerScore;
         state.mut().matches_1.resultHash = input.resultHash;
@@ -897,7 +897,7 @@ PUBLIC_PROCEDURE(SubmitResult)
     }
     else if (input.matchSlot == 2)
     {
-        if (state.get().matches_2.state != STATE_PENDING) { output.success = 0; return; }
+        if (state.get().matches_2.state != STATE_PENDING || state.get().matches_2.serverSigned) { output.success = 0; return; }
         state.mut().matches_2.winnerAddress = input.winner;
         state.mut().matches_2.winnerScore = input.winnerScore;
         state.mut().matches_2.resultHash = input.resultHash;
@@ -906,7 +906,7 @@ PUBLIC_PROCEDURE(SubmitResult)
     }
     else if (input.matchSlot == 3)
     {
-        if (state.get().matches_3.state != STATE_PENDING) { output.success = 0; return; }
+        if (state.get().matches_3.state != STATE_PENDING || state.get().matches_3.serverSigned) { output.success = 0; return; }
         state.mut().matches_3.winnerAddress = input.winner;
         state.mut().matches_3.winnerScore = input.winnerScore;
         state.mut().matches_3.resultHash = input.resultHash;
@@ -915,7 +915,7 @@ PUBLIC_PROCEDURE(SubmitResult)
     }
     else if (input.matchSlot == 4)
     {
-        if (state.get().matches_4.state != STATE_PENDING) { output.success = 0; return; }
+        if (state.get().matches_4.state != STATE_PENDING || state.get().matches_4.serverSigned) { output.success = 0; return; }
         state.mut().matches_4.winnerAddress = input.winner;
         state.mut().matches_4.winnerScore = input.winnerScore;
         state.mut().matches_4.resultHash = input.resultHash;
@@ -924,7 +924,7 @@ PUBLIC_PROCEDURE(SubmitResult)
     }
     else if (input.matchSlot == 5)
     {
-        if (state.get().matches_5.state != STATE_PENDING) { output.success = 0; return; }
+        if (state.get().matches_5.state != STATE_PENDING || state.get().matches_5.serverSigned) { output.success = 0; return; }
         state.mut().matches_5.winnerAddress = input.winner;
         state.mut().matches_5.winnerScore = input.winnerScore;
         state.mut().matches_5.resultHash = input.resultHash;
@@ -933,7 +933,7 @@ PUBLIC_PROCEDURE(SubmitResult)
     }
     else if (input.matchSlot == 6)
     {
-        if (state.get().matches_6.state != STATE_PENDING) { output.success = 0; return; }
+        if (state.get().matches_6.state != STATE_PENDING || state.get().matches_6.serverSigned) { output.success = 0; return; }
         state.mut().matches_6.winnerAddress = input.winner;
         state.mut().matches_6.winnerScore = input.winnerScore;
         state.mut().matches_6.resultHash = input.resultHash;
@@ -942,7 +942,7 @@ PUBLIC_PROCEDURE(SubmitResult)
     }
     else if (input.matchSlot == 7)
     {
-        if (state.get().matches_7.state != STATE_PENDING) { output.success = 0; return; }
+        if (state.get().matches_7.state != STATE_PENDING || state.get().matches_7.serverSigned) { output.success = 0; return; }
         state.mut().matches_7.winnerAddress = input.winner;
         state.mut().matches_7.winnerScore = input.winnerScore;
         state.mut().matches_7.resultHash = input.resultHash;
@@ -951,7 +951,7 @@ PUBLIC_PROCEDURE(SubmitResult)
     }
     else if (input.matchSlot == 8)
     {
-        if (state.get().matches_8.state != STATE_PENDING) { output.success = 0; return; }
+        if (state.get().matches_8.state != STATE_PENDING || state.get().matches_8.serverSigned) { output.success = 0; return; }
         state.mut().matches_8.winnerAddress = input.winner;
         state.mut().matches_8.winnerScore = input.winnerScore;
         state.mut().matches_8.resultHash = input.resultHash;
@@ -960,7 +960,7 @@ PUBLIC_PROCEDURE(SubmitResult)
     }
     else if (input.matchSlot == 9)
     {
-        if (state.get().matches_9.state != STATE_PENDING) { output.success = 0; return; }
+        if (state.get().matches_9.state != STATE_PENDING || state.get().matches_9.serverSigned) { output.success = 0; return; }
         state.mut().matches_9.winnerAddress = input.winner;
         state.mut().matches_9.winnerScore = input.winnerScore;
         state.mut().matches_9.resultHash = input.resultHash;
@@ -969,7 +969,7 @@ PUBLIC_PROCEDURE(SubmitResult)
     }
     else if (input.matchSlot == 10)
     {
-        if (state.get().matches_10.state != STATE_PENDING) { output.success = 0; return; }
+        if (state.get().matches_10.state != STATE_PENDING || state.get().matches_10.serverSigned) { output.success = 0; return; }
         state.mut().matches_10.winnerAddress = input.winner;
         state.mut().matches_10.winnerScore = input.winnerScore;
         state.mut().matches_10.resultHash = input.resultHash;
@@ -978,7 +978,7 @@ PUBLIC_PROCEDURE(SubmitResult)
     }
     else if (input.matchSlot == 11)
     {
-        if (state.get().matches_11.state != STATE_PENDING) { output.success = 0; return; }
+        if (state.get().matches_11.state != STATE_PENDING || state.get().matches_11.serverSigned) { output.success = 0; return; }
         state.mut().matches_11.winnerAddress = input.winner;
         state.mut().matches_11.winnerScore = input.winnerScore;
         state.mut().matches_11.resultHash = input.resultHash;
@@ -987,7 +987,7 @@ PUBLIC_PROCEDURE(SubmitResult)
     }
     else if (input.matchSlot == 12)
     {
-        if (state.get().matches_12.state != STATE_PENDING) { output.success = 0; return; }
+        if (state.get().matches_12.state != STATE_PENDING || state.get().matches_12.serverSigned) { output.success = 0; return; }
         state.mut().matches_12.winnerAddress = input.winner;
         state.mut().matches_12.winnerScore = input.winnerScore;
         state.mut().matches_12.resultHash = input.resultHash;
@@ -996,7 +996,7 @@ PUBLIC_PROCEDURE(SubmitResult)
     }
     else if (input.matchSlot == 13)
     {
-        if (state.get().matches_13.state != STATE_PENDING) { output.success = 0; return; }
+        if (state.get().matches_13.state != STATE_PENDING || state.get().matches_13.serverSigned) { output.success = 0; return; }
         state.mut().matches_13.winnerAddress = input.winner;
         state.mut().matches_13.winnerScore = input.winnerScore;
         state.mut().matches_13.resultHash = input.resultHash;
@@ -1005,7 +1005,7 @@ PUBLIC_PROCEDURE(SubmitResult)
     }
     else if (input.matchSlot == 14)
     {
-        if (state.get().matches_14.state != STATE_PENDING) { output.success = 0; return; }
+        if (state.get().matches_14.state != STATE_PENDING || state.get().matches_14.serverSigned) { output.success = 0; return; }
         state.mut().matches_14.winnerAddress = input.winner;
         state.mut().matches_14.winnerScore = input.winnerScore;
         state.mut().matches_14.resultHash = input.resultHash;
@@ -1014,7 +1014,7 @@ PUBLIC_PROCEDURE(SubmitResult)
     }
     else if (input.matchSlot == 15)
     {
-        if (state.get().matches_15.state != STATE_PENDING) { output.success = 0; return; }
+        if (state.get().matches_15.state != STATE_PENDING || state.get().matches_15.serverSigned) { output.success = 0; return; }
         state.mut().matches_15.winnerAddress = input.winner;
         state.mut().matches_15.winnerScore = input.winnerScore;
         state.mut().matches_15.resultHash = input.resultHash;
@@ -1046,6 +1046,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
     if (input.matchSlot == 0)
     {
         if (!state.get().matches_0.serverSigned) { output.confirmed = 0; return; }
+        if (state.get().matches_0.state == STATE_SETTLED || state.get().matches_0.state == STATE_DISPUTED) { output.confirmed = 0; return; }
+        if (state.get().matches_0.state == STATE_SETTLED) { output.confirmed = 0; return; }
 
         // Hash mismatch → dispute + refund
         if (input.resultHash != state.get().matches_0.resultHash)
@@ -1139,6 +1141,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
         else if (input.matchSlot == 1)
     {
         if (!state.get().matches_1.serverSigned) { output.confirmed = 0; return; }
+        if (state.get().matches_1.state == STATE_SETTLED || state.get().matches_1.state == STATE_DISPUTED) { output.confirmed = 0; return; }
+        if (state.get().matches_1.state == STATE_SETTLED) { output.confirmed = 0; return; }
 
         // Hash mismatch → dispute + refund
         if (input.resultHash != state.get().matches_1.resultHash)
@@ -1232,6 +1236,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
         else if (input.matchSlot == 2)
     {
         if (!state.get().matches_2.serverSigned) { output.confirmed = 0; return; }
+        if (state.get().matches_2.state == STATE_SETTLED || state.get().matches_2.state == STATE_DISPUTED) { output.confirmed = 0; return; }
+        if (state.get().matches_2.state == STATE_SETTLED) { output.confirmed = 0; return; }
 
         // Hash mismatch → dispute + refund
         if (input.resultHash != state.get().matches_2.resultHash)
@@ -1325,6 +1331,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
         else if (input.matchSlot == 3)
     {
         if (!state.get().matches_3.serverSigned) { output.confirmed = 0; return; }
+        if (state.get().matches_3.state == STATE_SETTLED || state.get().matches_3.state == STATE_DISPUTED) { output.confirmed = 0; return; }
+        if (state.get().matches_3.state == STATE_SETTLED) { output.confirmed = 0; return; }
 
         // Hash mismatch → dispute + refund
         if (input.resultHash != state.get().matches_3.resultHash)
@@ -1418,6 +1426,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
         else if (input.matchSlot == 4)
     {
         if (!state.get().matches_4.serverSigned) { output.confirmed = 0; return; }
+        if (state.get().matches_4.state == STATE_SETTLED || state.get().matches_4.state == STATE_DISPUTED) { output.confirmed = 0; return; }
+        if (state.get().matches_4.state == STATE_SETTLED) { output.confirmed = 0; return; }
 
         // Hash mismatch → dispute + refund
         if (input.resultHash != state.get().matches_4.resultHash)
@@ -1511,6 +1521,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
         else if (input.matchSlot == 5)
     {
         if (!state.get().matches_5.serverSigned) { output.confirmed = 0; return; }
+        if (state.get().matches_5.state == STATE_SETTLED || state.get().matches_5.state == STATE_DISPUTED) { output.confirmed = 0; return; }
+        if (state.get().matches_5.state == STATE_SETTLED) { output.confirmed = 0; return; }
 
         // Hash mismatch → dispute + refund
         if (input.resultHash != state.get().matches_5.resultHash)
@@ -1604,6 +1616,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
         else if (input.matchSlot == 6)
     {
         if (!state.get().matches_6.serverSigned) { output.confirmed = 0; return; }
+        if (state.get().matches_6.state == STATE_SETTLED || state.get().matches_6.state == STATE_DISPUTED) { output.confirmed = 0; return; }
+        if (state.get().matches_6.state == STATE_SETTLED) { output.confirmed = 0; return; }
 
         // Hash mismatch → dispute + refund
         if (input.resultHash != state.get().matches_6.resultHash)
@@ -1697,6 +1711,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
         else if (input.matchSlot == 7)
     {
         if (!state.get().matches_7.serverSigned) { output.confirmed = 0; return; }
+        if (state.get().matches_7.state == STATE_SETTLED || state.get().matches_7.state == STATE_DISPUTED) { output.confirmed = 0; return; }
+        if (state.get().matches_7.state == STATE_SETTLED) { output.confirmed = 0; return; }
 
         // Hash mismatch → dispute + refund
         if (input.resultHash != state.get().matches_7.resultHash)
@@ -1790,6 +1806,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
         else if (input.matchSlot == 8)
     {
         if (!state.get().matches_8.serverSigned) { output.confirmed = 0; return; }
+        if (state.get().matches_8.state == STATE_SETTLED || state.get().matches_8.state == STATE_DISPUTED) { output.confirmed = 0; return; }
+        if (state.get().matches_8.state == STATE_SETTLED) { output.confirmed = 0; return; }
 
         // Hash mismatch → dispute + refund
         if (input.resultHash != state.get().matches_8.resultHash)
@@ -1883,6 +1901,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
         else if (input.matchSlot == 9)
     {
         if (!state.get().matches_9.serverSigned) { output.confirmed = 0; return; }
+        if (state.get().matches_9.state == STATE_SETTLED || state.get().matches_9.state == STATE_DISPUTED) { output.confirmed = 0; return; }
+        if (state.get().matches_9.state == STATE_SETTLED) { output.confirmed = 0; return; }
 
         // Hash mismatch → dispute + refund
         if (input.resultHash != state.get().matches_9.resultHash)
@@ -1976,6 +1996,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
         else if (input.matchSlot == 10)
     {
         if (!state.get().matches_10.serverSigned) { output.confirmed = 0; return; }
+        if (state.get().matches_10.state == STATE_SETTLED || state.get().matches_10.state == STATE_DISPUTED) { output.confirmed = 0; return; }
+        if (state.get().matches_10.state == STATE_SETTLED) { output.confirmed = 0; return; }
 
         // Hash mismatch → dispute + refund
         if (input.resultHash != state.get().matches_10.resultHash)
@@ -2069,6 +2091,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
         else if (input.matchSlot == 11)
     {
         if (!state.get().matches_11.serverSigned) { output.confirmed = 0; return; }
+        if (state.get().matches_11.state == STATE_SETTLED || state.get().matches_11.state == STATE_DISPUTED) { output.confirmed = 0; return; }
+        if (state.get().matches_11.state == STATE_SETTLED) { output.confirmed = 0; return; }
 
         // Hash mismatch → dispute + refund
         if (input.resultHash != state.get().matches_11.resultHash)
@@ -2162,6 +2186,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
         else if (input.matchSlot == 12)
     {
         if (!state.get().matches_12.serverSigned) { output.confirmed = 0; return; }
+        if (state.get().matches_12.state == STATE_SETTLED || state.get().matches_12.state == STATE_DISPUTED) { output.confirmed = 0; return; }
+        if (state.get().matches_12.state == STATE_SETTLED) { output.confirmed = 0; return; }
 
         // Hash mismatch → dispute + refund
         if (input.resultHash != state.get().matches_12.resultHash)
@@ -2255,6 +2281,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
         else if (input.matchSlot == 13)
     {
         if (!state.get().matches_13.serverSigned) { output.confirmed = 0; return; }
+        if (state.get().matches_13.state == STATE_SETTLED || state.get().matches_13.state == STATE_DISPUTED) { output.confirmed = 0; return; }
+        if (state.get().matches_13.state == STATE_SETTLED) { output.confirmed = 0; return; }
 
         // Hash mismatch → dispute + refund
         if (input.resultHash != state.get().matches_13.resultHash)
@@ -2348,6 +2376,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
         else if (input.matchSlot == 14)
     {
         if (!state.get().matches_14.serverSigned) { output.confirmed = 0; return; }
+        if (state.get().matches_14.state == STATE_SETTLED || state.get().matches_14.state == STATE_DISPUTED) { output.confirmed = 0; return; }
+        if (state.get().matches_14.state == STATE_SETTLED) { output.confirmed = 0; return; }
 
         // Hash mismatch → dispute + refund
         if (input.resultHash != state.get().matches_14.resultHash)
@@ -2441,6 +2471,8 @@ PUBLIC_PROCEDURE(ConfirmResult)
         else if (input.matchSlot == 15)
     {
         if (!state.get().matches_15.serverSigned) { output.confirmed = 0; return; }
+        if (state.get().matches_15.state == STATE_SETTLED || state.get().matches_15.state == STATE_DISPUTED) { output.confirmed = 0; return; }
+        if (state.get().matches_15.state == STATE_SETTLED) { output.confirmed = 0; return; }
 
         // Hash mismatch → dispute + refund
         if (input.resultHash != state.get().matches_15.resultHash)
@@ -3351,4 +3383,4 @@ END_TICK()
         }
     }
 }
-};
+};// cache-bust Mon Mar 23 06:02:06 PM UTC 2026

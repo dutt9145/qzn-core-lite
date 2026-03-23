@@ -6,8 +6,7 @@
 //
 //  QPI Compliance Fixes (v1 → v2):
 //    - Removed #pragma once and #include "qpi.h"
-//      → replaced with: using namespace QPI;
-//    - Replaced all #define constants with constexpr
+//      → replaced with: //    - Replaced all #define constants with constexpr
 //    - Replaced typed enums (enum X : uint8) with constexpr uint8
 //    - Replaced true/false with 1/0 for bit types
 //    - Replaced division operator / with div(), modulo % with mod()
@@ -29,42 +28,41 @@
 //  Tournament creation restricted to PAO admin / protocol.
 // ============================================================
 
-using namespace QPI;
 
 // ============================================================
 //  CONSTANTS
 // ============================================================
 
-constexpr uint32 QZN_TOURNAMENT_MAX_TOURNAMENTS  = 64;
-constexpr uint32 QZN_TOURNAMENT_MAX_PLAYERS      = 64;   // must be power of 2 for bracket formats
-constexpr uint32 QZN_TOURNAMENT_MAX_MATCHES      = 256;  // covers double-elim with 64 players
-constexpr uint64 QZN_TOURNAMENT_PRIZE_FIRST      = 60ULL; // %
-constexpr uint64 QZN_TOURNAMENT_PRIZE_SECOND     = 30ULL; // %
-constexpr uint64 QZN_TOURNAMENT_MIN_ENTRY_FEE    = 100ULL; // QZN units
-constexpr uint32 QZN_TOURNAMENT_MIN_PLAYERS      = 4;
+static constexpr uint32 QZN_TOURNAMENT_MAX_TOURNAMENTS  = 64;
+static constexpr uint32 QZN_TOURNAMENT_MAX_PLAYERS      = 64;   // must be power of 2 for bracket formats
+static constexpr uint32 QZN_TOURNAMENT_MAX_MATCHES      = 256;  // covers double-elim with 64 players
+static constexpr uint64 QZN_TOURNAMENT_PRIZE_FIRST      = 60ULL; // %
+static constexpr uint64 QZN_TOURNAMENT_PRIZE_SECOND     = 30ULL; // %
+static constexpr uint64 QZN_TOURNAMENT_MIN_ENTRY_FEE    = 100ULL; // QZN units
+static constexpr uint32 QZN_TOURNAMENT_MIN_PLAYERS      = 4;
 
 // TournamentFormat constants (replaces typed enum)
-constexpr uint8  FORMAT_SINGLE_ELIMINATION       = 0;
-constexpr uint8  FORMAT_DOUBLE_ELIMINATION       = 1;
-constexpr uint8  FORMAT_ROUND_ROBIN              = 2;
+static constexpr uint8  FORMAT_SINGLE_ELIMINATION       = 0;
+static constexpr uint8  FORMAT_DOUBLE_ELIMINATION       = 1;
+static constexpr uint8  FORMAT_ROUND_ROBIN              = 2;
 
 // TournamentState constants (replaces typed enum)
 // Prefixed TSTATE_ to avoid collision with GameCabinet STATE_ constants
-constexpr uint8  TSTATE_REGISTRATION             = 0;
-constexpr uint8  TSTATE_IN_PROGRESS              = 1;
-constexpr uint8  TSTATE_FINALIZING               = 2;
-constexpr uint8  TSTATE_COMPLETE                 = 3;
-constexpr uint8  TSTATE_CANCELLED                = 4;
+static constexpr uint8  TSTATE_REGISTRATION             = 0;
+static constexpr uint8  TSTATE_IN_PROGRESS              = 1;
+static constexpr uint8  TSTATE_FINALIZING               = 2;
+static constexpr uint8  TSTATE_COMPLETE                 = 3;
+static constexpr uint8  TSTATE_CANCELLED                = 4;
 
 // MatchResult constants (replaces typed enum)
-constexpr uint8  TMATCH_PENDING                  = 0;
-constexpr uint8  TMATCH_PLAYER_A                 = 1;
-constexpr uint8  TMATCH_PLAYER_B                 = 2;
-constexpr uint8  TMATCH_DRAW                     = 3;   // round robin only
+static constexpr uint8  TMATCH_PENDING                  = 0;
+static constexpr uint8  TMATCH_PLAYER_A                 = 1;
+static constexpr uint8  TMATCH_PLAYER_B                 = 2;
+static constexpr uint8  TMATCH_DRAW                     = 3;   // round robin only
 
 // BracketSide constants (replaces typed enum)
-constexpr uint8  BRACKET_WINNERS                 = 0;
-constexpr uint8  BRACKET_LOSERS                  = 1;   // double elimination only
+static constexpr uint8  BRACKET_WINNERS                 = 0;
+static constexpr uint8  BRACKET_LOSERS                  = 1;   // double elimination only
 
 // ============================================================
 //  DATA STRUCTURES
@@ -1177,4 +1175,4 @@ END_TICK()
 
 };
 
-// cache-bust: Wed Mar 18 22:15:53 UTC 2026
+// cache-bust: Wed Mar 18 22:15:53 UTC 2026// cache-bust Mon Mar 23 06:36:17 PM UTC 2026

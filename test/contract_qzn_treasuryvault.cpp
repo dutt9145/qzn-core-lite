@@ -72,6 +72,10 @@ class QZNTreasuryVaultTest : public ::testing::Test
 protected:
     ContractTester<QZNTREASVAULT> tester;
 
+    void SetUp() override {
+        tester.reset();
+    }
+
     void initialize(sint64 balance = INITIAL_BALANCE)
     {
         InitializeVault_input in{};

@@ -1,3 +1,4 @@
+#pragma once
 // ============================================================
 //  QZN TREASURY VAULT PAO
 //  Contract: Programmable Arcade Object — Treasury Vault
@@ -449,7 +450,153 @@ PUBLIC_PROCEDURE(ProposeSpend)
         if (qpi.invocator() == state.get().signer_1) { state.mut().proposals_0.sig_1 = 1; state.mut().proposals_0.sigCount = 1; }
         if (qpi.invocator() == state.get().signer_2) { state.mut().proposals_0.sig_2 = 1; state.mut().proposals_0.sigCount = 1; }
     }
-    // Slots 1-7 follow identical pattern
+    else if (slot == 1)
+    {
+        state.mut().proposals_1.proposalId = state.get().nextProposalId;
+        state.mut().proposals_1.category = input.category;
+        state.mut().proposals_1.state = PROP_PENDING;
+        state.mut().proposals_1.destinationAddress = input.destination;
+        state.mut().proposals_1.amount = input.amount;
+        state.mut().proposals_1.memo = input.memo;
+        state.mut().proposals_1.proposedEpoch = qpi.epoch();
+        state.mut().proposals_1.approvedEpoch = 0;
+        state.mut().proposals_1.executeAfterEpoch = 0;
+        state.mut().proposals_1.executedEpoch = 0;
+        state.mut().proposals_1.proposerAddress = qpi.invocator();
+        state.mut().proposals_1.sigCount = 0;
+        state.mut().proposals_1.sig_0 = 0;
+        state.mut().proposals_1.sig_1 = 0;
+        state.mut().proposals_1.sig_2 = 0;
+        if (qpi.invocator() == state.get().signer_0) { state.mut().proposals_1.sig_0 = 1; state.mut().proposals_1.sigCount = 1; }
+        if (qpi.invocator() == state.get().signer_1) { state.mut().proposals_1.sig_1 = 1; state.mut().proposals_1.sigCount = 1; }
+        if (qpi.invocator() == state.get().signer_2) { state.mut().proposals_1.sig_2 = 1; state.mut().proposals_1.sigCount = 1; }
+    }
+    else if (slot == 2)
+    {
+        state.mut().proposals_2.proposalId = state.get().nextProposalId;
+        state.mut().proposals_2.category = input.category;
+        state.mut().proposals_2.state = PROP_PENDING;
+        state.mut().proposals_2.destinationAddress = input.destination;
+        state.mut().proposals_2.amount = input.amount;
+        state.mut().proposals_2.memo = input.memo;
+        state.mut().proposals_2.proposedEpoch = qpi.epoch();
+        state.mut().proposals_2.approvedEpoch = 0;
+        state.mut().proposals_2.executeAfterEpoch = 0;
+        state.mut().proposals_2.executedEpoch = 0;
+        state.mut().proposals_2.proposerAddress = qpi.invocator();
+        state.mut().proposals_2.sigCount = 0;
+        state.mut().proposals_2.sig_0 = 0;
+        state.mut().proposals_2.sig_1 = 0;
+        state.mut().proposals_2.sig_2 = 0;
+        if (qpi.invocator() == state.get().signer_0) { state.mut().proposals_2.sig_0 = 1; state.mut().proposals_2.sigCount = 1; }
+        if (qpi.invocator() == state.get().signer_1) { state.mut().proposals_2.sig_1 = 1; state.mut().proposals_2.sigCount = 1; }
+        if (qpi.invocator() == state.get().signer_2) { state.mut().proposals_2.sig_2 = 1; state.mut().proposals_2.sigCount = 1; }
+    }
+    else if (slot == 3)
+    {
+        state.mut().proposals_3.proposalId = state.get().nextProposalId;
+        state.mut().proposals_3.category = input.category;
+        state.mut().proposals_3.state = PROP_PENDING;
+        state.mut().proposals_3.destinationAddress = input.destination;
+        state.mut().proposals_3.amount = input.amount;
+        state.mut().proposals_3.memo = input.memo;
+        state.mut().proposals_3.proposedEpoch = qpi.epoch();
+        state.mut().proposals_3.approvedEpoch = 0;
+        state.mut().proposals_3.executeAfterEpoch = 0;
+        state.mut().proposals_3.executedEpoch = 0;
+        state.mut().proposals_3.proposerAddress = qpi.invocator();
+        state.mut().proposals_3.sigCount = 0;
+        state.mut().proposals_3.sig_0 = 0;
+        state.mut().proposals_3.sig_1 = 0;
+        state.mut().proposals_3.sig_2 = 0;
+        if (qpi.invocator() == state.get().signer_0) { state.mut().proposals_3.sig_0 = 1; state.mut().proposals_3.sigCount = 1; }
+        if (qpi.invocator() == state.get().signer_1) { state.mut().proposals_3.sig_1 = 1; state.mut().proposals_3.sigCount = 1; }
+        if (qpi.invocator() == state.get().signer_2) { state.mut().proposals_3.sig_2 = 1; state.mut().proposals_3.sigCount = 1; }
+    }
+    else if (slot == 4)
+    {
+        state.mut().proposals_4.proposalId = state.get().nextProposalId;
+        state.mut().proposals_4.category = input.category;
+        state.mut().proposals_4.state = PROP_PENDING;
+        state.mut().proposals_4.destinationAddress = input.destination;
+        state.mut().proposals_4.amount = input.amount;
+        state.mut().proposals_4.memo = input.memo;
+        state.mut().proposals_4.proposedEpoch = qpi.epoch();
+        state.mut().proposals_4.approvedEpoch = 0;
+        state.mut().proposals_4.executeAfterEpoch = 0;
+        state.mut().proposals_4.executedEpoch = 0;
+        state.mut().proposals_4.proposerAddress = qpi.invocator();
+        state.mut().proposals_4.sigCount = 0;
+        state.mut().proposals_4.sig_0 = 0;
+        state.mut().proposals_4.sig_1 = 0;
+        state.mut().proposals_4.sig_2 = 0;
+        if (qpi.invocator() == state.get().signer_0) { state.mut().proposals_4.sig_0 = 1; state.mut().proposals_4.sigCount = 1; }
+        if (qpi.invocator() == state.get().signer_1) { state.mut().proposals_4.sig_1 = 1; state.mut().proposals_4.sigCount = 1; }
+        if (qpi.invocator() == state.get().signer_2) { state.mut().proposals_4.sig_2 = 1; state.mut().proposals_4.sigCount = 1; }
+    }
+    else if (slot == 5)
+    {
+        state.mut().proposals_5.proposalId = state.get().nextProposalId;
+        state.mut().proposals_5.category = input.category;
+        state.mut().proposals_5.state = PROP_PENDING;
+        state.mut().proposals_5.destinationAddress = input.destination;
+        state.mut().proposals_5.amount = input.amount;
+        state.mut().proposals_5.memo = input.memo;
+        state.mut().proposals_5.proposedEpoch = qpi.epoch();
+        state.mut().proposals_5.approvedEpoch = 0;
+        state.mut().proposals_5.executeAfterEpoch = 0;
+        state.mut().proposals_5.executedEpoch = 0;
+        state.mut().proposals_5.proposerAddress = qpi.invocator();
+        state.mut().proposals_5.sigCount = 0;
+        state.mut().proposals_5.sig_0 = 0;
+        state.mut().proposals_5.sig_1 = 0;
+        state.mut().proposals_5.sig_2 = 0;
+        if (qpi.invocator() == state.get().signer_0) { state.mut().proposals_5.sig_0 = 1; state.mut().proposals_5.sigCount = 1; }
+        if (qpi.invocator() == state.get().signer_1) { state.mut().proposals_5.sig_1 = 1; state.mut().proposals_5.sigCount = 1; }
+        if (qpi.invocator() == state.get().signer_2) { state.mut().proposals_5.sig_2 = 1; state.mut().proposals_5.sigCount = 1; }
+    }
+    else if (slot == 6)
+    {
+        state.mut().proposals_6.proposalId = state.get().nextProposalId;
+        state.mut().proposals_6.category = input.category;
+        state.mut().proposals_6.state = PROP_PENDING;
+        state.mut().proposals_6.destinationAddress = input.destination;
+        state.mut().proposals_6.amount = input.amount;
+        state.mut().proposals_6.memo = input.memo;
+        state.mut().proposals_6.proposedEpoch = qpi.epoch();
+        state.mut().proposals_6.approvedEpoch = 0;
+        state.mut().proposals_6.executeAfterEpoch = 0;
+        state.mut().proposals_6.executedEpoch = 0;
+        state.mut().proposals_6.proposerAddress = qpi.invocator();
+        state.mut().proposals_6.sigCount = 0;
+        state.mut().proposals_6.sig_0 = 0;
+        state.mut().proposals_6.sig_1 = 0;
+        state.mut().proposals_6.sig_2 = 0;
+        if (qpi.invocator() == state.get().signer_0) { state.mut().proposals_6.sig_0 = 1; state.mut().proposals_6.sigCount = 1; }
+        if (qpi.invocator() == state.get().signer_1) { state.mut().proposals_6.sig_1 = 1; state.mut().proposals_6.sigCount = 1; }
+        if (qpi.invocator() == state.get().signer_2) { state.mut().proposals_6.sig_2 = 1; state.mut().proposals_6.sigCount = 1; }
+    }
+    else if (slot == 7)
+    {
+        state.mut().proposals_7.proposalId = state.get().nextProposalId;
+        state.mut().proposals_7.category = input.category;
+        state.mut().proposals_7.state = PROP_PENDING;
+        state.mut().proposals_7.destinationAddress = input.destination;
+        state.mut().proposals_7.amount = input.amount;
+        state.mut().proposals_7.memo = input.memo;
+        state.mut().proposals_7.proposedEpoch = qpi.epoch();
+        state.mut().proposals_7.approvedEpoch = 0;
+        state.mut().proposals_7.executeAfterEpoch = 0;
+        state.mut().proposals_7.executedEpoch = 0;
+        state.mut().proposals_7.proposerAddress = qpi.invocator();
+        state.mut().proposals_7.sigCount = 0;
+        state.mut().proposals_7.sig_0 = 0;
+        state.mut().proposals_7.sig_1 = 0;
+        state.mut().proposals_7.sig_2 = 0;
+        if (qpi.invocator() == state.get().signer_0) { state.mut().proposals_7.sig_0 = 1; state.mut().proposals_7.sigCount = 1; }
+        if (qpi.invocator() == state.get().signer_1) { state.mut().proposals_7.sig_1 = 1; state.mut().proposals_7.sigCount = 1; }
+        if (qpi.invocator() == state.get().signer_2) { state.mut().proposals_7.sig_2 = 1; state.mut().proposals_7.sigCount = 1; }
+    }
 
     state.mut().nextProposalId = state.get().nextProposalId + 1;
 
@@ -594,7 +741,265 @@ PUBLIC_PROCEDURE(SignProposal)
             output.executed   = 0;
         }
     }
-    // Slots 1-7 follow identical pattern
+    else if (slot == 1)
+    {
+        if (qpi.invocator() == state.get().signer_0 && !state.get().proposals_1.sig_0)
+        { state.mut().proposals_1.sig_0 = 1; state.mut().proposals_1.sigCount = state.get().proposals_1.sigCount + 1; }
+        else if (qpi.invocator() == state.get().signer_1 && !state.get().proposals_1.sig_1)
+        { state.mut().proposals_1.sig_1 = 1; state.mut().proposals_1.sigCount = state.get().proposals_1.sigCount + 1; }
+        else if (qpi.invocator() == state.get().signer_2 && !state.get().proposals_1.sig_2)
+        { state.mut().proposals_1.sig_2 = 1; state.mut().proposals_1.sigCount = state.get().proposals_1.sigCount + 1; }
+        output.sigsCollected = state.get().proposals_1.sigCount;
+        output.sigsRequired  = REQUIRED_SIGS;
+        if (state.get().proposals_1.sigCount >= REQUIRED_SIGS)
+        {
+            state.mut().proposals_1.approvedEpoch = qpi.epoch();
+            output.approved = 1;
+            if (state.get().proposals_1.amount >= TIMELOCK_THRESHOLD)
+            {
+                state.mut().proposals_1.state = PROP_TIMELOCKED;
+                state.mut().proposals_1.executeAfterEpoch = qpi.epoch() + TIMELOCK_DELAY_EPOCHS;
+                output.timelocked = 1; output.executed = 0;
+            }
+            else
+            {
+                state.mut().proposals_1.state = PROP_EXECUTED;
+                state.mut().proposals_1.executedEpoch = qpi.epoch();
+                sint64 amt = state.get().proposals_1.amount;
+                uint8  cat = state.get().proposals_1.category;
+                id    dest = state.get().proposals_1.destinationAddress;
+                if (cat == SPEND_EPOCH_REWARD || cat == SPEND_ACHIEVEMENT_FUND || cat == SPEND_LIQUIDITY_INJECT || cat == SPEND_ECOSYSTEM_GRANT)
+                { qpi.transfer(dest, amt); state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+                else
+                { state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalBurned = state.get().totalBurned + amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+                state.mut().lastSpendEpoch = qpi.epoch(); state.mut().lastSpendAmount = amt; state.mut().lastSpendCategory = cat;
+                output.timelocked = 0; output.executed = 1;
+            }
+        }
+        else { output.approved = 0; output.timelocked = 0; output.executed = 0; }
+    }
+    else if (slot == 2)
+    {
+        if (qpi.invocator() == state.get().signer_0 && !state.get().proposals_2.sig_0)
+        { state.mut().proposals_2.sig_0 = 1; state.mut().proposals_2.sigCount = state.get().proposals_2.sigCount + 1; }
+        else if (qpi.invocator() == state.get().signer_1 && !state.get().proposals_2.sig_1)
+        { state.mut().proposals_2.sig_1 = 1; state.mut().proposals_2.sigCount = state.get().proposals_2.sigCount + 1; }
+        else if (qpi.invocator() == state.get().signer_2 && !state.get().proposals_2.sig_2)
+        { state.mut().proposals_2.sig_2 = 1; state.mut().proposals_2.sigCount = state.get().proposals_2.sigCount + 1; }
+        output.sigsCollected = state.get().proposals_2.sigCount;
+        output.sigsRequired  = REQUIRED_SIGS;
+        if (state.get().proposals_2.sigCount >= REQUIRED_SIGS)
+        {
+            state.mut().proposals_2.approvedEpoch = qpi.epoch();
+            output.approved = 1;
+            if (state.get().proposals_2.amount >= TIMELOCK_THRESHOLD)
+            {
+                state.mut().proposals_2.state = PROP_TIMELOCKED;
+                state.mut().proposals_2.executeAfterEpoch = qpi.epoch() + TIMELOCK_DELAY_EPOCHS;
+                output.timelocked = 1; output.executed = 0;
+            }
+            else
+            {
+                state.mut().proposals_2.state = PROP_EXECUTED;
+                state.mut().proposals_2.executedEpoch = qpi.epoch();
+                sint64 amt = state.get().proposals_2.amount;
+                uint8  cat = state.get().proposals_2.category;
+                id    dest = state.get().proposals_2.destinationAddress;
+                if (cat == SPEND_EPOCH_REWARD || cat == SPEND_ACHIEVEMENT_FUND || cat == SPEND_LIQUIDITY_INJECT || cat == SPEND_ECOSYSTEM_GRANT)
+                { qpi.transfer(dest, amt); state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+                else
+                { state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalBurned = state.get().totalBurned + amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+                state.mut().lastSpendEpoch = qpi.epoch(); state.mut().lastSpendAmount = amt; state.mut().lastSpendCategory = cat;
+                output.timelocked = 0; output.executed = 1;
+            }
+        }
+        else { output.approved = 0; output.timelocked = 0; output.executed = 0; }
+    }
+    else if (slot == 3)
+    {
+        if (qpi.invocator() == state.get().signer_0 && !state.get().proposals_3.sig_0)
+        { state.mut().proposals_3.sig_0 = 1; state.mut().proposals_3.sigCount = state.get().proposals_3.sigCount + 1; }
+        else if (qpi.invocator() == state.get().signer_1 && !state.get().proposals_3.sig_1)
+        { state.mut().proposals_3.sig_1 = 1; state.mut().proposals_3.sigCount = state.get().proposals_3.sigCount + 1; }
+        else if (qpi.invocator() == state.get().signer_2 && !state.get().proposals_3.sig_2)
+        { state.mut().proposals_3.sig_2 = 1; state.mut().proposals_3.sigCount = state.get().proposals_3.sigCount + 1; }
+        output.sigsCollected = state.get().proposals_3.sigCount;
+        output.sigsRequired  = REQUIRED_SIGS;
+        if (state.get().proposals_3.sigCount >= REQUIRED_SIGS)
+        {
+            state.mut().proposals_3.approvedEpoch = qpi.epoch();
+            output.approved = 1;
+            if (state.get().proposals_3.amount >= TIMELOCK_THRESHOLD)
+            {
+                state.mut().proposals_3.state = PROP_TIMELOCKED;
+                state.mut().proposals_3.executeAfterEpoch = qpi.epoch() + TIMELOCK_DELAY_EPOCHS;
+                output.timelocked = 1; output.executed = 0;
+            }
+            else
+            {
+                state.mut().proposals_3.state = PROP_EXECUTED;
+                state.mut().proposals_3.executedEpoch = qpi.epoch();
+                sint64 amt = state.get().proposals_3.amount;
+                uint8  cat = state.get().proposals_3.category;
+                id    dest = state.get().proposals_3.destinationAddress;
+                if (cat == SPEND_EPOCH_REWARD || cat == SPEND_ACHIEVEMENT_FUND || cat == SPEND_LIQUIDITY_INJECT || cat == SPEND_ECOSYSTEM_GRANT)
+                { qpi.transfer(dest, amt); state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+                else
+                { state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalBurned = state.get().totalBurned + amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+                state.mut().lastSpendEpoch = qpi.epoch(); state.mut().lastSpendAmount = amt; state.mut().lastSpendCategory = cat;
+                output.timelocked = 0; output.executed = 1;
+            }
+        }
+        else { output.approved = 0; output.timelocked = 0; output.executed = 0; }
+    }
+    else if (slot == 4)
+    {
+        if (qpi.invocator() == state.get().signer_0 && !state.get().proposals_4.sig_0)
+        { state.mut().proposals_4.sig_0 = 1; state.mut().proposals_4.sigCount = state.get().proposals_4.sigCount + 1; }
+        else if (qpi.invocator() == state.get().signer_1 && !state.get().proposals_4.sig_1)
+        { state.mut().proposals_4.sig_1 = 1; state.mut().proposals_4.sigCount = state.get().proposals_4.sigCount + 1; }
+        else if (qpi.invocator() == state.get().signer_2 && !state.get().proposals_4.sig_2)
+        { state.mut().proposals_4.sig_2 = 1; state.mut().proposals_4.sigCount = state.get().proposals_4.sigCount + 1; }
+        output.sigsCollected = state.get().proposals_4.sigCount;
+        output.sigsRequired  = REQUIRED_SIGS;
+        if (state.get().proposals_4.sigCount >= REQUIRED_SIGS)
+        {
+            state.mut().proposals_4.approvedEpoch = qpi.epoch();
+            output.approved = 1;
+            if (state.get().proposals_4.amount >= TIMELOCK_THRESHOLD)
+            {
+                state.mut().proposals_4.state = PROP_TIMELOCKED;
+                state.mut().proposals_4.executeAfterEpoch = qpi.epoch() + TIMELOCK_DELAY_EPOCHS;
+                output.timelocked = 1; output.executed = 0;
+            }
+            else
+            {
+                state.mut().proposals_4.state = PROP_EXECUTED;
+                state.mut().proposals_4.executedEpoch = qpi.epoch();
+                sint64 amt = state.get().proposals_4.amount;
+                uint8  cat = state.get().proposals_4.category;
+                id    dest = state.get().proposals_4.destinationAddress;
+                if (cat == SPEND_EPOCH_REWARD || cat == SPEND_ACHIEVEMENT_FUND || cat == SPEND_LIQUIDITY_INJECT || cat == SPEND_ECOSYSTEM_GRANT)
+                { qpi.transfer(dest, amt); state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+                else
+                { state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalBurned = state.get().totalBurned + amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+                state.mut().lastSpendEpoch = qpi.epoch(); state.mut().lastSpendAmount = amt; state.mut().lastSpendCategory = cat;
+                output.timelocked = 0; output.executed = 1;
+            }
+        }
+        else { output.approved = 0; output.timelocked = 0; output.executed = 0; }
+    }
+    else if (slot == 5)
+    {
+        if (qpi.invocator() == state.get().signer_0 && !state.get().proposals_5.sig_0)
+        { state.mut().proposals_5.sig_0 = 1; state.mut().proposals_5.sigCount = state.get().proposals_5.sigCount + 1; }
+        else if (qpi.invocator() == state.get().signer_1 && !state.get().proposals_5.sig_1)
+        { state.mut().proposals_5.sig_1 = 1; state.mut().proposals_5.sigCount = state.get().proposals_5.sigCount + 1; }
+        else if (qpi.invocator() == state.get().signer_2 && !state.get().proposals_5.sig_2)
+        { state.mut().proposals_5.sig_2 = 1; state.mut().proposals_5.sigCount = state.get().proposals_5.sigCount + 1; }
+        output.sigsCollected = state.get().proposals_5.sigCount;
+        output.sigsRequired  = REQUIRED_SIGS;
+        if (state.get().proposals_5.sigCount >= REQUIRED_SIGS)
+        {
+            state.mut().proposals_5.approvedEpoch = qpi.epoch();
+            output.approved = 1;
+            if (state.get().proposals_5.amount >= TIMELOCK_THRESHOLD)
+            {
+                state.mut().proposals_5.state = PROP_TIMELOCKED;
+                state.mut().proposals_5.executeAfterEpoch = qpi.epoch() + TIMELOCK_DELAY_EPOCHS;
+                output.timelocked = 1; output.executed = 0;
+            }
+            else
+            {
+                state.mut().proposals_5.state = PROP_EXECUTED;
+                state.mut().proposals_5.executedEpoch = qpi.epoch();
+                sint64 amt = state.get().proposals_5.amount;
+                uint8  cat = state.get().proposals_5.category;
+                id    dest = state.get().proposals_5.destinationAddress;
+                if (cat == SPEND_EPOCH_REWARD || cat == SPEND_ACHIEVEMENT_FUND || cat == SPEND_LIQUIDITY_INJECT || cat == SPEND_ECOSYSTEM_GRANT)
+                { qpi.transfer(dest, amt); state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+                else
+                { state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalBurned = state.get().totalBurned + amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+                state.mut().lastSpendEpoch = qpi.epoch(); state.mut().lastSpendAmount = amt; state.mut().lastSpendCategory = cat;
+                output.timelocked = 0; output.executed = 1;
+            }
+        }
+        else { output.approved = 0; output.timelocked = 0; output.executed = 0; }
+    }
+    else if (slot == 6)
+    {
+        if (qpi.invocator() == state.get().signer_0 && !state.get().proposals_6.sig_0)
+        { state.mut().proposals_6.sig_0 = 1; state.mut().proposals_6.sigCount = state.get().proposals_6.sigCount + 1; }
+        else if (qpi.invocator() == state.get().signer_1 && !state.get().proposals_6.sig_1)
+        { state.mut().proposals_6.sig_1 = 1; state.mut().proposals_6.sigCount = state.get().proposals_6.sigCount + 1; }
+        else if (qpi.invocator() == state.get().signer_2 && !state.get().proposals_6.sig_2)
+        { state.mut().proposals_6.sig_2 = 1; state.mut().proposals_6.sigCount = state.get().proposals_6.sigCount + 1; }
+        output.sigsCollected = state.get().proposals_6.sigCount;
+        output.sigsRequired  = REQUIRED_SIGS;
+        if (state.get().proposals_6.sigCount >= REQUIRED_SIGS)
+        {
+            state.mut().proposals_6.approvedEpoch = qpi.epoch();
+            output.approved = 1;
+            if (state.get().proposals_6.amount >= TIMELOCK_THRESHOLD)
+            {
+                state.mut().proposals_6.state = PROP_TIMELOCKED;
+                state.mut().proposals_6.executeAfterEpoch = qpi.epoch() + TIMELOCK_DELAY_EPOCHS;
+                output.timelocked = 1; output.executed = 0;
+            }
+            else
+            {
+                state.mut().proposals_6.state = PROP_EXECUTED;
+                state.mut().proposals_6.executedEpoch = qpi.epoch();
+                sint64 amt = state.get().proposals_6.amount;
+                uint8  cat = state.get().proposals_6.category;
+                id    dest = state.get().proposals_6.destinationAddress;
+                if (cat == SPEND_EPOCH_REWARD || cat == SPEND_ACHIEVEMENT_FUND || cat == SPEND_LIQUIDITY_INJECT || cat == SPEND_ECOSYSTEM_GRANT)
+                { qpi.transfer(dest, amt); state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+                else
+                { state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalBurned = state.get().totalBurned + amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+                state.mut().lastSpendEpoch = qpi.epoch(); state.mut().lastSpendAmount = amt; state.mut().lastSpendCategory = cat;
+                output.timelocked = 0; output.executed = 1;
+            }
+        }
+        else { output.approved = 0; output.timelocked = 0; output.executed = 0; }
+    }
+    else if (slot == 7)
+    {
+        if (qpi.invocator() == state.get().signer_0 && !state.get().proposals_7.sig_0)
+        { state.mut().proposals_7.sig_0 = 1; state.mut().proposals_7.sigCount = state.get().proposals_7.sigCount + 1; }
+        else if (qpi.invocator() == state.get().signer_1 && !state.get().proposals_7.sig_1)
+        { state.mut().proposals_7.sig_1 = 1; state.mut().proposals_7.sigCount = state.get().proposals_7.sigCount + 1; }
+        else if (qpi.invocator() == state.get().signer_2 && !state.get().proposals_7.sig_2)
+        { state.mut().proposals_7.sig_2 = 1; state.mut().proposals_7.sigCount = state.get().proposals_7.sigCount + 1; }
+        output.sigsCollected = state.get().proposals_7.sigCount;
+        output.sigsRequired  = REQUIRED_SIGS;
+        if (state.get().proposals_7.sigCount >= REQUIRED_SIGS)
+        {
+            state.mut().proposals_7.approvedEpoch = qpi.epoch();
+            output.approved = 1;
+            if (state.get().proposals_7.amount >= TIMELOCK_THRESHOLD)
+            {
+                state.mut().proposals_7.state = PROP_TIMELOCKED;
+                state.mut().proposals_7.executeAfterEpoch = qpi.epoch() + TIMELOCK_DELAY_EPOCHS;
+                output.timelocked = 1; output.executed = 0;
+            }
+            else
+            {
+                state.mut().proposals_7.state = PROP_EXECUTED;
+                state.mut().proposals_7.executedEpoch = qpi.epoch();
+                sint64 amt = state.get().proposals_7.amount;
+                uint8  cat = state.get().proposals_7.category;
+                id    dest = state.get().proposals_7.destinationAddress;
+                if (cat == SPEND_EPOCH_REWARD || cat == SPEND_ACHIEVEMENT_FUND || cat == SPEND_LIQUIDITY_INJECT || cat == SPEND_ECOSYSTEM_GRANT)
+                { qpi.transfer(dest, amt); state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+                else
+                { state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalBurned = state.get().totalBurned + amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+                state.mut().lastSpendEpoch = qpi.epoch(); state.mut().lastSpendAmount = amt; state.mut().lastSpendCategory = cat;
+                output.timelocked = 0; output.executed = 1;
+            }
+        }
+        else { output.approved = 0; output.timelocked = 0; output.executed = 0; }
+    }
 }
 
 PUBLIC_PROCEDURE(ExecuteProposal)
@@ -634,7 +1039,7 @@ PUBLIC_PROCEDURE(ExecuteProposal)
     if (slot == 0)
     {
         // Enforce timelock delay
-        if (qpi.epoch() < state.get().proposals_0.executeAfterEpoch)
+        if (qpi.epoch() <= state.get().proposals_0.executeAfterEpoch)
         {
             output.executed = 0;
             return;
@@ -679,7 +1084,104 @@ PUBLIC_PROCEDURE(ExecuteProposal)
         output.amountSent  = amt;
         output.category    = cat;
     }
-    // Slots 1-7 identical
+    else if (slot == 1)
+    {
+        if (qpi.epoch() <= state.get().proposals_1.executeAfterEpoch) { output.executed = 0; return; }
+        sint64 amt = state.get().proposals_1.amount;
+        uint8  cat = state.get().proposals_1.category;
+        id    dest = state.get().proposals_1.destinationAddress;
+        if (cat == SPEND_EPOCH_REWARD || cat == SPEND_ACHIEVEMENT_FUND || cat == SPEND_LIQUIDITY_INJECT || cat == SPEND_ECOSYSTEM_GRANT)
+        { qpi.transfer(dest, amt); state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+        else { state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalBurned = state.get().totalBurned + amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+        state.mut().proposals_1.state = PROP_EXECUTED;
+        state.mut().proposals_1.executedEpoch = qpi.epoch();
+        state.mut().lastSpendEpoch = qpi.epoch(); state.mut().lastSpendAmount = amt; state.mut().lastSpendCategory = cat;
+        output.executed = 1; output.amountSent = amt; output.category = cat;
+    }
+    else if (slot == 2)
+    {
+        if (qpi.epoch() <= state.get().proposals_2.executeAfterEpoch) { output.executed = 0; return; }
+        sint64 amt = state.get().proposals_2.amount;
+        uint8  cat = state.get().proposals_2.category;
+        id    dest = state.get().proposals_2.destinationAddress;
+        if (cat == SPEND_EPOCH_REWARD || cat == SPEND_ACHIEVEMENT_FUND || cat == SPEND_LIQUIDITY_INJECT || cat == SPEND_ECOSYSTEM_GRANT)
+        { qpi.transfer(dest, amt); state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+        else { state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalBurned = state.get().totalBurned + amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+        state.mut().proposals_2.state = PROP_EXECUTED;
+        state.mut().proposals_2.executedEpoch = qpi.epoch();
+        state.mut().lastSpendEpoch = qpi.epoch(); state.mut().lastSpendAmount = amt; state.mut().lastSpendCategory = cat;
+        output.executed = 1; output.amountSent = amt; output.category = cat;
+    }
+    else if (slot == 3)
+    {
+        if (qpi.epoch() <= state.get().proposals_3.executeAfterEpoch) { output.executed = 0; return; }
+        sint64 amt = state.get().proposals_3.amount;
+        uint8  cat = state.get().proposals_3.category;
+        id    dest = state.get().proposals_3.destinationAddress;
+        if (cat == SPEND_EPOCH_REWARD || cat == SPEND_ACHIEVEMENT_FUND || cat == SPEND_LIQUIDITY_INJECT || cat == SPEND_ECOSYSTEM_GRANT)
+        { qpi.transfer(dest, amt); state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+        else { state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalBurned = state.get().totalBurned + amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+        state.mut().proposals_3.state = PROP_EXECUTED;
+        state.mut().proposals_3.executedEpoch = qpi.epoch();
+        state.mut().lastSpendEpoch = qpi.epoch(); state.mut().lastSpendAmount = amt; state.mut().lastSpendCategory = cat;
+        output.executed = 1; output.amountSent = amt; output.category = cat;
+    }
+    else if (slot == 4)
+    {
+        if (qpi.epoch() <= state.get().proposals_4.executeAfterEpoch) { output.executed = 0; return; }
+        sint64 amt = state.get().proposals_4.amount;
+        uint8  cat = state.get().proposals_4.category;
+        id    dest = state.get().proposals_4.destinationAddress;
+        if (cat == SPEND_EPOCH_REWARD || cat == SPEND_ACHIEVEMENT_FUND || cat == SPEND_LIQUIDITY_INJECT || cat == SPEND_ECOSYSTEM_GRANT)
+        { qpi.transfer(dest, amt); state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+        else { state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalBurned = state.get().totalBurned + amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+        state.mut().proposals_4.state = PROP_EXECUTED;
+        state.mut().proposals_4.executedEpoch = qpi.epoch();
+        state.mut().lastSpendEpoch = qpi.epoch(); state.mut().lastSpendAmount = amt; state.mut().lastSpendCategory = cat;
+        output.executed = 1; output.amountSent = amt; output.category = cat;
+    }
+    else if (slot == 5)
+    {
+        if (qpi.epoch() <= state.get().proposals_5.executeAfterEpoch) { output.executed = 0; return; }
+        sint64 amt = state.get().proposals_5.amount;
+        uint8  cat = state.get().proposals_5.category;
+        id    dest = state.get().proposals_5.destinationAddress;
+        if (cat == SPEND_EPOCH_REWARD || cat == SPEND_ACHIEVEMENT_FUND || cat == SPEND_LIQUIDITY_INJECT || cat == SPEND_ECOSYSTEM_GRANT)
+        { qpi.transfer(dest, amt); state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+        else { state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalBurned = state.get().totalBurned + amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+        state.mut().proposals_5.state = PROP_EXECUTED;
+        state.mut().proposals_5.executedEpoch = qpi.epoch();
+        state.mut().lastSpendEpoch = qpi.epoch(); state.mut().lastSpendAmount = amt; state.mut().lastSpendCategory = cat;
+        output.executed = 1; output.amountSent = amt; output.category = cat;
+    }
+    else if (slot == 6)
+    {
+        if (qpi.epoch() <= state.get().proposals_6.executeAfterEpoch) { output.executed = 0; return; }
+        sint64 amt = state.get().proposals_6.amount;
+        uint8  cat = state.get().proposals_6.category;
+        id    dest = state.get().proposals_6.destinationAddress;
+        if (cat == SPEND_EPOCH_REWARD || cat == SPEND_ACHIEVEMENT_FUND || cat == SPEND_LIQUIDITY_INJECT || cat == SPEND_ECOSYSTEM_GRANT)
+        { qpi.transfer(dest, amt); state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+        else { state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalBurned = state.get().totalBurned + amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+        state.mut().proposals_6.state = PROP_EXECUTED;
+        state.mut().proposals_6.executedEpoch = qpi.epoch();
+        state.mut().lastSpendEpoch = qpi.epoch(); state.mut().lastSpendAmount = amt; state.mut().lastSpendCategory = cat;
+        output.executed = 1; output.amountSent = amt; output.category = cat;
+    }
+    else if (slot == 7)
+    {
+        if (qpi.epoch() <= state.get().proposals_7.executeAfterEpoch) { output.executed = 0; return; }
+        sint64 amt = state.get().proposals_7.amount;
+        uint8  cat = state.get().proposals_7.category;
+        id    dest = state.get().proposals_7.destinationAddress;
+        if (cat == SPEND_EPOCH_REWARD || cat == SPEND_ACHIEVEMENT_FUND || cat == SPEND_LIQUIDITY_INJECT || cat == SPEND_ECOSYSTEM_GRANT)
+        { qpi.transfer(dest, amt); state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+        else { state.mut().treasuryBalance = state.get().treasuryBalance - amt; state.mut().totalBurned = state.get().totalBurned + amt; state.mut().totalSpent = state.get().totalSpent + amt; }
+        state.mut().proposals_7.state = PROP_EXECUTED;
+        state.mut().proposals_7.executedEpoch = qpi.epoch();
+        state.mut().lastSpendEpoch = qpi.epoch(); state.mut().lastSpendAmount = amt; state.mut().lastSpendCategory = cat;
+        output.executed = 1; output.amountSent = amt; output.category = cat;
+    }
 }
 
 PUBLIC_PROCEDURE(CancelProposal)
@@ -703,7 +1205,20 @@ PUBLIC_PROCEDURE(CancelProposal)
         output.cancelled        = 1;
         return;
     }
-    // Slots 1-7 identical
+    else if (state.get().proposals_1.proposalId == input.proposalId && state.get().proposals_1.state == PROP_PENDING)
+    { state.mut().proposals_1.state = PROP_CANCELLED; output.cancelled = 1; return; }
+    else if (state.get().proposals_2.proposalId == input.proposalId && state.get().proposals_2.state == PROP_PENDING)
+    { state.mut().proposals_2.state = PROP_CANCELLED; output.cancelled = 1; return; }
+    else if (state.get().proposals_3.proposalId == input.proposalId && state.get().proposals_3.state == PROP_PENDING)
+    { state.mut().proposals_3.state = PROP_CANCELLED; output.cancelled = 1; return; }
+    else if (state.get().proposals_4.proposalId == input.proposalId && state.get().proposals_4.state == PROP_PENDING)
+    { state.mut().proposals_4.state = PROP_CANCELLED; output.cancelled = 1; return; }
+    else if (state.get().proposals_5.proposalId == input.proposalId && state.get().proposals_5.state == PROP_PENDING)
+    { state.mut().proposals_5.state = PROP_CANCELLED; output.cancelled = 1; return; }
+    else if (state.get().proposals_6.proposalId == input.proposalId && state.get().proposals_6.state == PROP_PENDING)
+    { state.mut().proposals_6.state = PROP_CANCELLED; output.cancelled = 1; return; }
+    else if (state.get().proposals_7.proposalId == input.proposalId && state.get().proposals_7.state == PROP_PENDING)
+    { state.mut().proposals_7.state = PROP_CANCELLED; output.cancelled = 1; return; }
 
     output.cancelled = 0;
 }
@@ -736,7 +1251,83 @@ PUBLIC_FUNCTION(GetProposal)
         output.executeAfterEpoch = state.get().proposals_0.executeAfterEpoch;
         output.expired           = (qpi.epoch() > state.get().proposals_0.proposedEpoch + PROPOSAL_EXPIRY_EPOCHS) ? 1 : 0;
     }
-    // Slots 1-7 identical
+    else if (state.get().proposals_1.proposalId == input.proposalId)
+    {
+        output.category = state.get().proposals_1.category;
+        output.state = state.get().proposals_1.state;
+        output.amount = state.get().proposals_1.amount;
+        output.destination = state.get().proposals_1.destinationAddress;
+        output.sigsCollected = state.get().proposals_1.sigCount;
+        output.proposedEpoch = state.get().proposals_1.proposedEpoch;
+        output.executeAfterEpoch = state.get().proposals_1.executeAfterEpoch;
+        output.expired = (qpi.epoch() > state.get().proposals_1.proposedEpoch + PROPOSAL_EXPIRY_EPOCHS) ? 1 : 0;
+    }
+    else if (state.get().proposals_2.proposalId == input.proposalId)
+    {
+        output.category = state.get().proposals_2.category;
+        output.state = state.get().proposals_2.state;
+        output.amount = state.get().proposals_2.amount;
+        output.destination = state.get().proposals_2.destinationAddress;
+        output.sigsCollected = state.get().proposals_2.sigCount;
+        output.proposedEpoch = state.get().proposals_2.proposedEpoch;
+        output.executeAfterEpoch = state.get().proposals_2.executeAfterEpoch;
+        output.expired = (qpi.epoch() > state.get().proposals_2.proposedEpoch + PROPOSAL_EXPIRY_EPOCHS) ? 1 : 0;
+    }
+    else if (state.get().proposals_3.proposalId == input.proposalId)
+    {
+        output.category = state.get().proposals_3.category;
+        output.state = state.get().proposals_3.state;
+        output.amount = state.get().proposals_3.amount;
+        output.destination = state.get().proposals_3.destinationAddress;
+        output.sigsCollected = state.get().proposals_3.sigCount;
+        output.proposedEpoch = state.get().proposals_3.proposedEpoch;
+        output.executeAfterEpoch = state.get().proposals_3.executeAfterEpoch;
+        output.expired = (qpi.epoch() > state.get().proposals_3.proposedEpoch + PROPOSAL_EXPIRY_EPOCHS) ? 1 : 0;
+    }
+    else if (state.get().proposals_4.proposalId == input.proposalId)
+    {
+        output.category = state.get().proposals_4.category;
+        output.state = state.get().proposals_4.state;
+        output.amount = state.get().proposals_4.amount;
+        output.destination = state.get().proposals_4.destinationAddress;
+        output.sigsCollected = state.get().proposals_4.sigCount;
+        output.proposedEpoch = state.get().proposals_4.proposedEpoch;
+        output.executeAfterEpoch = state.get().proposals_4.executeAfterEpoch;
+        output.expired = (qpi.epoch() > state.get().proposals_4.proposedEpoch + PROPOSAL_EXPIRY_EPOCHS) ? 1 : 0;
+    }
+    else if (state.get().proposals_5.proposalId == input.proposalId)
+    {
+        output.category = state.get().proposals_5.category;
+        output.state = state.get().proposals_5.state;
+        output.amount = state.get().proposals_5.amount;
+        output.destination = state.get().proposals_5.destinationAddress;
+        output.sigsCollected = state.get().proposals_5.sigCount;
+        output.proposedEpoch = state.get().proposals_5.proposedEpoch;
+        output.executeAfterEpoch = state.get().proposals_5.executeAfterEpoch;
+        output.expired = (qpi.epoch() > state.get().proposals_5.proposedEpoch + PROPOSAL_EXPIRY_EPOCHS) ? 1 : 0;
+    }
+    else if (state.get().proposals_6.proposalId == input.proposalId)
+    {
+        output.category = state.get().proposals_6.category;
+        output.state = state.get().proposals_6.state;
+        output.amount = state.get().proposals_6.amount;
+        output.destination = state.get().proposals_6.destinationAddress;
+        output.sigsCollected = state.get().proposals_6.sigCount;
+        output.proposedEpoch = state.get().proposals_6.proposedEpoch;
+        output.executeAfterEpoch = state.get().proposals_6.executeAfterEpoch;
+        output.expired = (qpi.epoch() > state.get().proposals_6.proposedEpoch + PROPOSAL_EXPIRY_EPOCHS) ? 1 : 0;
+    }
+    else if (state.get().proposals_7.proposalId == input.proposalId)
+    {
+        output.category = state.get().proposals_7.category;
+        output.state = state.get().proposals_7.state;
+        output.amount = state.get().proposals_7.amount;
+        output.destination = state.get().proposals_7.destinationAddress;
+        output.sigsCollected = state.get().proposals_7.sigCount;
+        output.proposedEpoch = state.get().proposals_7.proposedEpoch;
+        output.executeAfterEpoch = state.get().proposals_7.executeAfterEpoch;
+        output.expired = (qpi.epoch() > state.get().proposals_7.proposedEpoch + PROPOSAL_EXPIRY_EPOCHS) ? 1 : 0;
+    }
 }
 
 // ============================================================
@@ -857,3 +1448,6 @@ BEGIN_EPOCH()
 END_TICK() {}
 
 };
+// cache-bust Mon Mar 23 08:24:43 PM UTC 2026
+// cache-bust Mon Mar 23 08:39:09 PM UTC 2026
+// cache-bust Mon Mar 23 08:55:52 PM UTC 2026

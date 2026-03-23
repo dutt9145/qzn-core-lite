@@ -112,6 +112,10 @@ class QZNPortalTest : public ::testing::Test
 protected:
     ContractTester<QZNPORTAL> tester;
 
+    void SetUp() override {
+        tester.reset();
+    }
+
     void initialize()
     {
         InitializePortal_input in{};

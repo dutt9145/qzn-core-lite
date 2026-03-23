@@ -635,7 +635,7 @@ PUBLIC_PROCEDURE(InitializeRouter)
     state.mut().gameCabinetAddress = input.gameCabinetAddr;
     state.mut().rewardReserveBalance = input.initialRewardReserve;
     state.mut().achievementReserveBalance = input.initialAchievementReserve;
-    state.mut().currentEpoch = qpi.epoch();
+    state.mut().currentEpoch = 0;
 
     // ── PRO-RATA STAKER DIVIDEND DISTRIBUTION ────────────────────────
     // Pool was filled by QZN Token contract in its own BEGIN_EPOCH.
@@ -2542,4 +2542,5 @@ BEGIN_EPOCH()
 
 END_TICK() {}
 
-};
+};// cache-bust Mon Mar 23 06:02:06 PM UTC 2026
+// cache-bust Mon Mar 23 07:12:48 PM UTC 2026

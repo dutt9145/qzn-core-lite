@@ -174,6 +174,7 @@ static constexpr unsigned short ConfirmResult_id       = 4;
 static constexpr unsigned short DisputeResult_id       = 5;
 static constexpr unsigned short InitializeRouter_id    = 1;
 static constexpr unsigned short RegisterPlayer_id      = 2;
+static constexpr unsigned short TourRegisterPlayer_id   = 3;
 static constexpr unsigned short StakeQZN_id            = 3;
 static constexpr unsigned short UnstakeQZN_id          = 4;
 static constexpr unsigned short ReportMatchResult_id   = 5;
@@ -215,12 +216,12 @@ static constexpr sint64 STAKE_TIER_0 = 0LL;
 
 // Map contract types to their indices
 template<typename T> struct ContractIndexOf { static constexpr unsigned int value = 0; };
-template<> struct ContractIndexOf<QZN> { static constexpr unsigned int value = 25; };
-template<> struct ContractIndexOf<QZNCABINET> { static constexpr unsigned int value = 26; };
-template<> struct ContractIndexOf<QZNREWARDROUTER> { static constexpr unsigned int value = 27; };
-template<> struct ContractIndexOf<QZNTREASVAULT> { static constexpr unsigned int value = 28; };
-template<> struct ContractIndexOf<QZNPORTAL> { static constexpr unsigned int value = 29; };
-template<> struct ContractIndexOf<QZNTOUR> { static constexpr unsigned int value = 30; };
+template<> struct ContractIndexOf<QZN> { static constexpr unsigned int value = 26; };
+template<> struct ContractIndexOf<QZNCABINET> { static constexpr unsigned int value = 27; };
+template<> struct ContractIndexOf<QZNREWARDROUTER> { static constexpr unsigned int value = 28; };
+template<> struct ContractIndexOf<QZNTREASVAULT> { static constexpr unsigned int value = 29; };
+template<> struct ContractIndexOf<QZNPORTAL> { static constexpr unsigned int value = 30; };
+template<> struct ContractIndexOf<QZNTOUR> { static constexpr unsigned int value = 31; };
 
 template<typename ContractType>
 class ContractTester : public ContractTesting {
@@ -254,9 +255,16 @@ public:
     }
 
     void reset() {
+        if (contractStates[contractIdx]) {
+            free(contractStates[contractIdx]);
+        }
+        contractStates[contractIdx] = (unsigned char*)malloc(contractDescriptions[contractIdx].stateSize);
         setMem(contractStates[contractIdx], contractDescriptions[contractIdx].stateSize, 0);
-        initEmptySpectrum();
-        initEmptyUniverse();
+        // Zero spectrum and universe WITHOUT reinitializing (avoids malloc leak)
+        memset(spectrum, 0, spectrumSizeInBytes);
+        updateSpectrumInfo();
+        memset(assets, 0, universeSizeInBytes);
+        as.indexLists.reset();
     }
 
     void setInvocator(id addr) {

@@ -107,6 +107,10 @@ class QZNTournamentEngineTest : public ::testing::Test
 protected:
     ContractTester<QZNTOUR> tester;
 
+    void SetUp() override {
+        tester.reset();
+    }
+
     void initialize(id adminOverride = NULL_ID)
     {
         InitializeTournamentEngine_input in{};
@@ -139,7 +143,7 @@ protected:
 
         tester.setInvocator(player);
         tester.setInvocationReward(tester.state().tournaments[tId].entryFee);
-        auto out = tester.callProcedure(RegisterPlayer_id, in);
+        auto out = tester.callProcedure(TourRegisterPlayer_id, in);
         return out.success;
     }
 
@@ -422,7 +426,7 @@ TEST_F(QZNTournamentEngineTest, Register_WrongState_Rejected)
     in.tournamentId = tId;
     tester.setInvocator(id(99, 0, 0, 0));
     tester.setInvocationReward(ENTRY_FEE);
-    auto out = tester.callProcedure(RegisterPlayer_id, in);
+    auto out = tester.callProcedure(TourRegisterPlayer_id, in);
 
     EXPECT_EQ(out.success, 0);
 }
@@ -438,7 +442,7 @@ TEST_F(QZNTournamentEngineTest, Register_DuplicatePlayer_Rejected)
     in.tournamentId = tId;
     tester.setInvocator(PLAYER_A);
     tester.setInvocationReward(ENTRY_FEE);
-    auto out = tester.callProcedure(RegisterPlayer_id, in);
+    auto out = tester.callProcedure(TourRegisterPlayer_id, in);
 
     EXPECT_EQ(out.success, 0);
     EXPECT_EQ(tester.state().tournaments[tId].registeredCount, 1);
@@ -454,7 +458,7 @@ TEST_F(QZNTournamentEngineTest, Register_AtCapacity_Rejected)
     in.tournamentId = tId;
     tester.setInvocator(id(50, 0, 0, 0));
     tester.setInvocationReward(ENTRY_FEE);
-    auto out = tester.callProcedure(RegisterPlayer_id, in);
+    auto out = tester.callProcedure(TourRegisterPlayer_id, in);
 
     EXPECT_EQ(out.success, 0);
     EXPECT_EQ(tester.state().tournaments[tId].registeredCount, 4);
@@ -469,7 +473,7 @@ TEST_F(QZNTournamentEngineTest, Register_UnderpaymentRefundedAndRejected)
     in.tournamentId = tId;
     tester.setInvocator(PLAYER_A);
     tester.setInvocationReward(ENTRY_FEE - 1ULL);  // 1 under fee
-    auto out = tester.callProcedure(RegisterPlayer_id, in);
+    auto out = tester.callProcedure(TourRegisterPlayer_id, in);
 
     EXPECT_EQ(out.success, 0);
     EXPECT_EQ(tester.state().tournaments[tId].registeredCount, 0);
@@ -482,7 +486,7 @@ TEST_F(QZNTournamentEngineTest, Register_OutOfRangeTournamentId_Rejected)
     in.tournamentId = 9999;
     tester.setInvocator(PLAYER_A);
     tester.setInvocationReward(ENTRY_FEE);
-    auto out = tester.callProcedure(RegisterPlayer_id, in);
+    auto out = tester.callProcedure(TourRegisterPlayer_id, in);
 
     EXPECT_EQ(out.success, 0);
 }

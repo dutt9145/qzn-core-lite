@@ -56,6 +56,10 @@ class QZNTokenTest : public ::testing::Test
 protected:
     ContractTester<QZN> tester;
 
+    void SetUp() override {
+        tester.reset();
+    }
+
     // Performs a standard InitializeQZN call as ADMIN_ADDR,
     // vesting start at epoch 100 for deterministic cliff tests.
     void initialize(sint64 vestingEpochOverride = 100)

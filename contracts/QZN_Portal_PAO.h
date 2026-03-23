@@ -1,3 +1,4 @@
+#pragma once
 // ============================================================
 //  QZN PORTAL NODE PAO
 //  Contract: Programmable Arcade Object — PORTAL Node
@@ -498,6 +499,18 @@ PUBLIC_PROCEDURE(IssueNode)
         state.mut().nodes_2.issuedEpoch = qpi.epoch();
         state.mut().nodes_2.lastClaimEpoch = qpi.epoch();
     }
+    else if (input.nodeId == 11)
+    {
+        state.mut().nodes_11.nodeId = 11;
+        state.mut().nodes_11.tier = tier;
+        state.mut().nodes_11.state = NODE_ACTIVE;
+        state.mut().nodes_11.ownerAddress = input.ownerAddress;
+        state.mut().nodes_11.shareBPS = shareBPS;
+        state.mut().nodes_11.pendingRevenue = 0;
+        state.mut().nodes_11.lifetimeRevenue = 0;
+        state.mut().nodes_11.issuedEpoch = qpi.epoch();
+        state.mut().nodes_11.lastClaimEpoch = qpi.epoch();
+    }
     // Nodes 3-16 follow identical pattern
     // Full deployment expands to all 100
 
@@ -888,6 +901,15 @@ PUBLIC_FUNCTION(GetNode)
         output.pendingRevenue = state.get().nodes_2.pendingRevenue;
         output.lifetimeRevenue = state.get().nodes_2.lifetimeRevenue;
     }
+    else if (input.nodeId == 11)
+    {
+        output.tier            = state.get().nodes_11.tier;
+        output.state           = state.get().nodes_11.state;
+        output.owner           = state.get().nodes_11.ownerAddress;
+        output.shareBPS        = state.get().nodes_11.shareBPS;
+        output.pendingRevenue  = state.get().nodes_11.pendingRevenue;
+        output.lifetimeRevenue = state.get().nodes_11.lifetimeRevenue;
+    }
     // Nodes 3-16 identical
 }
 
@@ -1043,4 +1065,4 @@ BEGIN_EPOCH()
 
 END_TICK() {}
 
-};
+};// cache-bust Mon Mar 23 06:42:22 PM UTC 2026
