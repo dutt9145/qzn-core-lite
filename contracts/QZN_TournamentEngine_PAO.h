@@ -265,12 +265,12 @@ struct GetTournament_output
     bit    prizesDistributed;
 };
 
-struct GetMatch_input
+struct GetTourMatch_input
 {
     uint32 tournamentId;
     uint32 matchIndex;
 };
-struct GetMatch_output
+struct GetTourMatch_output
 {
     TournamentMatch match;
     bit             found;
@@ -1078,7 +1078,7 @@ PUBLIC_FUNCTION(GetTournament)
     output.prizesDistributed = state.get().tournaments[tIdx].prizesDistributed;
 }
 
-PUBLIC_FUNCTION(GetMatch)
+PUBLIC_FUNCTION(GetTourMatch)
 /*
  * Returns a specific match record by tournament + match index.
  * Sets output.found = 0 if either index is out of range.
@@ -1149,7 +1149,7 @@ REGISTER_USER_FUNCTIONS_AND_PROCEDURES()
     REGISTER_USER_PROCEDURE(SubmitMatchResult,          5);
     REGISTER_USER_PROCEDURE(CancelTournament,           6);
     REGISTER_USER_FUNCTION(GetTournament,               7);
-    REGISTER_USER_FUNCTION(GetMatch,                    8);
+    REGISTER_USER_FUNCTION(GetTourMatch,                    8);
     REGISTER_USER_FUNCTION(GetPlayerRecord,             9);
 }
 

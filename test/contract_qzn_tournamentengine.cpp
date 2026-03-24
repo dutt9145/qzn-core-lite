@@ -797,7 +797,7 @@ TEST_F(QZNTournamentEngineTest, Submit_RoundRobin_4Players_AllRoundsComplete)
     EXPECT_EQ(tester.state().tournaments[tId].currentRound, 2u);
 
     submitResult(tId, 2, PLAYER_A);
-    submitResult(tId, 3, PLAYER_C);
+    submitResult(tId, 3, PLAYER_B);
     EXPECT_EQ(tester.state().tournaments[tId].currentRound, 3u);
 
     submitResult(tId, 4, PLAYER_A);
@@ -986,7 +986,7 @@ TEST_F(QZNTournamentEngineTest, GetMatch_AfterStart_CorrectFields)
     GetTourMatch_input in{};
     in.tournamentId = tId;
     in.matchIndex   = 0;
-    auto out = tester.callFunction(GetMatch_id, in);
+    auto out = tester.callFunction(GetTourMatch_id, in);
 
     EXPECT_EQ(out.found,          1);
     EXPECT_EQ(out.match.playerA,  PLAYER_A);
@@ -1006,7 +1006,7 @@ TEST_F(QZNTournamentEngineTest, GetMatch_AfterSubmit_SettledAndWinnerSet)
     GetTourMatch_input in{};
     in.tournamentId = tId;
     in.matchIndex   = 0;
-    auto out = tester.callFunction(GetMatch_id, in);
+    auto out = tester.callFunction(GetTourMatch_id, in);
 
     EXPECT_EQ(out.found,           1);
     EXPECT_EQ(out.match.settled,   1);
@@ -1025,7 +1025,7 @@ TEST_F(QZNTournamentEngineTest, GetMatch_OutOfRangeMatchIndex_NotFound)
     GetTourMatch_input in{};
     in.tournamentId = tId;
     in.matchIndex   = 999;
-    auto out = tester.callFunction(GetMatch_id, in);
+    auto out = tester.callFunction(GetTourMatch_id, in);
 
     EXPECT_EQ(out.found, 0);
 }
@@ -1153,7 +1153,7 @@ TEST_F(QZNTournamentEngineTest, Integration_RoundRobin4Player_FullEndToEnd)
     submitResult(tId, 0, PLAYER_A);
     submitResult(tId, 1, PLAYER_C);
     submitResult(tId, 2, PLAYER_A);
-    submitResult(tId, 3, PLAYER_C);
+    submitResult(tId, 3, PLAYER_B);
     submitResult(tId, 4, PLAYER_A);
     auto last = submitResult(tId, 5, PLAYER_C);
 

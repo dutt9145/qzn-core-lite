@@ -99,8 +99,8 @@ using CancelTournament_input     = QZNTOUR::CancelTournament_input;
 using CancelTournament_output    = QZNTOUR::CancelTournament_output;
 using GetTournament_input        = QZNTOUR::GetTournament_input;
 using GetTournament_output       = QZNTOUR::GetTournament_output;
-using GetTourMatch_input  = QZNTOUR::GetMatch_input;
-using GetTourMatch_output = QZNTOUR::GetMatch_output;
+using GetTourMatch_input  = QZNTOUR::GetTourMatch_input;
+using GetTourMatch_output = QZNTOUR::GetTourMatch_output;
 using GetPlayerRecord_input      = QZNTOUR::GetPlayerRecord_input;
 using GetPlayerRecord_output     = QZNTOUR::GetPlayerRecord_output;
 
