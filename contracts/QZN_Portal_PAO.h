@@ -66,7 +66,7 @@ constexpr sint64 STANDARD_SHARE_BPS       = 1000LL;  // 1.0x
 constexpr sint64 SHARE_BPS_DENOM          = 1000LL;
 
 // Revenue distribution: % of protocol fees to PORTAL nodes
-constexpr sint64 NODE_REVENUE_POOL_BPS    = 2000LL;  // 20% of protocol fees
+constexpr sint64 NODE_REVENUE_POOL_BPS    = 10000LL;  // 100% of received fees (split happens upstream in Token_v2)
 constexpr sint64 REVENUE_BPS_DENOM        = 10000LL;
 
 // Player access tier thresholds (QZN staked)

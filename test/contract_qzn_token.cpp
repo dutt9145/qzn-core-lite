@@ -227,13 +227,13 @@ TEST_F(QZNTokenTest, SettleMatch_HappyPath_OutputRoutingMathCorrect)
     auto out = settleMatch(WINNER_ADDR, STANDARD_STAKE);
 
     EXPECT_EQ(out.prizeAwarded,     bps(STANDARD_STAKE, 4500));  // 45%
-    EXPECT_EQ(out.treasuryShare,    bps(STANDARD_STAKE, 2000));  // 20%
+    EXPECT_EQ(out.treasuryShare,    bps(STANDARD_STAKE, 100));  //  1%
     EXPECT_EQ(out.liquidityShare,   bps(STANDARD_STAKE, 2000));  // 20%
     EXPECT_EQ(out.burnedAmount,     bps(STANDARD_STAKE, 1000));  // 10%
-    EXPECT_EQ(out.portalNodeShare,  bps(STANDARD_STAKE,  200));  //  2%
-    EXPECT_EQ(out.portalProtoShare, bps(STANDARD_STAKE,  100));  //  1%
+    EXPECT_EQ(out.portalNodeShare,  bps(STANDARD_STAKE,  300));  //  3%
+    EXPECT_EQ(out.portalProtoShare, 0LL);                        //  0% (PORTAL_PROTO disabled)
     EXPECT_EQ(out.qswapProtoShare,  bps(STANDARD_STAKE,  100));  //  1%
-    EXPECT_EQ(out.protocolFee,      bps(STANDARD_STAKE,  100));  //  1%
+    EXPECT_EQ(out.protocolFee,      0LL);                            //  0%
 }
 
 TEST_F(QZNTokenTest, SettleMatch_HappyPath_BpsRoutingSumsTo100Percent)
@@ -248,7 +248,9 @@ TEST_F(QZNTokenTest, SettleMatch_HappyPath_BpsRoutingSumsTo100Percent)
                  + out.portalNodeShare
                  + out.portalProtoShare
                  + out.qswapProtoShare
-                 + out.protocolFee;
+                 + out.protocolFee
+                + out.stakerDividendShare
+                + out.builderDividendShare;
 
     // Integer division may produce dust of at most 7 QU.
     // Assert total is within 8 QU of the full stake.
@@ -263,7 +265,7 @@ TEST_F(QZNTokenTest, SettleMatch_HappyPath_TreasuryBalanceAccumulates)
 
     settleMatch(WINNER_ADDR, STANDARD_STAKE);
 
-    sint64 expected = initialTreasury + bps(STANDARD_STAKE, 2000);
+    sint64 expected = initialTreasury + bps(STANDARD_STAKE,  100);
     EXPECT_EQ(tester.state().treasuryBalance, expected);
 }
 
@@ -300,7 +302,7 @@ TEST_F(QZNTokenTest, SettleMatch_HappyPath_ProtocolFeeAccumulates)
 {
     initialize();
     settleMatch(WINNER_ADDR, STANDARD_STAKE);
-    EXPECT_EQ(tester.state().protocolFeeBalance, bps(STANDARD_STAKE, 100));
+    EXPECT_EQ(tester.state().protocolFeeBalance, 0LL);
 }
 
 TEST_F(QZNTokenTest, SettleMatch_HappyPath_LifetimeStatsUpdated)
@@ -313,9 +315,9 @@ TEST_F(QZNTokenTest, SettleMatch_HappyPath_LifetimeStatsUpdated)
     EXPECT_EQ(s.totalPrizeDistributed, bps(STANDARD_STAKE, 4500));
     EXPECT_EQ(s.totalRouteBurned,      bps(STANDARD_STAKE, 1000));
     EXPECT_EQ(s.totalRouteLiquidity,   bps(STANDARD_STAKE, 2000));
-    EXPECT_EQ(s.totalRouteTreasury,    bps(STANDARD_STAKE, 2000));
-    EXPECT_EQ(s.totalRoutePortalNode,  bps(STANDARD_STAKE,  200));
-    EXPECT_EQ(s.totalRoutePortalProto, bps(STANDARD_STAKE,  100));
+    EXPECT_EQ(s.totalRouteTreasury,    bps(STANDARD_STAKE,  100));
+    EXPECT_EQ(s.totalRoutePortalNode,  bps(STANDARD_STAKE,  300));
+    EXPECT_EQ(s.totalRoutePortalProto, 0LL);  // PORTAL_PROTO_BPS = 0
     EXPECT_EQ(s.totalRouteQswapProto,  bps(STANDARD_STAKE,  100));
 }
 
@@ -385,8 +387,10 @@ TEST_F(QZNTokenTest, SettleMatch_SmallStake_MinimumRouting)
 
     // Sum must not exceed input stake
     sint64 total = out.prizeAwarded + out.treasuryShare + out.liquidityShare
-                 + out.burnedAmount + out.portalNodeShare + out.portalProtoShare
-                 + out.qswapProtoShare + out.protocolFee;
+                 + out.burnedAmount + out.portalNodeShare + out.portalProtoShare  // portalProtoShare == 0
+                 + out.qswapProtoShare + out.protocolFee
+                + out.stakerDividendShare
+                + out.builderDividendShare;
     EXPECT_LE(total, 10LL);
     EXPECT_GE(total, 0LL);
 }
@@ -698,7 +702,7 @@ TEST_F(QZNTokenTest, GetSupplyInfo_AfterSettlement_ReflectsChanges)
 
     sint64 expectedBurn    = bps(STANDARD_STAKE, 1000);
     sint64 expectedCirc    = QZN_LIQUIDITY_ALLOC - expectedBurn;
-    sint64 expectedFee     = bps(STANDARD_STAKE, 100);
+    sint64 expectedFee     = 0LL;
 
     EXPECT_EQ(out.totalBurned,        expectedBurn);
     EXPECT_EQ(out.circulatingSupply,  expectedCirc);
@@ -828,9 +832,9 @@ TEST_F(QZNTokenTest, GetMatchStats_SingleMatch_CorrectTotals)
     EXPECT_EQ(out.totalPrizeDistributed, bps(STANDARD_STAKE, 4500));
     EXPECT_EQ(out.totalRouteBurned,      bps(STANDARD_STAKE, 1000));
     EXPECT_EQ(out.totalRouteLiquidity,   bps(STANDARD_STAKE, 2000));
-    EXPECT_EQ(out.totalRouteTreasury,    bps(STANDARD_STAKE, 2000));
-    EXPECT_EQ(out.totalRoutePortalNode,  bps(STANDARD_STAKE,  200));
-    EXPECT_EQ(out.totalRoutePortalProto, bps(STANDARD_STAKE,  100));
+    EXPECT_EQ(out.totalRouteTreasury,    bps(STANDARD_STAKE,  100));
+    EXPECT_EQ(out.totalRoutePortalNode,  bps(STANDARD_STAKE,  300));
+    EXPECT_EQ(out.totalRoutePortalProto, 0LL);  // PORTAL_PROTO_BPS = 0
     EXPECT_EQ(out.totalRouteQswapProto,  bps(STANDARD_STAKE,  100));
 }
 

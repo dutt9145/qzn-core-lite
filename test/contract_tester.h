@@ -233,8 +233,11 @@ public:
     ContractTester() : ContractTesting() {
         contractIdx = ContractIndexOf<ContractType>::value;
         if (!contractStates[contractIdx]) {
-            contractStates[contractIdx] = (unsigned char*)malloc(contractDescriptions[contractIdx].stateSize);
-            setMem(contractStates[contractIdx], contractDescriptions[contractIdx].stateSize, 0);
+            // contractDescriptions[] is positionally indexed (0-based) but contractIdx
+            // is the Qubic contract index — off by 1 for all QZN contracts (indices 26-31
+            // map to array positions 25-30). Use sizeof directly to guarantee correct size.
+            contractStates[contractIdx] = (unsigned char*)malloc(sizeof(typename ContractType::StateData));
+            setMem(contractStates[contractIdx], sizeof(typename ContractType::StateData), 0);
         }
         // Register functions and procedures for this contract
         contractSystemProcedures[contractIdx][INITIALIZE] = (SYSTEM_PROCEDURE)ContractType::__initialize;
@@ -258,8 +261,8 @@ public:
         if (contractStates[contractIdx]) {
             free(contractStates[contractIdx]);
         }
-        contractStates[contractIdx] = (unsigned char*)malloc(contractDescriptions[contractIdx].stateSize);
-        setMem(contractStates[contractIdx], contractDescriptions[contractIdx].stateSize, 0);
+        contractStates[contractIdx] = (unsigned char*)malloc(sizeof(typename ContractType::StateData));
+        setMem(contractStates[contractIdx], sizeof(typename ContractType::StateData), 0);
         // Zero spectrum and universe WITHOUT reinitializing (avoids malloc leak)
         memset(spectrum, 0, spectrumSizeInBytes);
         updateSpectrumInfo();

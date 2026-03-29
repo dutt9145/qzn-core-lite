@@ -13,15 +13,15 @@ constexpr sint64 QZN_VEST_CLIFF_EPOCHS   = 52LL;
 constexpr sint64 QZN_VEST_TOTAL_EPOCHS   = 260LL;
 
 constexpr sint64 QZN_ROUTE_PRIZE_BPS         = 4500LL;
-constexpr sint64 QZN_ROUTE_STAKER_BPS        = 3000LL;
-constexpr sint64 QZN_ROUTE_BUILDER_BPS       = 700LL;
+constexpr sint64 QZN_ROUTE_STAKER_BPS     = 2000LL;
+constexpr sint64 QZN_ROUTE_BUILDER_BPS    = 0LL;
+constexpr sint64 QZN_ROUTE_PROTOCOL_BPS   = 0LL;
 constexpr sint64 QZN_ROUTE_LIQUIDITY_BPS     = 2000LL;
 constexpr sint64 QZN_ROUTE_BURN_BPS          = 1000LL;
-constexpr sint64 QZN_ROUTE_NODE_BPS          = 200LL;
-constexpr sint64 QZN_ROUTE_TREASURY_BPS      = 2000LL;
-constexpr sint64 QZN_ROUTE_PORTAL_PROTO_BPS  = 100LL;
+constexpr sint64 QZN_ROUTE_NODE_BPS       = 300LL;
+constexpr sint64 QZN_ROUTE_TREASURY_BPS   = 100LL;
+constexpr sint64 QZN_ROUTE_PORTAL_PROTO_BPS  = 0LL;
 constexpr sint64 QZN_ROUTE_QSWAP_PROTO_BPS   = 100LL;
-constexpr sint64 QZN_ROUTE_PROTOCOL_BPS      = 100LL;
 constexpr sint64 QZN_BPS_DENOMINATOR         = 10000LL;
 constexpr uint32 QZN_CABINET_CONTRACT_INDEX  = 0;
 

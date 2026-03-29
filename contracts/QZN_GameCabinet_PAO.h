@@ -77,7 +77,7 @@ constexpr sint64 TANQ_MAX_SCORE         = 100000LL;
 //  Fill these in after IPO — deployment order must place
 //  Token_v2 at a LOWER contract index than GameCabinet.
 
-constexpr uint32 QZN_TOKEN_CONTRACT_INDEX_LOCAL = 0;   // TODO: set after IPO
+constexpr uint32 QZN_TOKEN_CONTRACT_INDEX_LOCAL = 26;   // TODO: set after IPO
 constexpr uint8  QZN_SETTLE_MATCH_PROC_ID  = 2;   // SettleMatch = procedure 2 in Token_v2
 
 // ============================================================
