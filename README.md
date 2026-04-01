@@ -507,7 +507,7 @@ Pham is a core member of the QZN development team responsible for the frontend a
 | JoeTom | Qubic core developer | Confirmed single-proposal six-contract PR approach; coordinating mainnet deployment at indices 26–31; technical sounding board on contract architecture |
 | mundus_tj85 | Appointed auditor | 25,000,000,000 QU formal written quote received; full six-contract audit scope confirmed |
 | DeFiMomma | Ecosystem connector | Introduced QZN to the incubation program; community credibility anchor; ongoing ecosystem ambassador |
-| Eko | Ecosystem developer | Informal technical advisory; cross-protocol development coordination |
+| E | Ecosystem developer | Informal technical advisory; cross-protocol development coordination |
 
 ---
 
