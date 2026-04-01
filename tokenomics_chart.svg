@@ -1,0 +1,77 @@
+<svg viewBox="0 0 620 430" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif">
+
+  <!-- Title -->
+  <text x="310" y="28" text-anchor="middle" font-size="16" font-weight="bold" fill="#085041">QZN Token Distribution — 250,000,000 QZN Fixed Supply</text>
+
+  <!-- Donut slices -->
+  <!-- PAO Governance Treasury 35% -->
+  <path d="M200.00,60.00 A150,150 0 0,1 329.90,285.00 L258.89,244.00 A68,68 0 0,0 200.00,142.00 Z" fill="#085041"/>
+  <!-- Public Issuance ICO 25% -->
+  <path d="M329.90,285.00 A150,150 0 0,1 134.92,345.15 L170.50,271.27 A68,68 0 0,0 258.89,244.00 Z" fill="#1D9E75"/>
+  <!-- Core Contributor Vest 15% -->
+  <path d="M134.92,345.15 A150,150 0 0,1 53.76,243.38 L133.70,225.13 A68,68 0 0,0 170.50,271.27 Z" fill="#5DCAA5"/>
+  <!-- Liquidity Provision 15% -->
+  <path d="M53.76,243.38 A150,150 0 0,1 82.73,116.48 L146.84,167.60 A68,68 0 0,0 133.70,225.13 Z" fill="#3B6D11"/>
+  <!-- Ecosystem Expansion 10% -->
+  <path d="M82.73,116.48 A150,150 0 0,1 155.79,66.66 L179.96,145.02 A68,68 0 0,0 146.84,167.60 Z" fill="#888780"/>
+  <!-- Genesis Burn 5% -->
+  <path d="M155.79,66.66 A150,150 0 0,1 200.00,60.00 L200.00,142.00 A68,68 0 0,0 179.96,145.02 Z" fill="#BA7517"/>
+
+  <!-- Thin white borders between slices -->
+  <path d="M200.00,60.00 A150,150 0 0,1 329.90,285.00 L258.89,244.00 A68,68 0 0,0 200.00,142.00 Z" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+  <path d="M329.90,285.00 A150,150 0 0,1 134.92,345.15 L170.50,271.27 A68,68 0 0,0 258.89,244.00 Z" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+  <path d="M134.92,345.15 A150,150 0 0,1 53.76,243.38 L133.70,225.13 A68,68 0 0,0 170.50,271.27 Z" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+  <path d="M53.76,243.38 A150,150 0 0,1 82.73,116.48 L146.84,167.60 A68,68 0 0,0 133.70,225.13 Z" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+  <path d="M82.73,116.48 A150,150 0 0,1 155.79,66.66 L179.96,145.02 A68,68 0 0,0 146.84,167.60 Z" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+  <path d="M155.79,66.66 A150,150 0 0,1 200.00,60.00 L200.00,142.00 A68,68 0 0,0 179.96,145.02 Z" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+
+  <!-- Center circle (donut hole) -->
+  <circle cx="200" cy="210" r="64" fill="#ffffff"/>
+
+  <!-- Center text -->
+  <text x="200" y="202" text-anchor="middle" font-size="13" font-weight="bold" fill="#085041">250M QZN</text>
+  <text x="200" y="219" text-anchor="middle" font-size="10" fill="#888780">Fixed Supply</text>
+  <text x="200" y="233" text-anchor="middle" font-size="10" fill="#BA7517">No Inflation</text>
+
+  <!-- Legend -->
+  <!-- PAO Governance Treasury -->
+  <rect x="390" y="68" width="14" height="14" rx="3" fill="#085041"/>
+  <text x="410" y="80" font-size="13" font-weight="bold" fill="#085041">35%</text>
+  <text x="445" y="80" font-size="12" fill="#333333">PAO Governance Treasury</text>
+  <text x="410" y="95" font-size="11" fill="#888888">87,500,000 QZN · PAO quorum required</text>
+
+  <!-- Public Issuance ICO -->
+  <rect x="390" y="116" width="14" height="14" rx="3" fill="#1D9E75"/>
+  <text x="410" y="128" font-size="13" font-weight="bold" fill="#085041">25%</text>
+  <text x="445" y="128" font-size="12" fill="#333333">Public Issuance (ICO)</text>
+  <text x="410" y="143" font-size="11" fill="#888888">62,500,000 QZN · Immediate on close</text>
+
+  <!-- Core Contributor Vest -->
+  <rect x="390" y="164" width="14" height="14" rx="3" fill="#5DCAA5"/>
+  <text x="410" y="176" font-size="13" font-weight="bold" fill="#085041">15%</text>
+  <text x="445" y="176" font-size="12" fill="#333333">Core Contributor Vest</text>
+  <text x="410" y="191" font-size="11" fill="#888888">37,500,000 QZN · 1yr cliff · 4yr vest</text>
+
+  <!-- Liquidity Provision -->
+  <rect x="390" y="212" width="14" height="14" rx="3" fill="#3B6D11"/>
+  <text x="410" y="224" font-size="13" font-weight="bold" fill="#085041">15%</text>
+  <text x="445" y="224" font-size="12" fill="#333333">Liquidity Provision</text>
+  <text x="410" y="239" font-size="11" fill="#888888">37,500,000 QZN · Locked deterministically</text>
+
+  <!-- Ecosystem Expansion -->
+  <rect x="390" y="260" width="14" height="14" rx="3" fill="#888780"/>
+  <text x="410" y="272" font-size="13" font-weight="bold" fill="#085041">10%</text>
+  <text x="445" y="272" font-size="12" fill="#333333">Ecosystem Expansion</text>
+  <text x="410" y="287" font-size="11" fill="#888888">25,000,000 QZN · PAO-governed</text>
+
+  <!-- Genesis Burn -->
+  <rect x="390" y="308" width="14" height="14" rx="3" fill="#BA7517"/>
+  <text x="410" y="320" font-size="13" font-weight="bold" fill="#085041">5%</text>
+  <text x="445" y="320" font-size="12" fill="#333333">Genesis Burn</text>
+  <text x="410" y="335" font-size="11" fill="#888888">12,500,000 QZN · Burned at launch</text>
+
+  <!-- Bottom note -->
+  <line x1="40" y1="400" x2="580" y2="400" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="310" y="418" text-anchor="middle" font-size="10" fill="#aaaaaa">All figures reflect stated allocations. Genesis Burn is executed at launch, permanently removing 12.5M QZN before first trade.</text>
+
+</svg>
