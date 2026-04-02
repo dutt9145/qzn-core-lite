@@ -1,7 +1,7 @@
 # QZN PROTOCOL
 ### Qubic Incubation Program — Funding Proposal & Business Plan
 
-**Submitted to the Qubic Incubation Board · March 2026**
+**Submitted to the Qubic Incubation Board · April 2026**
 **Hunter Duttenhefer · [hello@qzn.app](mailto:hello@qzn.app) · [qzn.app](https://qzn.app) · [github.com/dutt9145/qzn-core-lite](https://github.com/dutt9145/qzn-core-lite)**
 
 ---
