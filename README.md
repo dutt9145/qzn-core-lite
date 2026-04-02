@@ -106,7 +106,7 @@ The global blockchain gaming market was valued at approximately $4.6 billion in 
 
 ### Serviceable Addressable Market (SAM)
 
-QZN's SAM is scoped to Qubic-native users: active wallet holders who interact with the Qubic network, can receive QU, and are reachable through existing ecosystem channels including Discord, Telegram, and QWALLET. Based on current network data, Qubic maintains approximately 45,000–60,000 active wallets with non-zero balances. Applying a 15–25% DeFi/gaming engagement rate — a deliberately conservative range benchmarked against observed engagement on comparable early-stage L1 ecosystems — the SAM ranges from approximately 7,500 users in Year 1 to 30,000 by Year 3 as the Qubic network grows.
+QZN's SAM is scoped to Qubic-native users: active wallet holders who interact with the Qubic network, can receive QU, and are reachable through existing ecosystem channels including Discord, Telegram, and X. Based on current network data, Qubic maintains approximately 45,000–60,000 active wallets with non-zero balances. Applying a 15–25% DeFi/gaming engagement rate — a deliberately conservative range benchmarked against observed engagement on comparable early-stage L1 ecosystems — the SAM ranges from approximately 7,500 users in Year 1 to 30,000 by Year 3 as the Qubic network grows.
 
 ### Serviceable Obtainable Market (SOM) — QZN's Realistic Capture
 
