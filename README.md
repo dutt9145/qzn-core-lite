@@ -40,7 +40,7 @@ Six production-grade smart contracts — 10,172 lines of audited-ready C++, 436/
 
 This proposal requests 30,000,000,000 QU from the Qubic Incubation Program. 25,000,000,000 QU is allocated directly to the formal six-contract security audit (committed written quote in hand from auditor mundus_tj85) and 5,000,000,000 QU covers community onboarding, liquidity seeding, and marketing through mainnet launch. Any unspent operational buffer at the end of the launch period is returned to the Incubation Program — not absorbed into the treasury.
 
-QZN is requesting a one-time, non-dilutive grant with a defined repayment structure. Beginning Month 6 post-mainnet launch, 5% of treasury protocol fee revenue is contributed quarterly to the Qubic ecosystem development fund. As protocol volume scales, this contribution grows proportionally — the Incubation Program's return is directly tied to QZN's success. The more QZN grows, the more the ecosystem gets back. QZN enters incubation not as a concept, but as a fully built and test-validated system ready for deployment pending audit.
+QZN is requesting a one-time, non-dilutive grant with a defined ecosystem return structure. Three compounding mechanisms deliver value back to the Qubic ecosystem: (1) Upon ICO Phase 2 close, 5% of total ICO gross proceeds (936,250,000 QU) is contributed directly to the Qubic ecosystem development fund — a concrete, near-term return independent of protocol revenue; (2) Beginning Month 6 post-mainnet launch, 10% of total treasury protocol revenue is contributed quarterly, reaching 453,600 QU per year at Year 3 run rate and growing with every new user; (3) 10% of all game volume in QU is permanently burned every session — removing 36,432,000 QU from circulating supply over three years alone. QZN enters incubation not as a concept, but as a fully built and test-validated system ready for deployment pending audit.
 
 | Key Metric | Value |
 |---|---|
@@ -51,7 +51,7 @@ QZN is requesting a one-time, non-dilutive grant with a defined repayment struct
 | Token Supply | 250,000,000 QZN (fixed, no inflation) |
 | Contracts Deployed | Indices 26–31 on Qubic mainnet (pending audit) |
 | Mainnet Target | Month 4 post-approval |
-| Break-Even (Protocol Fee) | Year 2 base case (1,050 MAU); ICO-funded operational self-sufficiency from Day 1 |
+| Break-Even (Total Protocol Revenue) | Year 2 base case (1,050 MAU, 831,600 QU/year fee + rake); ICO-funded operational self-sufficiency from Day 1 |
 
 ---
 
@@ -146,9 +146,13 @@ The ICO is structured across two phases to optimize price discovery and reward e
 |---|---|---|---|---|
 | Phase 1 | 12,500,000 QZN | 150 QU | 1,875,000,000 | 5.0% |
 | Phase 2 | 50,000,000 QZN | 337 QU | 16,850,000,000 | 20.0% |
-| Total ICO | 62,500,000 QZN | — | 18,725,000,000 | 25.0% |
+| **Total Gross Raise** | **62,500,000 QZN** | **—** | **18,725,000,000** | **25.0%** |
+| Qubic Incubation Fund Donation (5% of gross) | — | — | **(936,250,000)** | — |
+| **Net Treasury Proceeds** | **—** | **—** | **17,788,750,000** | **—** |
 
 Phase 1 pricing at 150 QU provides a 124% discount to Phase 2, creating strong incentive for early community participation and word-of-mouth recruitment. Phase 2 price of 337 QU sets the initial reference price for the QSWAP listing. Any unsold tokens at ICO close are burned — not returned to treasury, not reallocated. This hard commitment eliminates the overhang risk that has undermined many blockchain protocol launches.
+
+The 936,250,000 QU ecosystem fund donation is a hard commitment, not a discretionary disbursement. It is paid directly from ICO proceeds to the Qubic Incubation Development Fund within 60 days of ICO Phase 2 close, prior to any other ICO proceeds allocation. All percentage allocations in the treasury spending policy are calculated against **net proceeds** (17,788,750,000 QU).
 
 #### ICO Completion Sweepstakes — 3 QIP Shares
 
@@ -230,6 +234,7 @@ The protocol's lean cost structure means treasury accumulates almost all protoco
 | Annual Game Volume (QU) | 6,480,000 | 55,440,000 | 302,400,000 |
 | Protocol Fee Revenue (1%) | 64,800 QU | 554,400 QU | 3,024,000 QU |
 | Tournament Rake (est. 0.5%) | 32,400 QU | 277,200 QU | 1,512,000 QU |
+| **Total Protocol Revenue** | **97,200 QU** | **831,600 QU** | **4,536,000 QU** |
 | QU burned (10% of volume) | 648,000 QU | 5,544,000 QU | 30,240,000 QU |
 | ICO proceeds (one-time) | 18,725,000,000 QU | — | — |
 | Y1→Y2 revenue growth | — | 756% | — |
@@ -241,37 +246,37 @@ The protocol's lean cost structure means treasury accumulates almost all protoco
 
 **Frame 1: Protocol Self-Sufficiency (Operating Break-Even)**
 
-QZN's operating costs are USD-denominated fixed expenses totaling $5,176 per year. These are fully covered by ICO proceeds from Day 1 and do not depend on protocol fee revenue to sustain operations. The ICO raise of 18,725,000,000 QU provides approximately 3.6 years of operational runway at current QU price with zero protocol revenue — a conservative floor. In practice, protocol fee revenue begins accruing immediately on launch and extends this runway indefinitely.
+QZN's operating costs are USD-denominated fixed expenses totaling $5,176 per year. These are fully covered by ICO proceeds from Day 1 and do not depend on protocol revenue to sustain operations. The ICO raise of 18,725,000,000 QU provides approximately 3.6 years of operational runway at current QU price with zero protocol activity — a conservative floor. In practice, total protocol revenue (protocol fee + tournament rake) begins accruing immediately on launch and extends this runway indefinitely.
 
-The meaningful break-even milestone for QZN is not operational — the ICO solves that immediately. It is the point at which treasury protocol fee revenue becomes a self-sustaining, compounding reserve independent of the ICO. At Year 2 base case (1,050 MAU), total protocol revenue of 831,600 QU per year represents exactly that — a fully self-sustaining income stream that funds operations, ecosystem contributions, and strategic reserves simultaneously, with zero reliance on the initial grant.
+The meaningful break-even milestone for QZN is not operational — the ICO solves that immediately. It is the point at which total treasury protocol revenue (1% fee + 0.5% tournament rake = 1.5% of game volume) becomes a self-sustaining, compounding reserve independent of the ICO. At Year 2 base case (1,050 MAU), total protocol revenue of 831,600 QU per year represents exactly that — a fully self-sustaining income stream that funds operations, ecosystem contributions, and strategic reserves simultaneously, with zero reliance on the initial grant.
 
 **Explicit Break-Even Threshold**
 
-QZN's operating costs are denominated in USD and permanently covered by ICO proceeds from Day 1. The meaningful break-even milestone is therefore not operational — it is the point at which the protocol generates a self-sustaining QU treasury reserve entirely independent of the initial grant. At 1,050 MAU generating 831,600 QU in annual protocol revenue, QZN achieves exactly that: a compounding treasury income stream that funds operations, ecosystem contributions, and strategic reserves with zero drawdown on ICO capital. This milestone is projected at Year 2 base case.
+QZN's operating costs are denominated in USD and permanently covered by ICO proceeds from Day 1. The meaningful break-even milestone is therefore not operational — it is the point at which the protocol generates a self-sustaining QU treasury reserve entirely independent of the initial grant. At 1,050 MAU generating 831,600 QU in annual total protocol revenue (fee + rake), QZN achieves exactly that: a compounding treasury income stream that funds operations, ecosystem contributions, and strategic reserves with zero drawdown on ICO capital. This milestone is projected at Year 2 base case. The 936,250,000 QU ecosystem fund donation paid at ICO close is separate from and does not affect this break-even calculation — it is funded from gross ICO proceeds before treasury allocation.
 
 **Frame 2: Return on Incubation Investment**
 
 QZN proposes the following incubation return mechanism:
 
-- 5% of treasury protocol fee revenue contributed to the Qubic ecosystem development fund quarterly, beginning Month 6 post-mainnet launch
-- QSWAP listing at 337 QU/QZN within 30 days of mainnet deployment, with 40% of ICO proceeds (7,490,000,000 QU) seeded directly as liquidity — an immediate contribution to Qubic DeFi TVL
+- 5% of total ICO gross proceeds (936,250,000 QU) contributed directly to the Qubic ecosystem development fund within 60 days of ICO Phase 2 close; plus 10% of total treasury protocol revenue (protocol fee + tournament rake = 1.5% of game volume) contributed quarterly beginning Month 6 post-mainnet launch — reaching 453,600 QU per year at Year 3 run rate
+- QSWAP listing at 337 QU/QZN within 30 days of mainnet deployment, with 40% of net ICO proceeds (7,115,500,000 QU) seeded directly as liquidity — an immediate contribution to Qubic DeFi TVL
 - 10% of all game volume permanently burned in QU — a deflationary mechanism that benefits every QU holder in perpetuity, including the Qubic Foundation
 
 Any unspent operational buffer at the end of the launch period is returned to the Incubation Program — not absorbed into the treasury.
 
 ### Incubation Payback Schedule
 
-| Quarter | Cumulative MAU | Protocol Fee Revenue (QU) | Ecosystem Contribution 5% (QU) | QU Burned |
+| Quarter | Cumulative MAU | Total Protocol Revenue (QU) | Ecosystem Contribution (10%) | QU Burned |
 |---|---|---|---|---|
-| Q3 2026 | 80 | 4,200 | 210 | 42,000 |
-| Q4 2026 | 225 | 16,200 | 810 | 162,000 |
-| Q1 2027 | 400 | 32,400 | 1,620 | 324,000 |
-| Q2 2027 | 650 | 68,250 | 3,413 | 682,500 |
-| Q3 2027 | 1,050 | 138,600 | 6,930 | 1,386,000 |
-| Q4 2027 | 1,800 | 291,600 | 14,580 | 2,916,000 |
-| Year 3 (Run Rate) | 3,600 | 3,024,000 | 151,200 | 30,240,000 |
+| Q3 2026 | 80 | 6,300 | 630 | 42,000 |
+| Q4 2026 | 225 | 24,300 | 2,430 | 162,000 |
+| Q1 2027 | 400 | 48,600 | 4,860 | 324,000 |
+| Q2 2027 | 650 | 102,375 | 10,238 | 682,500 |
+| Q3 2027 | 1,050 | 207,900 | 20,790 | 1,386,000 |
+| Q4 2027 | 1,800 | 437,400 | 43,740 | 2,916,000 |
+| Year 3 (Run Rate) | 3,600 | 4,536,000 | 453,600 | 30,240,000 |
 
-3-year cumulative QU permanently burned: **36,432,000 QU.** Ecosystem contributions scale to a 151,200 QU quarterly run rate by Year 3, accelerating with every new cohort of users. The contribution mechanism is permanent and uncapped — it grows for as long as QZN generates protocol fee revenue.
+3-year cumulative QU permanently burned: **36,432,000 QU** (Year 1 + Year 2 + Year 3 annualized session burns). 3-year cumulative direct ecosystem contributions (incl. ICO donation): **936,786,288 QU** (936,250,000 QU ICO direct donation + 536,288 QU protocol revenue contributions) — growing exponentially as volume compounds. The Incubation Program's return accelerates the longer the protocol runs.
 
 ---
 
@@ -304,12 +309,19 @@ Stripe at peak growth scored approximately 120. Snowflake at IPO scored approxim
 
 ### Treasury Coverage Ratio
 
+QZN's operating costs are fixed USD-denominated expenses of $5,176 per year. At current QU price ($0.000001), this converts to approximately 5,176,000,000 QU — a figure that shrinks dramatically with any QU price appreciation. The table below illustrates coverage at multiple price levels.
+
 | Metric | Value |
 |---|---|
 | Post-ICO treasury (ops buffer + ICO raise) | 23,725,000,000 QU |
-| Annual operating requirement (QU equivalent) | 5,176,000,000 QU |
-| Treasury coverage ratio | 4.58x |
-| Years of runway (zero revenue) | 4.58 years |
+| Annual Operating Cost (USD-fixed) | $5,176/year |
+| Annual operating requirement at current QU price | 5,176,000,000 QU |
+| Treasury coverage ratio (current QU price) | 4.58x |
+| Treasury coverage ratio at $0.0001/QU (100x) | 458x |
+| Treasury coverage ratio at $0.001/QU (1,000x) | 4,582x |
+| Break-even MAU (protocol self-sufficiency, zero ICO) | ~15 MAU at 400 QU avg. / 6 sessions/month |
+
+The 4.58x figure at current price is the floor scenario — zero revenue, zero QU appreciation, zero protocol activity. In every other scenario, the treasury is self-sustaining indefinitely. Protocol fee revenue begins accruing on Day 1 of mainnet launch, extending this runway regardless of QU price movement.
 
 ### Annual Protocol Fee Sensitivity (QU)
 
@@ -354,11 +366,6 @@ QZN enters at a comparable launch-stage MAU to every protocol on this list. Its 
 
 ## 7. Tokenomics
 
-### Token Distribution
-
-![QZN Token Distribution](tokenomics_chart.svg)
-
-
 | Allocation | Tokens (QZN) | % Supply | Lock / Vesting |
 |---|---|---|---|
 | PAO Governance Treasury | 87,500,000 | 35.0% | All spend requires PAO quorum vote; treasury address published on-chain before ICO launch |
@@ -397,13 +404,11 @@ QZN fully endorses the Qubic Incubation Program's recommended four-stage approac
 
 - Public announcement of incubation approval with full protocol overview
 - AMA session in the Qubic Discord with QZN founder and ecosystem advisors (DeFiMomma, JoeTom)
-- ICO whitelist campaign launch — early registrations collected via [hello@qzn.app](mailto:hello@qzn.app), creating a committed pipeline prior to Phase 1 open
+- ICO whitelist campaign launch — early registrations collected via [hello@qzn.app](mailto:hello@qzn.app)
 - Technical explainer thread on contract architecture, BPS routing, and flywheel mechanics
 - Discord bot ICO hype campaigns activated (ICO_LIVE flag toggled to true)
 
 ### Stage 2: Core-Tech PR Review (Weeks 2–7)
-
-Each contract submitted as a standalone pull request, one per week:
 
 | Week | Contract | Index | Primary Review Focus |
 |---|---|---|---|
@@ -418,7 +423,7 @@ Each PR includes: contract source, inline documentation, the corresponding GTest
 
 ### Stage 3: Formal Security Audit (Months 2–3)
 
-Upon core-tech approval of all six PRs, the 25B QU audit allocation is released to mundus_tj85. A formal written quote of 25B QU has been received. The audit scope covers all six contracts with particular emphasis on cross-contract call chains, BPS arithmetic overflow/underflow, PAO governance attack surfaces, and treasury access control bypass vectors. Estimated audit duration: 6–8 weeks. All findings will be remediated and re-submitted for auditor sign-off prior to deployment. The audit allocation includes contingency for multiple remediation cycles. No contract will be deployed to mainnet without full auditor sign-off.
+Upon core-tech approval of all six PRs, the 25B QU audit allocation is released to mundus_tj85. A formal written quote of 25B QU has been received. The audit scope covers all six contracts with particular emphasis on cross-contract call chains, BPS arithmetic overflow/underflow, PAO governance attack surfaces, and treasury access control bypass vectors. Estimated audit duration: 6–8 weeks. All findings will be remediated and re-submitted for auditor sign-off prior to deployment. No contract will be deployed to mainnet without full auditor sign-off.
 
 ### Stage 4: Mainnet Deployment & ICO Launch (Month 4)
 
@@ -455,13 +460,16 @@ All treasury fund movements are subject to the following hard caps, published pu
 
 | Category | Hard Cap | Notes |
 |---|---|---|
-| Security audit disbursement | 25,000,000,000 QU | Released directly to mundus_tj85 upon core-tech PR approval. Single transaction. No discretionary use. |
-| Community & marketing | 2,000,000,000 QU | Discord campaigns, bounties, AMAs, community onboarding through mainnet launch |
-| Liquidity seeding (QSWAP) | 40% of ICO proceeds | Deployed directly to QSWAP at listing. Not subject to discretionary reallocation. |
-| Development reserve | 30% of ICO proceeds | Smart contract development, frontend infrastructure, tooling |
-| Operational runway | 10% of ICO proceeds | Server costs, tooling, legal (Wyoming LLC formation) |
-| Marketing & growth | 20% of ICO proceeds | Ecosystem partnerships, community growth, external developer outreach |
+| Security audit disbursement | 25,000,000,000 QU | Released directly to mundus_tj85 upon core-tech PR approval. Single transaction. No discretionary use. Funded from incubation grant, not ICO proceeds. |
+| Community & marketing (ops buffer) | 2,000,000,000 QU | Discord campaigns, bounties, AMAs, community onboarding through mainnet launch. Funded from incubation grant ops buffer. |
+| **Ecosystem Fund Donation** | **5% of gross ICO proceeds (936,250,000 QU)** | **Paid directly to Qubic ecosystem development fund within 60 days of ICO Phase 2 close. Off the top. Non-discretionary.** |
+| Liquidity seeding (QSWAP) | 40% of net ICO proceeds (7,115,500,000 QU) | Deployed directly to QSWAP at listing. Not subject to discretionary reallocation. |
+| Development reserve | 27% of net ICO proceeds (4,803,000,000 QU) | Smart contract development, frontend infrastructure, tooling |
+| Operational runway | 10% of net ICO proceeds (1,778,875,000 QU) | Server costs, tooling, legal (Wyoming LLC formation) |
+| Marketing & growth | 23% of net ICO proceeds (4,091,412,500 QU) | Ecosystem partnerships, community growth, external developer outreach |
 | Founder withdrawals | $0 until ICO Phase 2 close | Founder takes no compensation from treasury prior to full ICO completion |
+
+**ICO proceeds allocation totals 100% of net proceeds.** The ecosystem donation is taken from gross proceeds before allocation. Unspent operational buffer from the incubation grant ops allocation is returned to the Incubation Program, not absorbed into treasury.
 
 ### On-Chain Transparency Commitment
 
@@ -517,9 +525,7 @@ QZN Protocol is not a concept. It is not a whitepaper. It is not a team with an 
 
 The Qubic Incubation Program's 30,000,000,000 QU grant does not fund a vision. It funds a security audit. The vision is already built. The code is already written. The tests are already passing. The community is already active. The frontend is already live. The audit is the final gate between QZN and mainnet — and the Incubation Program holds the key.
 
-In return, the Qubic ecosystem receives the first fully vertically integrated arcade gaming and DeFi coordination protocol on the network. It receives 36,432,000 QU permanently removed from circulation over three years through session burns alone — growing with every new user, every new game, and every tournament. It receives 7,490,000,000 QU injected into QSWAP liquidity at launch. It receives quarterly ecosystem contributions beginning Month 6, compounding as the network grows. And it receives a protocol whose long-term USD value is directly and structurally tied to Qubic's own appreciation — QZN does not succeed unless Qubic succeeds. The incentives are perfectly aligned.
-
-At $0.001/QU — a price level achievable with modest network growth — QZN's ICO raise generates nearly $19M, Year 3 annual revenue reaches $4,536, and the FDV of 84.25B QU becomes an $84.25M protocol. Every comparable blockchain gaming protocol on this list launched at higher valuations with worse margins, less complete codebases, and no existing flywheel. QZN is not asking the board to take a leap of faith. It is asking the board to unlock what is already built.
+In return, the Qubic ecosystem receives something no incubated project has delivered before: a structured, multi-mechanism return that begins before the first game is ever played. Upon ICO Phase 2 close, 936,250,000 QU flows directly to the Qubic ecosystem development fund — a concrete return on the board's investment that is independent of protocol performance and paid before any other treasury allocation. From there, the compounding begins: 7,115,500,000 QU seeded into QSWAP liquidity at mainnet launch, 36,432,000 QU permanently removed from circulation over three years through session burns alone, and quarterly ecosystem contributions at 10% of total protocol revenue starting Month 6 — reaching 453,600 QU per year at Year 3 run rate and growing with every new user, every new game, and every tournament epoch. QZN does not succeed unless Qubic succeeds. The incentives are not aligned by coincidence. They are aligned by design.
 
 QZN is not attempting to discover product-market fit post-funding. It has already built the system, validated the mechanics, and defined the economic model. The incubation grant does not fund experimentation — it unlocks deployment.
 
