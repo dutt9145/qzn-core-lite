@@ -40,11 +40,11 @@ qzn_block = """
 #undef CONTRACT_STATE_TYPE
 #undef CONTRACT_STATE2_TYPE
 
-#define QZN_PORTAL_CONTRACT_INDEX 30
-#define CONTRACT_INDEX QZN_PORTAL_CONTRACT_INDEX
-#define CONTRACT_STATE_TYPE QZNPORTAL
-#define CONTRACT_STATE2_TYPE QZNPORTAL2
-#include "contracts/QZN_Portal_PAO.h"
+#define QZN_NODES_CONTRACT_INDEX 30
+#define CONTRACT_INDEX QZN_NODES_CONTRACT_INDEX
+#define CONTRACT_STATE_TYPE QZNNODES
+#define CONTRACT_STATE2_TYPE QZNNODES2
+#include "contracts/QZN_Nodes_PAO.h"
 #undef CONTRACT_INDEX
 #undef CONTRACT_STATE_TYPE
 #undef CONTRACT_STATE2_TYPE
@@ -81,7 +81,7 @@ qzn_tests = """  contract_qzn_token.cpp
   contract_qzn_gamecabinet.cpp
   contract_qzn_rewardrouter.cpp
   contract_qzn_treasuryvault.cpp
-  contract_qzn_portal.cpp
+  contract_qzn_nodes.cpp
   contract_qzn_tournamentengine.cpp
 """
 

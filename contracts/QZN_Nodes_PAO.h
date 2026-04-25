@@ -1,25 +1,25 @@
 #pragma once
 // ============================================================
-//  QZN PORTAL NODE PAO
-//  Contract: Programmable Arcade Object — PORTAL Node
+//  QZN NOVUM INITIUM NODE PAO
+//  Contract: Programmable Arcade Object — NOVUM INITIUM Node
 //  Network:  Qubic (QPI / C++ Smart Contract)
 //  Version:  1.0.0
 //
-//  Architecture from: QZN Whitepaper (Section 6 — PORTAL)
+//  Architecture from: QZN Whitepaper (Section 6 — NOVUM INITIUM)
 //
-//  PORTAL is the access, discovery, and profit participation
+//  NOVUM INITIUM is the access, discovery, and profit participation
 //  layer of the QZN Arcade Coordination Protocol.
 //
 //  Responsibilities:
 //    1. Game Registry    — Index all QZN-compatible arcade games
 //    2. Access Control   — Gate premium content behind QZN stake
-//    3. Node Ownership   — PORTAL Nodes are ownable onchain assets
+//    3. Node Ownership   — NOVUM INITIUM Nodes are ownable onchain assets
 //    4. Revenue Share    — Node owners earn % of protocol fees
-//    5. Builder Onboard  — Third-party devs register games via PORTAL
+//    5. Builder Onboard  — Third-party devs register games via NOVUM INITIUM
 //    6. Discovery Index  — Queryable arcade index for frontend
 //
-//  PORTAL Node Model:
-//    - Fixed supply of PORTAL Nodes (100 max)
+//  NOVUM INITIUM Node Model:
+//    - Fixed supply of NOVUM INITIUM Nodes (100 max)
 //    - Each Node is an ownable onchain object
 //    - Node owners earn share of protocol fee revenue
 //    - Nodes can be traded on QX secondary market
@@ -36,7 +36,7 @@
 //    CHAMPION : Stake ≥ 25,000 QZN → unlock all content + early access
 //
 //  Builder Registration:
-//    - Any dev can submit a game for PORTAL listing
+//    - Any dev can submit a game for NOVUM INITIUM listing
 //    - Requires QZN stake (anti-spam)
 //    - Admin approval required before listing goes live
 //    - Approved games share in protocol revenue routing
@@ -49,7 +49,7 @@ using namespace QPI;
 // ============================================================
 
 // Node supply
-constexpr sint64 MAX_PORTAL_NODES         = 100LL;
+constexpr sint64 MAX_NOVUM_INITIUM_NODES         = 100LL;
 constexpr sint64 GENESIS_NODE_COUNT       = 10LL;
 constexpr sint64 CORE_NODE_COUNT          = 30LL;   // Nodes 11-40
 constexpr sint64 STANDARD_NODE_COUNT      = 60LL;   // Nodes 41-100
@@ -65,7 +65,7 @@ constexpr sint64 CORE_SHARE_BPS           = 1500LL;  // 1.5x
 constexpr sint64 STANDARD_SHARE_BPS       = 1000LL;  // 1.0x
 constexpr sint64 SHARE_BPS_DENOM          = 1000LL;
 
-// Revenue distribution: % of protocol fees to PORTAL nodes
+// Revenue distribution: % of protocol fees to NOVUM INITIUM nodes
 constexpr sint64 NODE_REVENUE_POOL_BPS    = 10000LL;  // 100% of received fees (split happens upstream in Token_v2)
 constexpr sint64 REVENUE_BPS_DENOM        = 10000LL;
 
@@ -84,7 +84,7 @@ constexpr sint64 MAX_REGISTERED_GAMES     = 32LL;
 
 // Game states
 constexpr uint8  GAME_PENDING             = 0;   // Submitted, awaiting approval
-constexpr uint8  GAME_ACTIVE              = 1;   // Live on PORTAL
+constexpr uint8  GAME_ACTIVE              = 1;   // Live on NOVUM INITIUM
 constexpr uint8  GAME_SUSPENDED           = 2;   // Temporarily removed
 constexpr uint8  GAME_RETIRED             = 3;   // Permanently removed
 
@@ -132,15 +132,15 @@ struct GameListing
 //  CONTRACT STATE
 // ============================================================
 
-struct QZNPORTAL2
+struct QZNNODES2
 {
 };
 
-struct QZNPORTAL : public ContractBase
+struct QZNNODES : public ContractBase
 {
     struct StateData
     {
-    // ---- PORTAL Nodes (100 slots) ----
+    // ---- NOVUM INITIUM Nodes (100 slots) ----
     // Abbreviated to 16 for clarity — full deployment expands to 100
     PortalNode nodes_1;
     PortalNode nodes_2;
@@ -393,7 +393,7 @@ struct GetGame_output
     sint64  registeredEpoch;
 };
 
-// --- Portal Stats ---
+// --- NOVUM INITIUM Stats ---
 struct GetPortalStats_input {};
 struct GetPortalStats_output
 {
@@ -438,7 +438,7 @@ PUBLIC_PROCEDURE(InitializePortal)
 
 PUBLIC_PROCEDURE(IssueNode)
 /*
- * Admin mints a PORTAL Node to an owner address.
+ * Admin mints a NOVUM INITIUM Node to an owner address.
  * Node tier is determined by nodeId range:
  *   1-10:  GENESIS  (3.0x revenue share)
  *   11-40: CORE     (1.5x revenue share)
@@ -449,7 +449,7 @@ PUBLIC_PROCEDURE(IssueNode)
  */
 {
     if (qpi.invocator() != state.get().adminAddress) { return; }
-    if (input.nodeId < 1 || input.nodeId > MAX_PORTAL_NODES) { return; }
+    if (input.nodeId < 1 || input.nodeId > MAX_NOVUM_INITIUM_NODES) { return; }
 
     // Determine tier and share
     uint8   tier;
@@ -531,7 +531,7 @@ PUBLIC_PROCEDURE(TransferNode)
  * Future revenue goes to new owner from transfer epoch onward.
  */
 {
-    if (input.nodeId < 1 || input.nodeId > MAX_PORTAL_NODES) { return; }
+    if (input.nodeId < 1 || input.nodeId > MAX_NOVUM_INITIUM_NODES) { return; }
 
     if (input.nodeId == 1)
     {
@@ -573,7 +573,7 @@ PUBLIC_PROCEDURE(ClaimNodeRevenue)
  * Unclaimed after REVENUE_CLAIM_EPOCHS is returned to treasury.
  */
 {
-    if (input.nodeId < 1 || input.nodeId > MAX_PORTAL_NODES) { return; }
+    if (input.nodeId < 1 || input.nodeId > MAX_NOVUM_INITIUM_NODES) { return; }
 
     if (input.nodeId == 1)
     {
@@ -620,11 +620,11 @@ PUBLIC_PROCEDURE(ClaimNodeRevenue)
 
 PUBLIC_PROCEDURE(RegisterGame)
 /*
- * Third-party builder submits a game for PORTAL listing.
+ * Third-party builder submits a game for NOVUM INITIUM listing.
  * Requires QZN stake (anti-spam, returned on retirement).
  * Game starts in GAME_PENDING state — admin must approve.
  *
- * Approved games appear in the PORTAL discovery index
+ * Approved games appear in the NOVUM INITIUM discovery index
  * and share in protocol revenue routing.
  */
 {
@@ -676,7 +676,7 @@ PUBLIC_PROCEDURE(ApproveGame)
 /*
  * Admin approves a pending game listing.
  * Sets revenue share BPS for this game's contribution.
- * Game goes live in PORTAL discovery index immediately.
+ * Game goes live in NOVUM INITIUM discovery index immediately.
  */
 {
     if (qpi.invocator() != state.get().adminAddress) { return; }
@@ -831,7 +831,7 @@ PUBLIC_PROCEDURE(StakeForAccess)
 PUBLIC_PROCEDURE(ReceiveProtocolFees)
 /*
  * Called by QZN Core when protocol fees accumulate.
- * 20% of protocol fees flow to PORTAL node revenue pool.
+ * 20% of protocol fees flow to NOVUM INITIUM node revenue pool.
  * Remainder stays in protocol treasury.
  */
 {

@@ -20,7 +20,7 @@ constexpr sint64 QZN_ROUTE_LIQUIDITY_BPS     = 2000LL;
 constexpr sint64 QZN_ROUTE_BURN_BPS          = 1000LL;
 constexpr sint64 QZN_ROUTE_NODE_BPS       = 300LL;
 constexpr sint64 QZN_ROUTE_TREASURY_BPS   = 100LL;
-constexpr sint64 QZN_ROUTE_PORTAL_PROTO_BPS  = 0LL;
+constexpr sint64 QZN_ROUTE_NOVUM_INITIUM_PROTO_BPS  = 0LL;
 constexpr sint64 QZN_ROUTE_QSWAP_PROTO_BPS   = 100LL;
 constexpr sint64 QZN_BPS_DENOMINATOR         = 10000LL;
 constexpr uint32 QZN_CABINET_CONTRACT_INDEX  = 0;
@@ -254,7 +254,7 @@ public:
         sint64 liquidityShare   = div(input.totalStake * QZN_ROUTE_LIQUIDITY_BPS,    QZN_BPS_DENOMINATOR).quot;
         sint64 burnShare        = div(input.totalStake * QZN_ROUTE_BURN_BPS,         QZN_BPS_DENOMINATOR).quot;
         sint64 nodeShare        = div(input.totalStake * QZN_ROUTE_NODE_BPS,         QZN_BPS_DENOMINATOR).quot;
-        sint64 portalProtoShare = div(input.totalStake * QZN_ROUTE_PORTAL_PROTO_BPS, QZN_BPS_DENOMINATOR).quot;
+        sint64 portalProtoShare = div(input.totalStake * QZN_ROUTE_NOVUM_INITIUM_PROTO_BPS, QZN_BPS_DENOMINATOR).quot;
         sint64 qswapProtoShare  = div(input.totalStake * QZN_ROUTE_QSWAP_PROTO_BPS,  QZN_BPS_DENOMINATOR).quot;
         sint64 protocolShare    = div(input.totalStake * QZN_ROUTE_PROTOCOL_BPS,     QZN_BPS_DENOMINATOR).quot;
         qpi.transferShareOwnershipAndPossession(QZN_ASSET_NAME, SELF, SELF, SELF, prizeShare, input.winnerAddress);
@@ -463,7 +463,7 @@ REGISTER_USER_FUNCTIONS_AND_PROCEDURES()
     //   20% → SC holders (676 shareholders via distributeDividends)
     //   10% → RewardRouter reserve
     //    6% → GameCabinet reserve
-    //    6% → Portal reserve
+    //    6% → NOVUM INITIUM reserve
     //    5% → TournamentEngine reserve
     //    3% → TreasuryVault reserve
     //   50% → stays in protocolFeeBalance (runway)

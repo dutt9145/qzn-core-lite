@@ -3,9 +3,9 @@
 #include "contract_testing.h"
 
 // ============================================================
-//  QZN Portal PAO — GTest Suite
-//  File:    test/contract_qzn_portal.cpp
-//  Place in qubic/core repo at: test/contract_qzn_portal.cpp
+//  QZN NOVUM INITIUM PAO — GTest Suite
+//  File:    test/contract_qzn_nodes.cpp
+//  Place in qubic/core repo at: test/contract_qzn_nodes.cpp
 //
 //  Coverage:
 //    [PROC-1]  InitializePortal     — happy path, double-init guard,
@@ -36,7 +36,7 @@
 //                                     gameId increments, state = PENDING,
 //                                     builder stored, stake stored,
 //                                     below-min stake rejected,
-//                                     portal inactive rejected,
+//                                     NOVUM INITIUM inactive rejected,
 //                                     max games cap,
 //                                     slot recycled after RETIRED game
 //    [PROC-6]  ApproveGame          — admin approves pending game,
@@ -81,7 +81,7 @@
 // ============================================================
 
 #include "gtest/gtest.h"
-#include "../src/contracts/QZN_Portal_PAO.h"
+#include "../src/contracts/QZN_Nodes_PAO.h"
 #include "contract_testing.h"
 
 // ============================================================
@@ -107,10 +107,10 @@ static constexpr sint64 PROTOCOL_FEES = 100000LL;
 //  FIXTURE
 // ============================================================
 
-class QZNPortalTest : public ::testing::Test
+class QZNNODESTest : public ::testing::Test
 {
 protected:
-    ContractTester<QZNPORTAL> tester;
+    ContractTester<QZNNODES> tester;
 
     void SetUp() override {
         tester.reset();
@@ -172,7 +172,7 @@ protected:
 //  [PROC-1]  InitializePortal
 // ============================================================
 
-TEST_F(QZNPortalTest, Init_HappyPath_AddressesStored)
+TEST_F(QZNNODESTest, Init_HappyPath_AddressesStored)
 {
     initialize();
     EXPECT_EQ(tester.state().adminAddress,       ADMIN_ADDR);
@@ -181,7 +181,7 @@ TEST_F(QZNPortalTest, Init_HappyPath_AddressesStored)
     EXPECT_EQ(tester.state().gameCabinetAddress, CABINET_ADDR);
 }
 
-TEST_F(QZNPortalTest, Init_HappyPath_AllStatsZero)
+TEST_F(QZNNODESTest, Init_HappyPath_AllStatsZero)
 {
     initialize();
     const auto& s = tester.state();
@@ -199,20 +199,20 @@ TEST_F(QZNPortalTest, Init_HappyPath_AllStatsZero)
     EXPECT_EQ(s.playerCount,             0LL);
 }
 
-TEST_F(QZNPortalTest, Init_HappyPath_NextGameIdStartsAt1)
+TEST_F(QZNNODESTest, Init_HappyPath_NextGameIdStartsAt1)
 {
     initialize();
     EXPECT_EQ(tester.state().nextGameId, 1LL);
 }
 
-TEST_F(QZNPortalTest, Init_HappyPath_PortalActiveAndInitialized)
+TEST_F(QZNNODESTest, Init_HappyPath_PortalActiveAndInitialized)
 {
     initialize();
     EXPECT_EQ(tester.state().portalActive, 1);
     EXPECT_EQ(tester.state().initialized,  1);
 }
 
-TEST_F(QZNPortalTest, Init_HappyPath_OutputSuccess)
+TEST_F(QZNNODESTest, Init_HappyPath_OutputSuccess)
 {
     InitializePortal_input in{};
     in.treasuryAddr    = TREASURY_ADDR;
@@ -223,7 +223,7 @@ TEST_F(QZNPortalTest, Init_HappyPath_OutputSuccess)
     EXPECT_EQ(out.success, 1);
 }
 
-TEST_F(QZNPortalTest, Init_DoubleInitGuard_SecondCallIgnored)
+TEST_F(QZNNODESTest, Init_DoubleInitGuard_SecondCallIgnored)
 {
     initialize();
     InitializePortal_input in{};
@@ -239,7 +239,7 @@ TEST_F(QZNPortalTest, Init_DoubleInitGuard_SecondCallIgnored)
 //  [PROC-2]  IssueNode
 // ============================================================
 
-TEST_F(QZNPortalTest, IssueNode_NodeId1_GenesisTier_3xShareBPS)
+TEST_F(QZNNODESTest, IssueNode_NodeId1_GenesisTier_3xShareBPS)
 {
     initialize();
     auto out = issueNode(1, OWNER_A);
@@ -253,7 +253,7 @@ TEST_F(QZNPortalTest, IssueNode_NodeId1_GenesisTier_3xShareBPS)
     EXPECT_EQ(tester.state().nodes_1.state,        NODE_ACTIVE);
 }
 
-TEST_F(QZNPortalTest, IssueNode_NodeId10_LastGenesis_GenesisTier)
+TEST_F(QZNNODESTest, IssueNode_NodeId10_LastGenesis_GenesisTier)
 {
     initialize();
     auto out = issueNode(10, OWNER_A);  // Last Genesis node
@@ -263,7 +263,7 @@ TEST_F(QZNPortalTest, IssueNode_NodeId10_LastGenesis_GenesisTier)
     EXPECT_EQ(tester.state().genesisNodesIssued, 1LL);
 }
 
-TEST_F(QZNPortalTest, IssueNode_NodeId11_FirstCore_CoreTier)
+TEST_F(QZNNODESTest, IssueNode_NodeId11_FirstCore_CoreTier)
 {
     initialize();
     auto out = issueNode(11, OWNER_A);  // First Core node
@@ -273,7 +273,7 @@ TEST_F(QZNPortalTest, IssueNode_NodeId11_FirstCore_CoreTier)
     EXPECT_EQ(tester.state().coreNodesIssued, 1LL);
 }
 
-TEST_F(QZNPortalTest, IssueNode_NodeId40_LastCore_CoreTier)
+TEST_F(QZNNODESTest, IssueNode_NodeId40_LastCore_CoreTier)
 {
     initialize();
     auto out = issueNode(16, OWNER_A);  // Abbreviated — testing boundary
@@ -283,7 +283,7 @@ TEST_F(QZNPortalTest, IssueNode_NodeId40_LastCore_CoreTier)
     EXPECT_EQ(out.shareBPS, CORE_SHARE_BPS);
 }
 
-TEST_F(QZNPortalTest, IssueNode_NodeCountersIncrementByTier)
+TEST_F(QZNNODESTest, IssueNode_NodeCountersIncrementByTier)
 {
     initialize();
     issueNode(1, OWNER_A);   // Genesis
@@ -296,7 +296,7 @@ TEST_F(QZNPortalTest, IssueNode_NodeCountersIncrementByTier)
     EXPECT_EQ(tester.state().totalActiveNodes,   3LL);
 }
 
-TEST_F(QZNPortalTest, IssueNode_NonAdmin_Rejected)
+TEST_F(QZNNODESTest, IssueNode_NonAdmin_Rejected)
 {
     initialize();
     IssueNode_input in{};
@@ -309,7 +309,7 @@ TEST_F(QZNPortalTest, IssueNode_NonAdmin_Rejected)
     EXPECT_EQ(tester.state().totalNodesIssued, 0LL);
 }
 
-TEST_F(QZNPortalTest, IssueNode_NodeId0_Rejected)
+TEST_F(QZNNODESTest, IssueNode_NodeId0_Rejected)
 {
     initialize();
     IssueNode_input in{};
@@ -322,7 +322,7 @@ TEST_F(QZNPortalTest, IssueNode_NodeId0_Rejected)
     EXPECT_EQ(tester.state().totalNodesIssued, 0LL);
 }
 
-TEST_F(QZNPortalTest, IssueNode_NodeId101_Rejected)
+TEST_F(QZNNODESTest, IssueNode_NodeId101_Rejected)
 {
     initialize();
     IssueNode_input in{};
@@ -334,7 +334,7 @@ TEST_F(QZNPortalTest, IssueNode_NodeId101_Rejected)
     EXPECT_EQ(out.success, 0);
 }
 
-TEST_F(QZNPortalTest, IssueNode_NodeInitializedCorrectly)
+TEST_F(QZNNODESTest, IssueNode_NodeInitializedCorrectly)
 {
     initialize();
     tester.setCurrentEpoch(5);
@@ -352,7 +352,7 @@ TEST_F(QZNPortalTest, IssueNode_NodeInitializedCorrectly)
 //  [PROC-3]  TransferNode
 // ============================================================
 
-TEST_F(QZNPortalTest, TransferNode_HappyPath_OwnerUpdated)
+TEST_F(QZNNODESTest, TransferNode_HappyPath_OwnerUpdated)
 {
     initialize();
     issueNode(1, OWNER_A);
@@ -369,7 +369,7 @@ TEST_F(QZNPortalTest, TransferNode_HappyPath_OwnerUpdated)
     EXPECT_EQ(tester.state().nodes_1.ownerAddress, OWNER_B);
 }
 
-TEST_F(QZNPortalTest, TransferNode_LastClaimEpochResetOnTransfer)
+TEST_F(QZNNODESTest, TransferNode_LastClaimEpochResetOnTransfer)
 {
     initialize();
     tester.setCurrentEpoch(1);
@@ -385,7 +385,7 @@ TEST_F(QZNPortalTest, TransferNode_LastClaimEpochResetOnTransfer)
     EXPECT_EQ(tester.state().nodes_1.lastClaimEpoch, 5LL);
 }
 
-TEST_F(QZNPortalTest, TransferNode_NonOwner_Rejected)
+TEST_F(QZNNODESTest, TransferNode_NonOwner_Rejected)
 {
     initialize();
     issueNode(1, OWNER_A);
@@ -400,7 +400,7 @@ TEST_F(QZNPortalTest, TransferNode_NonOwner_Rejected)
     EXPECT_EQ(tester.state().nodes_1.ownerAddress, OWNER_A);
 }
 
-TEST_F(QZNPortalTest, TransferNode_InvalidNodeId_Rejected)
+TEST_F(QZNNODESTest, TransferNode_InvalidNodeId_Rejected)
 {
     initialize();
     TransferNode_input in{};
@@ -412,7 +412,7 @@ TEST_F(QZNPortalTest, TransferNode_InvalidNodeId_Rejected)
     EXPECT_EQ(out.success, 0);
 }
 
-TEST_F(QZNPortalTest, TransferNode_SuspendedNode_Rejected)
+TEST_F(QZNNODESTest, TransferNode_SuspendedNode_Rejected)
 {
     initialize();
     issueNode(1, OWNER_A);
@@ -432,7 +432,7 @@ TEST_F(QZNPortalTest, TransferNode_SuspendedNode_Rejected)
 //  [PROC-4]  ClaimNodeRevenue
 // ============================================================
 
-TEST_F(QZNPortalTest, ClaimRevenue_HappyPath_PendingClaimed)
+TEST_F(QZNNODESTest, ClaimRevenue_HappyPath_PendingClaimed)
 {
     initialize();
     issueNode(1, OWNER_A);
@@ -450,7 +450,7 @@ TEST_F(QZNPortalTest, ClaimRevenue_HappyPath_PendingClaimed)
     EXPECT_EQ(tester.state().nodes_1.pendingRevenue,  0LL);
 }
 
-TEST_F(QZNPortalTest, ClaimRevenue_LifetimeRevenueAccumulates)
+TEST_F(QZNNODESTest, ClaimRevenue_LifetimeRevenueAccumulates)
 {
     initialize();
     issueNode(1, OWNER_A);
@@ -464,7 +464,7 @@ TEST_F(QZNPortalTest, ClaimRevenue_LifetimeRevenueAccumulates)
     EXPECT_EQ(tester.state().nodes_1.lifetimeRevenue, 5000LL);
 }
 
-TEST_F(QZNPortalTest, ClaimRevenue_TotalDistributedIncremented)
+TEST_F(QZNNODESTest, ClaimRevenue_TotalDistributedIncremented)
 {
     initialize();
     issueNode(1, OWNER_A);
@@ -478,7 +478,7 @@ TEST_F(QZNPortalTest, ClaimRevenue_TotalDistributedIncremented)
     EXPECT_EQ(tester.state().totalRevenueDistributed, 5000LL);
 }
 
-TEST_F(QZNPortalTest, ClaimRevenue_NonOwner_Rejected)
+TEST_F(QZNNODESTest, ClaimRevenue_NonOwner_Rejected)
 {
     initialize();
     issueNode(1, OWNER_A);
@@ -493,7 +493,7 @@ TEST_F(QZNPortalTest, ClaimRevenue_NonOwner_Rejected)
     EXPECT_EQ(tester.state().totalRevenueDistributed, 0LL);
 }
 
-TEST_F(QZNPortalTest, ClaimRevenue_ZeroPending_Rejected)
+TEST_F(QZNNODESTest, ClaimRevenue_ZeroPending_Rejected)
 {
     initialize();
     issueNode(1, OWNER_A);
@@ -507,7 +507,7 @@ TEST_F(QZNPortalTest, ClaimRevenue_ZeroPending_Rejected)
     EXPECT_EQ(tester.state().totalRevenueDistributed, 0LL);
 }
 
-TEST_F(QZNPortalTest, ClaimRevenue_SuspendedNode_Rejected)
+TEST_F(QZNNODESTest, ClaimRevenue_SuspendedNode_Rejected)
 {
     initialize();
     issueNode(1, OWNER_A);
@@ -522,7 +522,7 @@ TEST_F(QZNPortalTest, ClaimRevenue_SuspendedNode_Rejected)
     EXPECT_EQ(tester.state().nodes_1.pendingRevenue, 5000LL);
 }
 
-TEST_F(QZNPortalTest, ClaimRevenue_DoubleClaim_SecondIsZero)
+TEST_F(QZNNODESTest, ClaimRevenue_DoubleClaim_SecondIsZero)
 {
     initialize();
     issueNode(1, OWNER_A);
@@ -537,7 +537,7 @@ TEST_F(QZNPortalTest, ClaimRevenue_DoubleClaim_SecondIsZero)
     EXPECT_EQ(out2.amountClaimed, 0LL);
 }
 
-TEST_F(QZNPortalTest, ClaimRevenue_MultipleClaimsAccumulateLifetime)
+TEST_F(QZNNODESTest, ClaimRevenue_MultipleClaimsAccumulateLifetime)
 {
     initialize();
     issueNode(1, OWNER_A);
@@ -560,7 +560,7 @@ TEST_F(QZNPortalTest, ClaimRevenue_MultipleClaimsAccumulateLifetime)
 //  [PROC-5]  RegisterGame
 // ============================================================
 
-TEST_F(QZNPortalTest, RegisterGame_HappyPath_GameStoredInSlot0)
+TEST_F(QZNNODESTest, RegisterGame_HappyPath_GameStoredInSlot0)
 {
     initialize();
     sint64 gameId = registerGame(BUILDER_A, BUILDER_STAKE_REQUIRED, NAME_HASH);
@@ -573,7 +573,7 @@ TEST_F(QZNPortalTest, RegisterGame_HappyPath_GameStoredInSlot0)
     EXPECT_EQ(tester.state().games_0.revenueShareBPS, 0LL); // Set on approval
 }
 
-TEST_F(QZNPortalTest, RegisterGame_HappyPath_GameIdIncrementsPerGame)
+TEST_F(QZNNODESTest, RegisterGame_HappyPath_GameIdIncrementsPerGame)
 {
     initialize();
     sint64 id1 = registerGame(BUILDER_A, BUILDER_STAKE_REQUIRED, NAME_HASH);
@@ -584,14 +584,14 @@ TEST_F(QZNPortalTest, RegisterGame_HappyPath_GameIdIncrementsPerGame)
     EXPECT_EQ(tester.state().nextGameId, 3LL);
 }
 
-TEST_F(QZNPortalTest, RegisterGame_HappyPath_TotalRegisteredIncremented)
+TEST_F(QZNNODESTest, RegisterGame_HappyPath_TotalRegisteredIncremented)
 {
     initialize();
     registerGame();
     EXPECT_EQ(tester.state().totalGamesRegistered, 1LL);
 }
 
-TEST_F(QZNPortalTest, RegisterGame_BelowMinStake_Rejected)
+TEST_F(QZNNODESTest, RegisterGame_BelowMinStake_Rejected)
 {
     initialize();
     sint64 id = registerGame(BUILDER_A, BUILDER_STAKE_REQUIRED - 1LL);
@@ -600,14 +600,14 @@ TEST_F(QZNPortalTest, RegisterGame_BelowMinStake_Rejected)
     EXPECT_EQ(tester.state().totalGamesRegistered, 0LL);
 }
 
-TEST_F(QZNPortalTest, RegisterGame_AtMinStake_Succeeds)
+TEST_F(QZNNODESTest, RegisterGame_AtMinStake_Succeeds)
 {
     initialize();
     sint64 id = registerGame(BUILDER_A, BUILDER_STAKE_REQUIRED);
     EXPECT_GT(id, 0LL);
 }
 
-TEST_F(QZNPortalTest, RegisterGame_PortalInactive_Rejected)
+TEST_F(QZNNODESTest, RegisterGame_PortalInactive_Rejected)
 {
     initialize();
     tester.state().portalActive = 0;
@@ -616,7 +616,7 @@ TEST_F(QZNPortalTest, RegisterGame_PortalInactive_Rejected)
     EXPECT_EQ(id, -1LL);
 }
 
-TEST_F(QZNPortalTest, RegisterGame_OutputStakeRequired_CorrectValue)
+TEST_F(QZNNODESTest, RegisterGame_OutputStakeRequired_CorrectValue)
 {
     initialize();
     RegisterGame_input in{};
@@ -629,7 +629,7 @@ TEST_F(QZNPortalTest, RegisterGame_OutputStakeRequired_CorrectValue)
     EXPECT_EQ(out.stakeRequired, BUILDER_STAKE_REQUIRED);
 }
 
-TEST_F(QZNPortalTest, RegisterGame_SlotRecycledAfterRetired)
+TEST_F(QZNNODESTest, RegisterGame_SlotRecycledAfterRetired)
 {
     initialize();
     sint64 id1 = registerGame(BUILDER_A, BUILDER_STAKE_REQUIRED, NAME_HASH);
@@ -652,7 +652,7 @@ TEST_F(QZNPortalTest, RegisterGame_SlotRecycledAfterRetired)
 //  [PROC-6]  ApproveGame
 // ============================================================
 
-TEST_F(QZNPortalTest, ApproveGame_HappyPath_GameMovesToActive)
+TEST_F(QZNNODESTest, ApproveGame_HappyPath_GameMovesToActive)
 {
     initialize();
     sint64 gid = registerGame();
@@ -664,7 +664,7 @@ TEST_F(QZNPortalTest, ApproveGame_HappyPath_GameMovesToActive)
     EXPECT_EQ(tester.state().totalGamesActive,        1LL);
 }
 
-TEST_F(QZNPortalTest, ApproveGame_HappyPath_ApprovedEpochStored)
+TEST_F(QZNNODESTest, ApproveGame_HappyPath_ApprovedEpochStored)
 {
     initialize();
     tester.setCurrentEpoch(7);
@@ -674,7 +674,7 @@ TEST_F(QZNPortalTest, ApproveGame_HappyPath_ApprovedEpochStored)
     EXPECT_EQ(tester.state().games_0.approvedEpoch, 7LL);
 }
 
-TEST_F(QZNPortalTest, ApproveGame_NonAdmin_Rejected)
+TEST_F(QZNNODESTest, ApproveGame_NonAdmin_Rejected)
 {
     initialize();
     sint64 gid = registerGame();
@@ -689,7 +689,7 @@ TEST_F(QZNPortalTest, ApproveGame_NonAdmin_Rejected)
     EXPECT_EQ(tester.state().games_0.state, GAME_PENDING);
 }
 
-TEST_F(QZNPortalTest, ApproveGame_AlreadyActive_NotReapproved)
+TEST_F(QZNNODESTest, ApproveGame_AlreadyActive_NotReapproved)
 {
     initialize();
     sint64 gid = registerGame();
@@ -706,7 +706,7 @@ TEST_F(QZNPortalTest, ApproveGame_AlreadyActive_NotReapproved)
     EXPECT_EQ(tester.state().games_0.revenueShareBPS, 500LL);
 }
 
-TEST_F(QZNPortalTest, ApproveGame_NonExistentGameId_Rejected)
+TEST_F(QZNNODESTest, ApproveGame_NonExistentGameId_Rejected)
 {
     initialize();
     bool ok = approveGame(9999LL);
@@ -718,7 +718,7 @@ TEST_F(QZNPortalTest, ApproveGame_NonExistentGameId_Rejected)
 //  [PROC-7]  UpdateGameState
 // ============================================================
 
-TEST_F(QZNPortalTest, UpdateGameState_SuspendActiveGame)
+TEST_F(QZNNODESTest, UpdateGameState_SuspendActiveGame)
 {
     initialize();
     sint64 gid = registerGame();
@@ -734,7 +734,7 @@ TEST_F(QZNPortalTest, UpdateGameState_SuspendActiveGame)
     EXPECT_EQ(tester.state().games_0.state,  GAME_SUSPENDED);
 }
 
-TEST_F(QZNPortalTest, UpdateGameState_RetireActiveGame_StakeRefunded)
+TEST_F(QZNNODESTest, UpdateGameState_RetireActiveGame_StakeRefunded)
 {
     initialize();
     sint64 gid = registerGame(BUILDER_A, BUILDER_STAKE_REQUIRED);
@@ -752,7 +752,7 @@ TEST_F(QZNPortalTest, UpdateGameState_RetireActiveGame_StakeRefunded)
     EXPECT_EQ(tester.state().games_0.builderStake, 0LL);   // Cleared after refund
 }
 
-TEST_F(QZNPortalTest, UpdateGameState_RetireGame_TotalActiveDecremented)
+TEST_F(QZNNODESTest, UpdateGameState_RetireGame_TotalActiveDecremented)
 {
     initialize();
     sint64 gid = registerGame();
@@ -768,7 +768,7 @@ TEST_F(QZNPortalTest, UpdateGameState_RetireGame_TotalActiveDecremented)
     EXPECT_EQ(tester.state().totalGamesActive, 0LL);
 }
 
-TEST_F(QZNPortalTest, UpdateGameState_NonAdmin_Rejected)
+TEST_F(QZNNODESTest, UpdateGameState_NonAdmin_Rejected)
 {
     initialize();
     sint64 gid = registerGame();
@@ -783,7 +783,7 @@ TEST_F(QZNPortalTest, UpdateGameState_NonAdmin_Rejected)
     EXPECT_EQ(tester.state().games_0.state, GAME_ACTIVE);
 }
 
-TEST_F(QZNPortalTest, UpdateGameState_ActiveGameNotBelow0_TotalGamesGuarded)
+TEST_F(QZNNODESTest, UpdateGameState_ActiveGameNotBelow0_TotalGamesGuarded)
 {
     initialize();
     // Register but don't approve — totalGamesActive stays 0
@@ -803,7 +803,7 @@ TEST_F(QZNPortalTest, UpdateGameState_ActiveGameNotBelow0_TotalGamesGuarded)
 //  [PROC-8]  StakeForAccess
 // ============================================================
 
-TEST_F(QZNPortalTest, StakeForAccess_ZeroAmount_Rejected)
+TEST_F(QZNNODESTest, StakeForAccess_ZeroAmount_Rejected)
 {
     initialize();
     StakeForAccess_input in{};
@@ -814,7 +814,7 @@ TEST_F(QZNPortalTest, StakeForAccess_ZeroAmount_Rejected)
     EXPECT_EQ(tester.state().playerCount, 0LL);
 }
 
-TEST_F(QZNPortalTest, StakeForAccess_BelowStakerThreshold_FreeTier)
+TEST_F(QZNNODESTest, StakeForAccess_BelowStakerThreshold_FreeTier)
 {
     initialize();
     StakeForAccess_input in{};
@@ -826,7 +826,7 @@ TEST_F(QZNPortalTest, StakeForAccess_BelowStakerThreshold_FreeTier)
     EXPECT_EQ(out.nextTierThreshold, STAKER_THRESHOLD);
 }
 
-TEST_F(QZNPortalTest, StakeForAccess_AtStakerThreshold_StakerTier)
+TEST_F(QZNNODESTest, StakeForAccess_AtStakerThreshold_StakerTier)
 {
     initialize();
     StakeForAccess_input in{};
@@ -839,7 +839,7 @@ TEST_F(QZNPortalTest, StakeForAccess_AtStakerThreshold_StakerTier)
     EXPECT_EQ(out.nextTierThreshold, CHAMPION_THRESHOLD);
 }
 
-TEST_F(QZNPortalTest, StakeForAccess_AtChampionThreshold_ChampionTier)
+TEST_F(QZNNODESTest, StakeForAccess_AtChampionThreshold_ChampionTier)
 {
     initialize();
     StakeForAccess_input in{};
@@ -852,7 +852,7 @@ TEST_F(QZNPortalTest, StakeForAccess_AtChampionThreshold_ChampionTier)
     EXPECT_EQ(out.nextTierThreshold, 0LL);  // Max tier — no next threshold
 }
 
-TEST_F(QZNPortalTest, StakeForAccess_IncrementalStakes_Accumulate)
+TEST_F(QZNNODESTest, StakeForAccess_IncrementalStakes_Accumulate)
 {
     initialize();
     StakeForAccess_input in{};
@@ -867,7 +867,7 @@ TEST_F(QZNPortalTest, StakeForAccess_IncrementalStakes_Accumulate)
     EXPECT_EQ(out.totalStaked, STAKER_THRESHOLD);
 }
 
-TEST_F(QZNPortalTest, StakeForAccess_NewPlayerSlotAssigned)
+TEST_F(QZNNODESTest, StakeForAccess_NewPlayerSlotAssigned)
 {
     initialize();
     StakeForAccess_input in{};
@@ -880,7 +880,7 @@ TEST_F(QZNPortalTest, StakeForAccess_NewPlayerSlotAssigned)
     EXPECT_EQ(tester.state().playerStake_0,     STAKER_THRESHOLD);
 }
 
-TEST_F(QZNPortalTest, StakeForAccess_TwoPlayers_SeparateSlots)
+TEST_F(QZNNODESTest, StakeForAccess_TwoPlayers_SeparateSlots)
 {
     initialize();
     StakeForAccess_input in{};
@@ -899,7 +899,7 @@ TEST_F(QZNPortalTest, StakeForAccess_TwoPlayers_SeparateSlots)
     EXPECT_EQ(tester.state().playerStake_1,  STAKER_THRESHOLD);
 }
 
-TEST_F(QZNPortalTest, StakeForAccess_ReturningPlayer_StakeAccumulates)
+TEST_F(QZNNODESTest, StakeForAccess_ReturningPlayer_StakeAccumulates)
 {
     initialize();
     StakeForAccess_input in{};
@@ -919,7 +919,7 @@ TEST_F(QZNPortalTest, StakeForAccess_ReturningPlayer_StakeAccumulates)
 //  [PROC-9]  ReceiveProtocolFees
 // ============================================================
 
-TEST_F(QZNPortalTest, ReceiveProtocolFees_20PercentRoutedToPool)
+TEST_F(QZNNODESTest, ReceiveProtocolFees_20PercentRoutedToPool)
 {
     initialize();
     receiveProtocolFees(PROTOCOL_FEES);
@@ -929,7 +929,7 @@ TEST_F(QZNPortalTest, ReceiveProtocolFees_20PercentRoutedToPool)
     EXPECT_EQ(tester.state().pendingDistribution,     expectedPool);
 }
 
-TEST_F(QZNPortalTest, ReceiveProtocolFees_AdminCanAlsoCall)
+TEST_F(QZNNODESTest, ReceiveProtocolFees_AdminCanAlsoCall)
 {
     initialize();
     ReceiveProtocolFees_input in{};
@@ -940,7 +940,7 @@ TEST_F(QZNPortalTest, ReceiveProtocolFees_AdminCanAlsoCall)
     EXPECT_GT(out.addedToPool, 0LL);
 }
 
-TEST_F(QZNPortalTest, ReceiveProtocolFees_Stranger_Rejected)
+TEST_F(QZNNODESTest, ReceiveProtocolFees_Stranger_Rejected)
 {
     initialize();
     ReceiveProtocolFees_input in{};
@@ -951,7 +951,7 @@ TEST_F(QZNPortalTest, ReceiveProtocolFees_Stranger_Rejected)
     EXPECT_EQ(tester.state().currentEpochRevenuePool, 0LL);
 }
 
-TEST_F(QZNPortalTest, ReceiveProtocolFees_PoolAccumulatesAcrossMultipleCalls)
+TEST_F(QZNNODESTest, ReceiveProtocolFees_PoolAccumulatesAcrossMultipleCalls)
 {
     initialize();
     receiveProtocolFees(PROTOCOL_FEES);
@@ -961,7 +961,7 @@ TEST_F(QZNPortalTest, ReceiveProtocolFees_PoolAccumulatesAcrossMultipleCalls)
     EXPECT_EQ(tester.state().currentEpochRevenuePool, singleContrib * 2LL);
 }
 
-TEST_F(QZNPortalTest, ReceiveProtocolFees_OutputReflectsCurrentPool)
+TEST_F(QZNNODESTest, ReceiveProtocolFees_OutputReflectsCurrentPool)
 {
     initialize();
     ReceiveProtocolFees_input in{};
@@ -978,7 +978,7 @@ TEST_F(QZNPortalTest, ReceiveProtocolFees_OutputReflectsCurrentPool)
 //  [FUNC-10] GetPlayerAccess
 // ============================================================
 
-TEST_F(QZNPortalTest, GetPlayerAccess_UnregisteredPlayer_FreeTier)
+TEST_F(QZNNODESTest, GetPlayerAccess_UnregisteredPlayer_FreeTier)
 {
     initialize();
     GetPlayerAccess_input in{};
@@ -991,7 +991,7 @@ TEST_F(QZNPortalTest, GetPlayerAccess_UnregisteredPlayer_FreeTier)
     EXPECT_EQ(out.hasEarlyAccess, 0);
 }
 
-TEST_F(QZNPortalTest, GetPlayerAccess_StakerTier_CanPlayPremium)
+TEST_F(QZNNODESTest, GetPlayerAccess_StakerTier_CanPlayPremium)
 {
     initialize();
     StakeForAccess_input sin{};
@@ -1009,7 +1009,7 @@ TEST_F(QZNPortalTest, GetPlayerAccess_StakerTier_CanPlayPremium)
     EXPECT_EQ(out.hasEarlyAccess, 0);
 }
 
-TEST_F(QZNPortalTest, GetPlayerAccess_ChampionTier_AllFlagsSet)
+TEST_F(QZNNODESTest, GetPlayerAccess_ChampionTier_AllFlagsSet)
 {
     initialize();
     StakeForAccess_input sin{};
@@ -1026,7 +1026,7 @@ TEST_F(QZNPortalTest, GetPlayerAccess_ChampionTier_AllFlagsSet)
     EXPECT_EQ(out.hasEarlyAccess, 1);
 }
 
-TEST_F(QZNPortalTest, GetPlayerAccess_IsReadOnly)
+TEST_F(QZNNODESTest, GetPlayerAccess_IsReadOnly)
 {
     initialize();
     sint64 prevCount = tester.state().playerCount;
@@ -1043,7 +1043,7 @@ TEST_F(QZNPortalTest, GetPlayerAccess_IsReadOnly)
 //  [FUNC-11] GetNode
 // ============================================================
 
-TEST_F(QZNPortalTest, GetNode_AfterIssue_CorrectTierAndOwner)
+TEST_F(QZNNODESTest, GetNode_AfterIssue_CorrectTierAndOwner)
 {
     initialize();
     issueNode(1, OWNER_A);
@@ -1060,7 +1060,7 @@ TEST_F(QZNPortalTest, GetNode_AfterIssue_CorrectTierAndOwner)
     EXPECT_EQ(out.lifetimeRevenue, 0LL);
 }
 
-TEST_F(QZNPortalTest, GetNode_AfterManualRevenueSet_PendingReflected)
+TEST_F(QZNNODESTest, GetNode_AfterManualRevenueSet_PendingReflected)
 {
     initialize();
     issueNode(1, OWNER_A);
@@ -1073,7 +1073,7 @@ TEST_F(QZNPortalTest, GetNode_AfterManualRevenueSet_PendingReflected)
     EXPECT_EQ(out.pendingRevenue, 9999LL);
 }
 
-TEST_F(QZNPortalTest, GetNode_CoreNode_CorrectShareBPS)
+TEST_F(QZNNODESTest, GetNode_CoreNode_CorrectShareBPS)
 {
     initialize();
     issueNode(11, OWNER_B);
@@ -1090,7 +1090,7 @@ TEST_F(QZNPortalTest, GetNode_CoreNode_CorrectShareBPS)
 //  [FUNC-12] GetGame
 // ============================================================
 
-TEST_F(QZNPortalTest, GetGame_AfterRegister_PendingState)
+TEST_F(QZNNODESTest, GetGame_AfterRegister_PendingState)
 {
     initialize();
     tester.setCurrentEpoch(3);
@@ -1107,7 +1107,7 @@ TEST_F(QZNPortalTest, GetGame_AfterRegister_PendingState)
     EXPECT_EQ(out.registeredEpoch, 3LL);
 }
 
-TEST_F(QZNPortalTest, GetGame_AfterApprove_ActiveStateAndBPS)
+TEST_F(QZNNODESTest, GetGame_AfterApprove_ActiveStateAndBPS)
 {
     initialize();
     sint64 gid = registerGame();
@@ -1125,7 +1125,7 @@ TEST_F(QZNPortalTest, GetGame_AfterApprove_ActiveStateAndBPS)
 //  [FUNC-13] GetPortalStats
 // ============================================================
 
-TEST_F(QZNPortalTest, GetPortalStats_InitialState_AllZero)
+TEST_F(QZNNODESTest, GetPortalStats_InitialState_AllZero)
 {
     initialize();
     GetPortalStats_input in{};
@@ -1138,7 +1138,7 @@ TEST_F(QZNPortalTest, GetPortalStats_InitialState_AllZero)
     EXPECT_EQ(out.currentEpochPool,        0LL);
 }
 
-TEST_F(QZNPortalTest, GetPortalStats_AfterNodesIssued_CountsCorrect)
+TEST_F(QZNNODESTest, GetPortalStats_AfterNodesIssued_CountsCorrect)
 {
     initialize();
     issueNode(1, OWNER_A);
@@ -1151,7 +1151,7 @@ TEST_F(QZNPortalTest, GetPortalStats_AfterNodesIssued_CountsCorrect)
     EXPECT_EQ(out.totalActiveNodes, 2LL);
 }
 
-TEST_F(QZNPortalTest, GetPortalStats_AfterGameApproved_ActiveGameCount)
+TEST_F(QZNNODESTest, GetPortalStats_AfterGameApproved_ActiveGameCount)
 {
     initialize();
     registerGame();
@@ -1163,7 +1163,7 @@ TEST_F(QZNPortalTest, GetPortalStats_AfterGameApproved_ActiveGameCount)
     EXPECT_EQ(out.totalGamesActive, 1LL);
 }
 
-TEST_F(QZNPortalTest, GetPortalStats_AfterFeeReceived_PoolUpdated)
+TEST_F(QZNNODESTest, GetPortalStats_AfterFeeReceived_PoolUpdated)
 {
     initialize();
     receiveProtocolFees(PROTOCOL_FEES);
@@ -1175,7 +1175,7 @@ TEST_F(QZNPortalTest, GetPortalStats_AfterFeeReceived_PoolUpdated)
     EXPECT_EQ(out.currentEpochPool, expected);
 }
 
-TEST_F(QZNPortalTest, GetPortalStats_IsReadOnly)
+TEST_F(QZNNODESTest, GetPortalStats_IsReadOnly)
 {
     initialize();
     issueNode(1, OWNER_A);
@@ -1192,7 +1192,7 @@ TEST_F(QZNPortalTest, GetPortalStats_IsReadOnly)
 //  BEGIN_EPOCH integration tests
 // ============================================================
 
-TEST_F(QZNPortalTest, BeginEpoch_NoPendingDistribution_NoOp)
+TEST_F(QZNNODESTest, BeginEpoch_NoPendingDistribution_NoOp)
 {
     initialize();
     issueNode(1, OWNER_A);
@@ -1203,7 +1203,7 @@ TEST_F(QZNPortalTest, BeginEpoch_NoPendingDistribution_NoOp)
     EXPECT_EQ(tester.state().nodes_1.pendingRevenue, 0LL);
 }
 
-TEST_F(QZNPortalTest, BeginEpoch_SingleActiveNode_ReceivesFullPool)
+TEST_F(QZNNODESTest, BeginEpoch_SingleActiveNode_ReceivesFullPool)
 {
     initialize();
     issueNode(1, OWNER_A);
@@ -1220,7 +1220,7 @@ TEST_F(QZNPortalTest, BeginEpoch_SingleActiveNode_ReceivesFullPool)
     EXPECT_EQ(tester.state().currentEpochRevenuePool, 0LL);
 }
 
-TEST_F(QZNPortalTest, BeginEpoch_GenesisEarnsMoreThanStandard)
+TEST_F(QZNNODESTest, BeginEpoch_GenesisEarnsMoreThanStandard)
 {
     initialize();
     // Issue one Genesis (3.0x) and one Standard-tier node
@@ -1235,7 +1235,7 @@ TEST_F(QZNPortalTest, BeginEpoch_GenesisEarnsMoreThanStandard)
               tester.state().nodes_16.pendingRevenue);
 }
 
-TEST_F(QZNPortalTest, BeginEpoch_UnclaimedSweep_StaleRevenueClearedAfterWindow)
+TEST_F(QZNNODESTest, BeginEpoch_UnclaimedSweep_StaleRevenueClearedAfterWindow)
 {
     initialize();
     tester.setCurrentEpoch(1);
@@ -1254,7 +1254,7 @@ TEST_F(QZNPortalTest, BeginEpoch_UnclaimedSweep_StaleRevenueClearedAfterWindow)
     EXPECT_GT(tester.state().totalRevenueReturned,   0LL);
 }
 
-TEST_F(QZNPortalTest, BeginEpoch_UnclaimedSweep_FreshRevenue_NotSwept)
+TEST_F(QZNNODESTest, BeginEpoch_UnclaimedSweep_FreshRevenue_NotSwept)
 {
     initialize();
     tester.setCurrentEpoch(1);
@@ -1272,7 +1272,7 @@ TEST_F(QZNPortalTest, BeginEpoch_UnclaimedSweep_FreshRevenue_NotSwept)
     EXPECT_EQ(tester.state().totalRevenueReturned,   0LL);
 }
 
-TEST_F(QZNPortalTest, BeginEpoch_PendingDistributionResetAfterDistribute)
+TEST_F(QZNNODESTest, BeginEpoch_PendingDistributionResetAfterDistribute)
 {
     initialize();
     issueNode(1, OWNER_A);
@@ -1289,7 +1289,7 @@ TEST_F(QZNPortalTest, BeginEpoch_PendingDistributionResetAfterDistribute)
 //  INVARIANTS
 // ============================================================
 
-TEST_F(QZNPortalTest, Invariant_TotalNodesIssuedNeverExceeds100)
+TEST_F(QZNNODESTest, Invariant_TotalNodesIssuedNeverExceeds100)
 {
     initialize();
     // Issue 16 nodes (the abbreviated limit in this contract)
@@ -1297,10 +1297,10 @@ TEST_F(QZNPortalTest, Invariant_TotalNodesIssuedNeverExceeds100)
     {
         issueNode(i, OWNER_A);
     }
-    EXPECT_LE(tester.state().totalNodesIssued, MAX_PORTAL_NODES);
+    EXPECT_LE(tester.state().totalNodesIssued, MAX_NOVUM_INITIUM_NODES);
 }
 
-TEST_F(QZNPortalTest, Invariant_TotalActiveNeverExceedsIssued)
+TEST_F(QZNNODESTest, Invariant_TotalActiveNeverExceedsIssued)
 {
     initialize();
     issueNode(1, OWNER_A);
@@ -1309,7 +1309,7 @@ TEST_F(QZNPortalTest, Invariant_TotalActiveNeverExceedsIssued)
     EXPECT_LE(tester.state().totalActiveNodes, tester.state().totalNodesIssued);
 }
 
-TEST_F(QZNPortalTest, Invariant_RevenueDistributedNeverExceedsPoolReceived)
+TEST_F(QZNNODESTest, Invariant_RevenueDistributedNeverExceedsPoolReceived)
 {
     initialize();
     issueNode(1, OWNER_A);
@@ -1325,7 +1325,7 @@ TEST_F(QZNPortalTest, Invariant_RevenueDistributedNeverExceedsPoolReceived)
     EXPECT_LE(tester.state().totalRevenueDistributed, totalEverReceived);
 }
 
-TEST_F(QZNPortalTest, Invariant_PlayerCountNeverExceedsSlots)
+TEST_F(QZNNODESTest, Invariant_PlayerCountNeverExceedsSlots)
 {
     initialize();
     // Register 16 players — the maximum slot count
@@ -1340,7 +1340,7 @@ TEST_F(QZNPortalTest, Invariant_PlayerCountNeverExceedsSlots)
     EXPECT_LE(tester.state().playerCount, 16LL);
 }
 
-TEST_F(QZNPortalTest, Invariant_GenesisShareBPSHigherThanCore)
+TEST_F(QZNNODESTest, Invariant_GenesisShareBPSHigherThanCore)
 {
     // Structural invariant — no state needed
     EXPECT_GT(GENESIS_SHARE_BPS, CORE_SHARE_BPS);

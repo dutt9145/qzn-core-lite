@@ -38,8 +38,8 @@ static const id FOUNDER_ADDR = id(2, 0, 0, 0);
 static const id TREASURY_ADDR  = id(3, 0, 0, 0);
 static const id LIQUIDITY_ADDR = id(4, 0, 0, 0);
 static const id ECOSYSTEM_ADDR = id(5, 0, 0, 0);
-static const id PORTAL_NODE_ADDR  = id(6, 0, 0, 0);
-static const id PORTAL_PROTO_ADDR = id(7, 0, 0, 0);
+static const id NOVUM_INITIUM_NODE_ADDR  = id(6, 0, 0, 0);
+static const id NOVUM_INITIUM_PROTO_ADDR = id(7, 0, 0, 0);
 static const id QSWAP_PROTO_ADDR  = id(8, 0, 0, 0);
 static const id WINNER_ADDR    = id(9,  0, 0, 0);
 static const id STRANGER_ADDR  = id(10, 0, 0, 0);
@@ -69,8 +69,8 @@ protected:
         in.founderAddr              = FOUNDER_ADDR;
         in.liquidityAddr            = LIQUIDITY_ADDR;
         in.ecosystemAddr            = ECOSYSTEM_ADDR;
-        in.portalNodeAddr           = PORTAL_NODE_ADDR;
-        in.portalProtoAddr          = PORTAL_PROTO_ADDR;
+        in.portalNodeAddr           = NOVUM_INITIUM_NODE_ADDR;
+        in.portalProtoAddr          = NOVUM_INITIUM_PROTO_ADDR;
         in.qswapProtoAddr           = QSWAP_PROTO_ADDR;
         in.vestingStartEpochOverride = vestingEpochOverride;
 
@@ -103,8 +103,8 @@ TEST_F(QZNTokenTest, Init_HappyPath_SetsAllAddresses)
     EXPECT_EQ(s.founderAddress,     FOUNDER_ADDR);
     EXPECT_EQ(s.treasuryAddress,    TREASURY_ADDR);
     EXPECT_EQ(s.liquidityAddress,   LIQUIDITY_ADDR);
-    EXPECT_EQ(s.portalNodeAddress,  PORTAL_NODE_ADDR);
-    EXPECT_EQ(s.portalProtoAddress, PORTAL_PROTO_ADDR);
+    EXPECT_EQ(s.portalNodeAddress,  NOVUM_INITIUM_NODE_ADDR);
+    EXPECT_EQ(s.portalProtoAddress, NOVUM_INITIUM_PROTO_ADDR);
     EXPECT_EQ(s.qswapProtoAddress,  QSWAP_PROTO_ADDR);
 }
 
@@ -171,8 +171,8 @@ TEST_F(QZNTokenTest, Init_HappyPath_OutputMatchesState)
     in.founderAddr               = FOUNDER_ADDR;
     in.liquidityAddr             = LIQUIDITY_ADDR;
     in.ecosystemAddr             = ECOSYSTEM_ADDR;
-    in.portalNodeAddr            = PORTAL_NODE_ADDR;
-    in.portalProtoAddr           = PORTAL_PROTO_ADDR;
+    in.portalNodeAddr            = NOVUM_INITIUM_NODE_ADDR;
+    in.portalProtoAddr           = NOVUM_INITIUM_PROTO_ADDR;
     in.qswapProtoAddr            = QSWAP_PROTO_ADDR;
     in.vestingStartEpochOverride = 100;
 
@@ -317,7 +317,7 @@ TEST_F(QZNTokenTest, SettleMatch_HappyPath_LifetimeStatsUpdated)
     EXPECT_EQ(s.totalRouteLiquidity,   bps(STANDARD_STAKE, 2000));
     EXPECT_EQ(s.totalRouteTreasury,    bps(STANDARD_STAKE,  100));
     EXPECT_EQ(s.totalRoutePortalNode,  bps(STANDARD_STAKE,  300));
-    EXPECT_EQ(s.totalRoutePortalProto, 0LL);  // PORTAL_PROTO_BPS = 0
+    EXPECT_EQ(s.totalRoutePortalProto, 0LL);  // NOVUM_INITIUM_PROTO_BPS = 0
     EXPECT_EQ(s.totalRouteQswapProto,  bps(STANDARD_STAKE,  100));
 }
 
@@ -834,7 +834,7 @@ TEST_F(QZNTokenTest, GetMatchStats_SingleMatch_CorrectTotals)
     EXPECT_EQ(out.totalRouteLiquidity,   bps(STANDARD_STAKE, 2000));
     EXPECT_EQ(out.totalRouteTreasury,    bps(STANDARD_STAKE,  100));
     EXPECT_EQ(out.totalRoutePortalNode,  bps(STANDARD_STAKE,  300));
-    EXPECT_EQ(out.totalRoutePortalProto, 0LL);  // PORTAL_PROTO_BPS = 0
+    EXPECT_EQ(out.totalRoutePortalProto, 0LL);  // NOVUM_INITIUM_PROTO_BPS = 0
     EXPECT_EQ(out.totalRouteQswapProto,  bps(STANDARD_STAKE,  100));
 }
 
